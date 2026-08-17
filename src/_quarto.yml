@@ -30,7 +30,7 @@ website:
   page-footer:
     center: |
       <span class="webr-footer">
-        <span><strong>webR Station</strong> — Execução de R no navegador via WebAssembly.</span><br>
+        <span><strong>webR Station</strong> — Projeto idealizado por <strong>Lucas Batista Vargas</strong> e compilado em <strong>Antigravity</strong>.</span><br>
         <small style="opacity: 0.85;">Powered by <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg & Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</small>
       </span>
 

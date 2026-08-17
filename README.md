@@ -110,6 +110,15 @@ Se quiser que o webR já inicialize instalando pacotes R adicionais automaticame
 
 ---
 
+---
+
+## 👤 Autoria & Idealização
+
+- **Idealização e Desenvolvimento:** **Lucas Batista Vargas** ([GitHub @batistalucasv](https://github.com/batistalucasv))
+- **Compilado e Estruturado em:** **Antigravity**
+
+---
+
 ## 🙏 Créditos e Agradecimentos
 
 Este projeto é desenvolvido com base em tecnologias e extensões de código aberto incríveis:

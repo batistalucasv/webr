@@ -45,3 +45,11 @@ git push -u origin main
 - `site_libs/`: Bibliotecas do Quarto, Bootstrap, ícones e syntax highlighting.
 - `brand/`: Favicon e identidade visual.
 - `.nojekyll`: Arquivo essencial que impede o GitHub Pages de ignorar pastas de scripts.
+
+
+---
+
+## 👤 Autoria & Idealização
+
+- **Idealização e Desenvolvimento:** **Lucas Batista Vargas** ([GitHub @batistalucasv](https://github.com/batistalucasv))
+- **Compilado e Estruturado em:** **Antigravity**
