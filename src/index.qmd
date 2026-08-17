@@ -57,7 +57,7 @@ Estação de trabalho com **R no navegador** (webR). Explore dados, teste script
 
 ```{webr-r}
 #| label: webr-station
-# Estação Área Basal — webR
+# webR Station — Console Interativo
 # Arquivos enviados ficam em:
 #   /home/web_user/uploads/
 

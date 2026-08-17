@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="quarto-1.10.18" name="generator"/>
 <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
-<title>webR — Estação de Análise no Navegador</title>
+<title>webR Station — Console R no Navegador</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -405,7 +405,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"# Estação Área Basal — webR\n# Arquivos enviados ficam em:\n#   /home/web_user/uploads/\n\nuploads <- \"/home/web_user/uploads\"\nif (dir.exists(uploads)) {\n  arquivos <- list.files(uploads, full.names = TRUE)\n  if (length(arquivos)) {\n    print(arquivos)\n  } else {\n    message(\"Pasta de uploads vazia. Envie arquivos acima e rode de novo.\")\n  }\n} else {\n  message(\"Ainda sem pasta de uploads. Envie um arquivo acima.\")\n}\n\n# Exemplo (depois de enviar um CSV):\n# dados <- read.csv(\"/home/web_user/uploads/seu_arquivo.csv\")\n# head(dados)\n# summary(dados)","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"webr-station","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"code":"# webR Station — Console Interativo\n# Arquivos enviados ficam em:\n#   /home/web_user/uploads/\n\nuploads <- \"/home/web_user/uploads\"\nif (dir.exists(uploads)) {\n  arquivos <- list.files(uploads, full.names = TRUE)\n  if (length(arquivos)) {\n    print(arquivos)\n  } else {\n    message(\"Pasta de uploads vazia. Envie arquivos acima e rode de novo.\")\n  }\n} else {\n  message(\"Ainda sem pasta de uploads. Envie um arquivo acima.\")\n}\n\n# Exemplo (depois de enviar um CSV):\n# dados <- read.csv(\"/home/web_user/uploads/seu_arquivo.csv\")\n# head(dados)\n# summary(dados)","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"webr-station","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
 </script>
 <script type="module">
@@ -1659,13 +1659,13 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 <link href="styles.css" rel="stylesheet"/>
-<meta content="webR – Área Basal" property="og:title"/>
+<meta content="webR Station — Console R no Navegador" property="og:title"/>
 <meta content="Estação de análise no navegador" property="og:description"/>
-<meta content="Área Basal" property="og:site_name"/>
-<meta content="webR – Área Basal" name="twitter:title"/>
+<meta content="webR Station" property="og:site_name"/>
+<meta content="webR Station — Console R no Navegador" name="twitter:title"/>
 <meta content="Estação de análise no navegador" name="twitter:description"/>
 <meta content="summary" name="twitter:card"/>
-<link href="https://areabasal.com.br/webr.html" rel="canonical"/>
+<link href="./webr.html" rel="canonical"/>
 </head>
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
@@ -1834,35 +1834,12 @@ globalThis.qwebrExecuteCode = async function (
 <header class="headroom fixed-top" id="quarto-header">
 <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
 <div class="navbar-container container-fluid">
-<div class="navbar-brand-container mx-auto">
-<a class="navbar-brand navbar-brand-logo" href="https://areabasal.com.br/">
-<img alt="Área Basal" class="navbar-logo light-content" src="./brand/mark.svg"/>
-<img alt="Área Basal" class="navbar-logo dark-content" src="./brand/mark.svg"/>
-</a>
-<a class="navbar-brand" href="https://areabasal.com.br/">
-<span class="navbar-title">Área Basal</span>
-</a>
-</div>
+<div class="navbar-brand-container mx-auto"><a class="navbar-brand navbar-brand-logo" href="./index.html"><img alt="webR Station" class="navbar-logo" src="./brand/logo.svg" style="height: 28px; width: 28px; margin-right: 8px;"/></a><a class="navbar-brand" href="./index.html"><span class="navbar-title">webR Station</span></a></div>
 <div class="" id="quarto-search" title="Procurar"></div>
 <button aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar de navegação" class="navbar-toggler" data-bs-target="#navbarCollapse" data-bs-toggle="collapse" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }" role="menu" type="button">
 <span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse" id="navbarCollapse">
-<ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item">
-<a class="nav-link" href="https://areabasal.com.br/estudo/">
-<span class="menu-text">Estudo</span></a>
-</li>
-<li class="nav-item">
-<a aria-current="page" class="nav-link active" href="./index.html">
-<span class="menu-text">webR</span></a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="https://areabasal.com.br/sobre.html">
-<span class="menu-text">Sobre</span></a>
-</li>
-</ul>
-</div> <!-- /navcollapse -->
+<div class="collapse navbar-collapse" id="navbarCollapse"><ul class="navbar-nav navbar-nav-scroll me-auto"><li class="nav-item"><a aria-current="page" class="nav-link active" href="./index.html"><span class="menu-text">Console</span></a></li><li class="nav-item"><a class="nav-link" href="https://docs.r-wasm.org/webr/latest/" rel="noopener" target="_blank"><span class="menu-text">Docs webR</span></a></li><li class="nav-item"><a class="nav-link" href="https://github.com/r-wasm/webr" rel="noopener" target="_blank"><span class="menu-text">r-wasm</span></a></li><li class="nav-item"><a class="nav-link" href="https://github.com/batistalucasv/webr" rel="noopener" target="_blank"><span class="menu-text">GitHub <i class="bi bi-github"></i></span></a></li></ul></div> <!-- /navcollapse -->
 <div class="quarto-navbar-tools">
 <a class="quarto-color-scheme-toggle quarto-navigation-tool px-1" href="" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
 </div>
@@ -2294,7 +2271,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/areabasal\.com\.br\/");
+        var filterRegex = new RegExp("https:\/\/batistalucasv\.github\.io\/webr\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -2622,19 +2599,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-<div class="nav-footer">
-<div class="nav-footer-left">
-       
-    </div>
-<div class="nav-footer-center">
-<p><span class="ab-footer"> <img alt="" aria-hidden="true" class="ab-footer-mark" height="18" src="./brand/mark.svg" width="18"/> <span>© 2026 Área Basal. Todos os direitos reservados.</span> <a aria-label="E-mail" class="ab-footer-icon" href="mailto:contato@areabasal.com.br"><i aria-hidden="true" class="bi bi-envelope"></i></a> <a aria-label="Instagram" class="ab-footer-icon" href="https://www.instagram.com/areabasal" rel="noopener" target="_blank"><i aria-hidden="true" class="bi bi-instagram"></i></a> </span></p>
-<p class="webr-credits" style="font-size: 0.82rem; opacity: 0.8; margin-top: 0.35rem;">Powered by <a href="https://docs.r-wasm.org/webr/latest/" rel="noopener" style="text-decoration: underline;" target="_blank">webR</a> por George Stagg &amp; Posit PBC · Extensão <a href="https://github.com/coatless/quarto-webr" rel="noopener" style="text-decoration: underline;" target="_blank">quarto-webr</a> por James J. Balamuta</p></div>
-<div class="nav-footer-right">
-       
-    </div>
-</div>
-</footer>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-left"></div><div class="nav-footer-center"><p style="margin-bottom: 0.25rem;"><span><strong>webR Station</strong> — Ambiente de análise interativa com R no navegador via WebAssembly.</span></p><p class="webr-credits" style="font-size: 0.82rem; opacity: 0.85; margin-top: 0.25rem;">Powered by <a href="https://docs.r-wasm.org/webr/latest/" rel="noopener" style="text-decoration: underline;" target="_blank">webR</a> por George Stagg &amp; Posit PBC · Extensão <a href="https://github.com/coatless/quarto-webr" rel="noopener" style="text-decoration: underline;" target="_blank">quarto-webr</a> por James J. Balamuta</p></div><div class="nav-footer-right"></div></div></footer>
 <script src="config/webr-workstation.js?v=0.3.0"></script>
 <script type="module">
 // Handle cell initialization initialization

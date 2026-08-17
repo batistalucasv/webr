@@ -91,7 +91,7 @@
     mark.width = 28;
     mark.height = 28;
     brand.appendChild(mark);
-    brand.appendChild(document.createTextNode("Área Basal"));
+    brand.appendChild(document.createTextNode("webR Station"));
 
     var btn = document.createElement("button");
     btn.type = "button";

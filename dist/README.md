@@ -1,6 +1,6 @@
 # webR — Estação de Análise no Navegador (GitHub Pages)
 
-Este repositório contém a versão independente (standalone) da estação **webR** do Área Basal, pronta para ser publicada no **GitHub Pages**.
+Este repositório contém a versão independente (standalone) da estação **webR** , pronta para ser publicada no **GitHub Pages**.
 
 ---
 

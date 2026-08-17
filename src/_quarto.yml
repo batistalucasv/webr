@@ -4,36 +4,34 @@ project:
   resources:
     - config/webr-workstation.js
     - brand/favicon.svg
+    - brand/logo.svg
     - brand/mark.svg
-    - brand/lockup.svg
 
 website:
-  title: "webR — Estação de Análise"
+  title: "webR Station"
   favicon: brand/favicon.svg
   description: "Estação de trabalho com R no navegador via WebAssembly."
   navbar:
     background: light
     foreground: dark
-    logo: brand/mark.svg
-    logo-alt: "Área Basal"
-    logo-href: https://areabasal.com.br/
-    title: "webR"
+    logo: brand/logo.svg
+    logo-alt: "webR Station"
+    logo-href: index.html
+    title: "webR Station"
     left:
-      - href: https://areabasal.com.br/
-        text: Área Basal
-      - href: https://areabasal.com.br/estudo/
-        text: Estudo
       - href: index.qmd
-        text: webR
-      - href: https://areabasal.com.br/sobre.html
-        text: Sobre
+        text: Console
+      - href: https://docs.r-wasm.org/webr/latest/
+        text: Docs webR
+      - href: https://github.com/r-wasm/webr
+        text: r-wasm
+      - href: https://github.com/batistalucasv/webr
+        text: GitHub
   page-footer:
     center: |
-      <span class="ab-footer">
-        <img class="ab-footer-mark" src="/brand/mark.svg" width="18" height="18" alt="" aria-hidden="true">
-        <span>© 2026 Área Basal. Todos os direitos reservados.</span>
-        <br>
-        <small style="opacity: 0.8;">Powered by <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg / Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</small>
+      <span class="webr-footer">
+        <span><strong>webR Station</strong> — Execução de R no navegador via WebAssembly.</span><br>
+        <small style="opacity: 0.85;">Powered by <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg & Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</small>
       </span>
 
 lang: pt-BR

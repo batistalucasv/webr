@@ -14,9 +14,8 @@
     "webr",
     "webassembly",
     "quarto",
-    "rstats",
-    "areabasal"
+    "rstats"
   ],
-  "author": "Área Basal",
+  "author": "Lucas Batista",
   "license": "MIT"
 }
