@@ -1,0 +1,22 @@
+{
+  "name": "webr-station",
+  "version": "1.0.0",
+  "description": "Estação de análise webR independente com R no navegador via WebAssembly",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "serve": "npx serve . -p 3000",
+    "build:quarto": "quarto render src"
+  },
+  "keywords": [
+    "r",
+    "webr",
+    "webassembly",
+    "quarto",
+    "rstats",
+    "areabasal"
+  ],
+  "author": "Área Basal",
+  "license": "MIT"
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="Area Basal">
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="#096b72" stroke-width="2.5" d="M32 6v6.5M32 51.5V58"/>
+    <circle cx="32" cy="32" r="19.5" stroke="#096b72" stroke-width="2.5"/>
+    <path stroke="#3a4149" stroke-width="2.25" d="M32 12.5v39"/>
+    <circle cx="32" cy="22" r="8" stroke="#3a4149" stroke-width="2.25"/>
+    <circle cx="25.5" cy="30" r="8" stroke="#3a4149" stroke-width="2.25"/>
+    <circle cx="38.5" cy="30" r="8" stroke="#3a4149" stroke-width="2.25"/>
+    <path stroke="#3a4149" stroke-width="2.25" d="M20.2 48.5L32 40.5M43.8 48.5L32 40.5"/>
+  </g>
+</svg>

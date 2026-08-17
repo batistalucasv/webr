@@ -1,0 +1,80 @@
+---
+title: "webR"
+subtitle: "Estação de análise no navegador"
+sidebar: false
+toc: false
+page-navigation: false
+include-in-header:
+  - text: |
+      <script>
+        document.documentElement.classList.add("webr-station-pending");
+        document.addEventListener("DOMContentLoaded", function () {
+          document.body.classList.add("webr-station");
+        });
+      </script>
+include-after-body:
+  - text: |
+      <script src="config/webr-workstation.js?v=0.3.0"></script>
+---
+
+Estação de trabalho com **R no navegador** (webR). Explore dados, teste scripts e monte análises sem instalar R no computador.
+
+::: {.callout-tip}
+## Como usar
+
+1. Aguarde **"webR is ready"** no topo da página.
+2. Arraste arquivos para a área abaixo (ou escolha no seletor). CSV, texto e outros formatos servem.
+3. No console, rode `list.files("/home/web_user/uploads", full.names = TRUE)` para ver o que entrou.
+4. Leia os dados com o caminho completo, por exemplo `read.csv("/home/web_user/uploads/seu_arquivo.csv")`.
+:::
+
+## Arquivos
+
+```{=html}
+<div class="webr-station-panel">
+  <div
+    id="webr-dropzone"
+    class="webr-dropzone webr-dropzone-disabled"
+    role="button"
+    tabindex="0"
+    aria-disabled="true"
+    aria-label="Área para enviar arquivos ao webR"
+  >
+    <p class="webr-dropzone-title">Arraste arquivos para cá</p>
+    <p class="webr-dropzone-sub">ou clique para escolher (vários de uma vez)</p>
+    <input id="webr-file-input" class="webr-file-input" type="file" multiple />
+  </div>
+  <div class="webr-station-actions">
+    <button id="webr-upload-btn" type="button" class="btn btn-primary">Enviar para o webR</button>
+    <button id="webr-upload-clear" type="button" class="btn btn-outline-secondary">Limpar uploads</button>
+  </div>
+  <p id="webr-upload-status" class="webr-upload-status" aria-live="polite">Aguarde o webR iniciar…</p>
+  <div id="webr-upload-list" class="webr-upload-list"></div>
+</div>
+```
+
+## Console
+
+```{webr-r}
+#| label: webr-station
+# Estação Área Basal — webR
+# Arquivos enviados ficam em:
+#   /home/web_user/uploads/
+
+uploads <- "/home/web_user/uploads"
+if (dir.exists(uploads)) {
+  arquivos <- list.files(uploads, full.names = TRUE)
+  if (length(arquivos)) {
+    print(arquivos)
+  } else {
+    message("Pasta de uploads vazia. Envie arquivos acima e rode de novo.")
+  }
+} else {
+  message("Ainda sem pasta de uploads. Envie um arquivo acima.")
+}
+
+# Exemplo (depois de enviar um CSV):
+# dados <- read.csv("/home/web_user/uploads/seu_arquivo.csv")
+# head(dados)
+# summary(dados)
+```

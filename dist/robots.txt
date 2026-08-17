@@ -1,0 +1,82 @@
+# Área Basal — política de rastreio
+# Conteúdo público pode ser indexado por buscadores e consultado por robôs de IA.
+# /admin/ e /interno/ ficam de fora.
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+# Busca (Google, Bing, etc.)
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+# Robôs de IA (treino, busca e consulta em tempo real)
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /admin/
+Disallow: /interno/
+
+Sitemap: https://areabasal.com.br/sitemap.xml
