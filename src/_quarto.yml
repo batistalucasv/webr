@@ -32,6 +32,8 @@ website:
       <span class="ab-footer">
         <img class="ab-footer-mark" src="/brand/mark.svg" width="18" height="18" alt="" aria-hidden="true">
         <span>© 2026 Área Basal. Todos os direitos reservados.</span>
+        <br>
+        <small style="opacity: 0.8;">Powered by <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg / Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</small>
       </span>
 
 lang: pt-BR

@@ -107,5 +107,17 @@ Se quiser que o webR já inicialize instalando pacotes R adicionais automaticame
 
 ---
 
+
+---
+
+## 🙏 Créditos e Agradecimentos
+
+Este projeto é desenvolvido com base em tecnologias e extensões de código aberto incríveis:
+
+- **[webR](https://docs.r-wasm.org/webr/latest/)** — Criado por **George Stagg** e mantido pela equipe da **Posit PBC** ([GitHub r-wasm/webr](https://github.com/r-wasm/webr)). Trata-se da versão oficial do interpretador R compilado para WebAssembly (WASM), permitindo executar código R inteiramente no navegador do usuário sem depender de servidor remoto.
+- **[quarto-webr](https://github.com/coatless/quarto-webr)** — Desenvolvido por **James Joseph Balamuta (coatless)** ([GitHub coatless/quarto-webr](https://github.com/coatless/quarto-webr)). Extensão que integra o webR ao ecossistema Quarto e Monaco Editor.
+- **[Monaco Editor](https://microsoft.github.io/monaco-editor/)** — O editor de código open source desenvolvido pela **Microsoft** que alimenta o VS Code.
+- **[Quarto](https://quarto.org/)** — Sistema de publicação técnica e científica de código aberto da **Posit PBC**.
+
 ## 📄 Licença
 Distribuído sob a licença MIT.
