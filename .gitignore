@@ -14,3 +14,22 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Arquivos de teste e desenvolvimento experimental (webr2 / webr3 / webrtest)
+webr2*
+webr3*
+webrtest*
+styles-webr2*
+styles-webr3*
+dist/webr2*
+dist/webr3*
+dist/webrtest*
+src/webr2*
+src/webr3*
+src/webrtest*
+ROADMAP_WEBR2.md
+
+# Git worktrees & SDD scratch
+.worktrees/
+.superpowers/
+
