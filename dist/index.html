@@ -23,120 +23,91 @@
 </head>
 <body>
   <div class="app-container">
-    <header class="app-header webr-app-header" id="app-header">
-      <nav class="header-menubar" aria-label="Menu principal">
-        <div class="dropdown header-menu-static">
-          <button type="button" class="menubar-item">Arquivo</button>
-          <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" id="menu-save-r"><i class="bi bi-download"></i> Salvar .R</button>
-            <button type="button" class="dropdown-item" id="menu-open-session"><i class="bi bi-folder2-open"></i> Abrir sessão</button>
-            <button type="button" class="dropdown-item" id="menu-session"><i class="bi bi-archive"></i> Salvar sessão</button>
-          </div>
-        </div>
-        <div class="dropdown header-menu-static">
-          <button type="button" class="menubar-item">Código</button>
-          <div class="dropdown-menu menubar-menu-wide">
-            <button type="button" class="dropdown-item" id="menu-snippets"><i class="bi bi-journal-code"></i> Snippets</button>
-            <div class="dropdown-divider"></div>
-            <button type="button" class="dropdown-item" data-example="eda"><i class="bi bi-bar-chart-fill"></i> Análise Exploratória</button>
-            <button type="button" class="dropdown-item" data-example="plots"><i class="bi bi-pie-chart-fill"></i> Gráficos Base R</button>
-            <button type="button" class="dropdown-item" data-example="ggplot"><i class="bi bi-palette-fill"></i> ggplot2</button>
-            <button type="button" class="dropdown-item" data-example="regression"><i class="bi bi-graph-up-arrow"></i> Regressão (lm)</button>
-            <button type="button" class="dropdown-item" data-example="simulation"><i class="bi bi-dice-5-fill"></i> Simulações</button>
-            <button type="button" class="dropdown-item" data-example="matrix"><i class="bi bi-grid-3x3-gap-fill"></i> Matrizes</button>
-          </div>
-        </div>
-        <div class="dropdown header-menu-static">
-          <button type="button" class="menubar-item">Executar</button>
-          <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" id="menu-run"><i class="bi bi-play-fill"></i> Executar seleção</button>
-            <button type="button" class="dropdown-item" id="menu-run-all"><i class="bi bi-play-circle"></i> Executar tudo</button>
-            <button type="button" class="dropdown-item" id="menu-clear"><i class="bi bi-trash3"></i> Limpar console</button>
-          </div>
-        </div>
-        <div class="dropdown header-menu-static">
-          <button type="button" class="menubar-item">Ver</button>
-          <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" data-goto-tab="console"><i class="bi bi-terminal"></i> Console</button>
-            <button type="button" class="dropdown-item" data-goto-tab="data"><i class="bi bi-table"></i> Dados</button>
-            <button type="button" class="dropdown-item" data-goto-tab="plots"><i class="bi bi-image"></i> Gráficos</button>
-            <button type="button" class="dropdown-item" data-goto-tab="files"><i class="bi bi-folder2-open"></i> Arquivos</button>
-            <button type="button" class="dropdown-item" data-goto-tab="environment"><i class="bi bi-database"></i> Ambiente</button>
-          </div>
-        </div>
-        <div class="dropdown header-menu-static">
-          <button type="button" class="menubar-item">Compartilhar</button>
-          <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" id="menu-share"><i class="bi bi-link-45deg"></i> Share link</button>
-            <button type="button" class="dropdown-item" id="menu-report"><i class="bi bi-file-earmark-richtext"></i> Relatório HTML</button>
-          </div>
-        </div>
-      </nav>
-
-      <div class="header-row header-row-top">
-        <div class="brand-section">
-          <a href="./index.html" class="brand-logo" title="webR Station">
-            <svg viewBox="0 0 100 100" width="28" height="28">
-              <rect width="92" height="92" x="4" y="4" rx="20" fill="#276DC3"/>
-              <ellipse cx="50" cy="50" rx="36" ry="24" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.3"/>
-              <path d="M32 72V28h22c8.8 0 15 5.4 15 13.5 0 6.6-4.2 11.6-10.4 13.1L71 72H57.5L46.8 56H42v16H32zm10-25.5h10.8c3.8 0 6.2-2.2 6.2-5.5s-2.4-5.5-6.2-5.5H42v11z" fill="#FFFFFF"/>
-            </svg>
-            <span>webR</span>
-          </a>
-          <span class="brand-badge">Station</span>
-          <div id="webr-status-badge" class="status-badge" title="Status da engine WebAssembly do R">
-            <span class="status-indicator"></span>
-            <span id="webr-status-text">Inicializando webR WASM...</span>
-          </div>
-        </div>
-
-        <div class="header-group header-group-run">
-          <button id="btn-run-code" class="btn btn-primary" title="Executar seleção ou linha atual (Ctrl+Enter)">
-            <i class="bi bi-play-fill"></i>
-            <span class="btn-label">Executar</span>
-          </button>
-          <button id="btn-run-all" class="btn btn-secondary" title="Executar todo o código do editor (Shift+Enter)">
-            <i class="bi bi-play-circle"></i>
-            <span class="btn-label">Tudo</span>
-          </button>
-          <button id="btn-clear-console" class="btn btn-secondary" title="Limpar saída do console (Ctrl+L)">
-            <i class="bi bi-trash3"></i>
-            <span class="btn-label">Limpar</span>
-          </button>
-        </div>
-
-        <div class="header-group header-group-system">
-          <button id="btn-toggle-theme" class="btn btn-icon" title="Alternar tema claro/escuro">
-            <i class="bi bi-sun-fill"></i>
-          </button>
-          <a href="https://github.com/batistalucasv/webr" target="_blank" rel="noopener" class="btn btn-icon" title="Repositório no GitHub">
-            <i class="bi bi-github"></i>
-          </a>
+    <!-- Top App Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <a href="./index.html" class="brand-logo" title="webR Station">
+          <svg viewBox="0 0 100 100" width="28" height="28">
+            <rect width="92" height="92" x="4" y="4" rx="20" fill="#276DC3"/>
+            <ellipse cx="50" cy="50" rx="36" ry="24" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.3"/>
+            <path d="M32 72V28h22c8.8 0 15 5.4 15 13.5 0 6.6-4.2 11.6-10.4 13.1L71 72H57.5L46.8 56H42v16H32zm10-25.5h10.8c3.8 0 6.2-2.2 6.2-5.5s-2.4-5.5-6.2-5.5H42v11z" fill="#FFFFFF"/>
+          </svg>
+          <span>webR</span>
+        </a>
+        <span class="brand-badge">Station</span>
+        <div id="webr-status-badge" class="status-badge" title="Status da engine WebAssembly do R">
+          <span class="status-indicator"></span>
+          <span id="webr-status-text">Inicializando webR WASM...</span>
         </div>
       </div>
 
-      <div class="header-actions-hidden" aria-hidden="true">
-        <button id="btn-open-snippets" class="btn btn-secondary" tabindex="-1">Snippets</button>
-        <button id="btn-download-script" class="btn btn-secondary" tabindex="-1">Salvar .R</button>
-        <button id="btn-share-link" class="btn btn-secondary" tabindex="-1">Share</button>
-        <button id="btn-export-report" class="btn btn-secondary" tabindex="-1">Relatório</button>
-        <button id="btn-save-session" class="btn btn-secondary" tabindex="-1">Sessão</button>
-        <label class="btn btn-secondary btn-file-label" tabindex="-1">
-          Abrir
-          <input type="file" id="session-file-picker" accept=".json,.webr-project.json" />
-        </label>
+      <!-- Execution Toolbar -->
+      <div class="header-actions">
+        <button id="btn-run-code" class="btn btn-primary" title="Executar seleção ou linha atual (Ctrl+Enter)">
+          <i class="bi bi-play-fill"></i>
+          <span>Executar</span>
+        </button>
+        <button id="btn-run-all" class="btn btn-secondary" title="Executar todo o código do editor (Shift+Enter)">
+          <i class="bi bi-play-circle"></i>
+          <span>Tudo</span>
+        </button>
+        <button id="btn-clear-console" class="btn btn-secondary" title="Limpar saída do console (Ctrl+L)">
+          <i class="bi bi-trash3"></i>
+          <span>Limpar</span>
+        </button>
+
+        <!-- Dropdown Exemplos -->
+        <div class="dropdown">
+          <button id="btn-examples-dropdown" class="btn btn-secondary" title="Carregar exemplos prontos">
+            <i class="bi bi-lightbulb"></i>
+            <span>Exemplos</span>
+            <i class="bi bi-chevron-down" style="font-size: 0.7rem;"></i>
+          </button>
+          <div id="examples-menu" class="dropdown-menu">
+            <button class="dropdown-item" data-example="eda">
+              <i class="bi bi-bar-chart-fill"></i> Análise Exploratória & Estatística
+            </button>
+            <button class="dropdown-item" data-example="plots">
+              <i class="bi bi-pie-chart-fill"></i> Gráficos Base R (Hist, Boxplot, Pairs)
+            </button>
+            <button class="dropdown-item" data-example="ggplot">
+              <i class="bi bi-palette-fill"></i> Visualização com ggplot2
+            </button>
+            <button class="dropdown-item" data-example="regression">
+              <i class="bi bi-graph-up-arrow"></i> Regressão Linear & Modelagem (lm)
+            </button>
+            <button class="dropdown-item" data-example="simulation">
+              <i class="bi bi-dice-5-fill"></i> Simulações & Probabilidade (Monte Carlo)
+            </button>
+            <button class="dropdown-item" data-example="matrix">
+              <i class="bi bi-grid-3x3-gap-fill"></i> Álgebra Linear & Matrizes
+            </button>
+          </div>
+        </div>
+
+        <button id="btn-download-script" class="btn btn-secondary" title="Baixar script como arquivo .R">
+          <i class="bi bi-download"></i>
+          <span>Salvar .R</span>
+        </button>
+
+        <!-- Theme & Links -->
+        <button id="btn-toggle-theme" class="btn btn-icon" title="Alternar tema claro/escuro">
+          <i class="bi bi-sun-fill"></i>
+        </button>
+        <a href="https://github.com/batistalucasv/webr" target="_blank" rel="noopener" class="btn btn-icon" title="Repositório no GitHub">
+          <i class="bi bi-github"></i>
+        </a>
       </div>
     </header>
 
     <!-- Main Workspace Split View -->
-    <main class="workspace-container" id="workspace-container">
+    <main class="workspace-container">
       <!-- Left Panel: Code Editor -->
-      <section class="pane pane-editor" id="pane-editor">
-        <div class="pane-header script-tabs-header">
-          <div class="script-tabs-bar">
-            <div id="script-tabs-list" class="script-tabs-list"></div>
-            <button id="btn-new-script-tab" type="button" class="btn btn-icon btn-sm" title="Novo script">+</button>
-            <button id="btn-download-scripts-zip" type="button" class="btn btn-icon btn-sm" title="Baixar todos os scripts (.zip)"><i class="bi bi-file-zip"></i></button>
+      <section class="pane pane-editor">
+        <div class="pane-header">
+          <div class="pane-title">
+            <i class="bi bi-file-earmark-code" style="color: var(--accent-blue-hover);"></i>
+            <span>script.R</span>
           </div>
           <div style="display: flex; gap: 4px;">
             <button id="btn-copy-editor" class="btn btn-icon" title="Copiar todo o código">
@@ -158,20 +129,12 @@
         </div>
       </section>
 
-      <!-- Resizer Splitter Bar -->
-      <div id="workspace-resizer" class="pane-resizer" title="Arraste para redimensionar painéis (Duplo clique para 50/50)">
-        <div class="resizer-handle"></div>
-      </div>
-
       <!-- Right Panel: Tools & Output Tabbed Workspace -->
-      <section class="pane pane-tools" id="pane-tools">
+      <section class="pane pane-tools">
         <div class="pane-header">
           <nav class="tab-nav" role="tablist">
             <button class="tab-btn active" data-tab="console">
               <i class="bi bi-terminal"></i> Console
-            </button>
-            <button class="tab-btn" data-tab="data">
-              <i class="bi bi-table"></i> Dados <span id="data-tab-badge" class="badge-count" style="display:none;">0</span>
             </button>
             <button class="tab-btn" data-tab="plots">
               <i class="bi bi-image"></i> Gráficos
@@ -201,143 +164,29 @@
           </div>
         </div>
 
-        <!-- Tab: Data Grid Viewer Pro -->
-        <div id="tab-data" class="tab-content">
-          <div class="data-viewer-wrapper">
-            <div class="data-viewer-toolbar">
-              <div class="data-source-group">
-                <label for="data-select-dataset"><i class="bi bi-database-fill"></i> Dataset:</label>
-                <select id="data-select-dataset" class="data-select-input">
-                  <option value="">Selecione um DataFrame...</option>
-                  <option value="iris">iris (150 obs)</option>
-                  <option value="mtcars">mtcars (32 obs)</option>
-                  <option value="airquality">airquality (153 obs)</option>
-                </select>
-                <button id="btn-refresh-datasets" class="btn btn-secondary btn-sm" title="Recarregar lista de DataFrames">
-                  <i class="bi bi-arrow-clockwise"></i>
-                </button>
-              </div>
-
-              <div class="data-search-box">
-                <i class="bi bi-search"></i>
-                <input type="text" id="data-search-input" placeholder="Buscar em todas as colunas..." autocomplete="off" />
-                <button id="btn-clear-data-search" class="btn-clear-search" style="display:none;" title="Limpar busca">&times;</button>
-              </div>
-
-              <div class="data-actions-group">
-                <button id="btn-apply-grid-r" class="btn btn-primary btn-sm" title="Gravar edições do grid no objeto R">
-                  <i class="bi bi-box-arrow-in-down"></i> <span>Aplicar ao R</span>
-                </button>
-                <button id="btn-convert-col-type" class="btn btn-secondary btn-sm" title="Converter tipo da coluna no R">
-                  <i class="bi bi-arrow-left-right"></i> <span>Tipo</span>
-                </button>
-                <button id="btn-toggle-skim" class="btn btn-secondary btn-sm" title="Diagnóstico do data.frame (skim)">
-                  <i class="bi bi-clipboard-data"></i> <span>Skim</span>
-                </button>
-                <button id="btn-export-csv" class="btn btn-secondary btn-sm" title="Exportar tabela atual filtrada para CSV">
-                  <i class="bi bi-filetype-csv"></i> <span>CSV</span>
-                </button>
-                <button id="btn-export-xlsx" class="btn btn-secondary btn-sm" title="Exportar tabela filtrada para Excel (.xlsx)">
-                  <i class="bi bi-file-earmark-spreadsheet"></i> <span>XLSX</span>
-                </button>
-              </div>
-            </div>
-
-            <div id="data-skim-panel" class="data-skim-panel">
-              <div class="data-skim-header">
-                <strong><i class="bi bi-clipboard-data"></i> Diagnóstico</strong>
-                <span id="data-skim-summary" class="data-skim-summary">Selecione um DataFrame</span>
-              </div>
-              <div id="data-skim-table" class="data-skim-table"></div>
-            </div>
-
-            <!-- Data Meta & Stats Bar -->
-            <div id="data-meta-bar" class="data-meta-bar">
-              <div class="data-meta-badges">
-                <span id="data-meta-name" class="data-tag"><i class="bi bi-file-earmark-spreadsheet"></i> <em>Nenhum</em></span>
-                <span id="data-meta-dim" class="data-tag">0 linhas × 0 colunas</span>
-              </div>
-              <span id="data-meta-filtered" style="color: var(--text-muted);">Total: 0</span>
-            </div>
-
-            <!-- Interactive Data Grid Container -->
-            <div class="data-grid-container" id="data-grid-container">
-              <div class="data-empty-state">
-                <i class="bi bi-table"></i>
-                <p><strong>Nenhum DataFrame carregado na visualização</strong><br>Selecione um dataset acima ou clique em <em>Ver</em> no painel <strong>Ambiente</strong>.</p>
-              </div>
-            </div>
-
-            <!-- Pagination Bar -->
-            <div id="data-pagination" class="data-pagination-bar" style="display: none;">
-              <div class="data-page-size">
-                <span>Exibir:</span>
-                <select id="data-page-size-select">
-                  <option value="10">10 linhas</option>
-                  <option value="25" selected>25 linhas</option>
-                  <option value="50">50 linhas</option>
-                  <option value="100">100 linhas</option>
-                  <option value="500">500 linhas</option>
-                </select>
-              </div>
-              <div class="data-page-nav">
-                <button id="btn-data-first-page" class="btn btn-icon btn-sm" title="Primeira página"><i class="bi bi-chevron-double-left"></i></button>
-                <button id="btn-data-prev-page" class="btn btn-icon btn-sm" title="Página anterior"><i class="bi bi-chevron-left"></i></button>
-                <span id="data-page-indicator" class="data-page-text">Pág 1 de 1</span>
-                <button id="btn-data-next-page" class="btn btn-icon btn-sm" title="Próxima página"><i class="bi bi-chevron-right"></i></button>
-                <button id="btn-data-last-page" class="btn btn-icon btn-sm" title="Última página"><i class="bi bi-chevron-double-right"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab 2: Plots Pro -->
+        <!-- Tab 2: Plots -->
         <div id="tab-plots" class="tab-content">
-          <div class="plot-pro-wrapper">
-            <div class="plot-actions" style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="display: flex; align-items: center; gap: 4px;">
-                <button id="btn-prev-plot" class="btn btn-secondary btn-sm" title="Gráfico anterior">
-                  <i class="bi bi-chevron-left"></i>
-                </button>
-                <span id="plot-nav-indicator" style="font-size: 0.75rem; font-family: var(--font-mono); padding: 0 4px; display: flex; align-items: center; color: var(--text-secondary);">1 / 1</span>
-                <button id="btn-next-plot" class="btn btn-secondary btn-sm" title="Próximo gráfico">
-                  <i class="bi bi-chevron-right"></i>
-                </button>
-              </div>
-              
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <button id="btn-toggle-filmstrip" class="btn btn-secondary btn-sm" title="Mostrar/ocultar galeria de miniaturas">
-                  <i class="bi bi-grid-3x3-gap"></i> <span>Galeria</span>
-                </button>
-                <button id="btn-export-plot-modal" class="btn btn-primary btn-sm" title="Exportar figura com alta resolução (DPI/SVG/PNG)">
-                  <i class="bi bi-download"></i> <span>Exportar Pro</span>
-                </button>
-                <button id="btn-download-plot-quick" class="btn btn-secondary btn-sm" title="Baixar PNG rápido (72 DPI)">
-                  <i class="bi bi-filetype-png"></i> PNG
-                </button>
-                <button id="btn-clear-plot" class="btn btn-secondary btn-sm" title="Limpar histórico de gráficos">
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </div>
+          <div class="plot-wrapper">
+            <div class="plot-actions">
+              <button id="btn-prev-plot" class="btn btn-secondary btn-sm" title="Gráfico anterior">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <span id="plot-nav-indicator" style="font-size: 0.75rem; font-family: var(--font-mono); padding: 0 4px; display: flex; align-items: center; color: var(--text-secondary);">1 / 1</span>
+              <button id="btn-next-plot" class="btn btn-secondary btn-sm" title="Próximo gráfico">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+              <button id="btn-download-plot" class="btn btn-secondary btn-sm" title="Baixar imagem como PNG">
+                <i class="bi bi-download"></i> PNG
+              </button>
+              <button id="btn-clear-plot" class="btn btn-secondary btn-sm" title="Limpar histórico de gráficos">
+                <i class="bi bi-trash3"></i>
+              </button>
             </div>
-
-            <div class="plot-pro-body">
-              <div class="plot-stage-col">
-                <div id="plot-container" class="plot-canvas-stage">
-                  <div class="plot-placeholder">
-                    <i class="bi bi-graph-up"></i>
-                    <p>Nenhum gráfico gerado ainda.<br>Rode um comando como <code>plot(iris$Sepal.Length, iris$Petal.Length)</code></p>
-                  </div>
-                </div>
-                <div id="plot-filmstrip" class="plot-filmstrip"></div>
+            <div id="plot-container" class="plot-canvas-container">
+              <div class="plot-placeholder">
+                <i class="bi bi-graph-up"></i>
+                <p>Nenhum gráfico gerado ainda.<br>Rode um comando como <code>plot(iris$Sepal.Length, iris$Sepal.Width)</code></p>
               </div>
-              <aside id="plot-style-panel" class="plot-style-panel" aria-label="Editor de estilo do gráfico">
-                <div class="plot-style-header">
-                  <h3><i class="bi bi-palette-fill"></i> Estilo</h3>
-                </div>
-                <p id="plot-style-hint" class="plot-style-hint">Rode um <code>ggplot()</code> ou <code>plot()</code> para editar cores, símbolos, legenda e fonte. As mudanças são escritas no script.</p>
-                <div id="plot-style-form" class="plot-style-form" hidden></div>
-              </aside>
             </div>
           </div>
         </div>
@@ -345,34 +194,6 @@
         <!-- Tab 3: Files & Uploads -->
         <div id="tab-files" class="tab-content">
           <div class="files-wrapper">
-            <div class="url-import-box">
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-cloud-download"></i> Importar dados via URL</h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">CSV público, GitHub raw ou Google Sheets (export CSV).</p>
-              <div class="url-import-row">
-                <input type="url" id="url-import-input" class="form-control" placeholder="https://raw.githubusercontent.com/.../dados.csv" spellcheck="false" />
-                <button id="btn-url-import" type="button" class="btn btn-primary btn-sm">Importar</button>
-              </div>
-              <p id="url-import-status" class="url-import-status"></p>
-            </div>
-
-            <div class="csv-wizard-box">
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-filetype-csv"></i> Assistente de importação CSV</h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Detecta separador, decimal brasileiro e encoding antes de carregar no R.</p>
-              <label class="btn btn-primary btn-sm" style="cursor:pointer;">
-                <i class="bi bi-upload"></i> Escolher CSV / TXT
-                <input type="file" id="csv-wizard-picker" accept=".csv,.txt,.tsv" style="display:none;" />
-              </label>
-            </div>
-
-            <div class="excel-import-box">
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-file-earmark-spreadsheet"></i> Importar Excel (.xlsx)</h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Selecione aba e preview antes de carregar no R.</p>
-              <label class="btn btn-secondary btn-sm" style="cursor:pointer;">
-                <i class="bi bi-upload"></i> Escolher .xlsx
-                <input type="file" id="excel-file-picker" accept=".xlsx,.xls" style="display:none;" />
-              </label>
-            </div>
-
             <div>
               <h3 style="font-size: 0.9rem; margin-bottom: 8px;">Upload de Arquivos para o R</h3>
               <div id="file-dropzone" class="dropzone-box">
@@ -503,10 +324,10 @@
     <!-- Bottom App Footer -->
     <footer class="app-footer">
       <div>
-        <span>webR Station · Projeto idealizado por <strong>Lucas Batista Vargas</strong> e desenvolvido com <strong>Cursor</strong> e <strong>Antigravity</strong></span>
+        <span>webR Station · Projeto idealizado por <strong>Lucas Batista Vargas</strong> e compilado em <strong>Antigravity</strong></span>
       </div>
       <div>
-        <span>Com tecnologia <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg &amp; Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</span>
+        <span>Powered by <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg &amp; Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</span>
       </div>
     </footer>
   </div>
@@ -516,31 +337,10 @@
 
   <!-- Monaco Loader -->
   <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/loader.js"></script>
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="./config/webr-productivity.js"></script>
-  <script src="./config/webr-session.js"></script>
-  <script src="./config/webr-header.js"></script>
-  <script src="./config/webr-analysis.js"></script>
 
   <!-- Main Application Script (ES Module) -->
   <script type="module">
     import { WebR } from 'https://webr.r-wasm.org/v0.5.7/webr.mjs';
-    import { unpackWebRJs, rScalar } from './config/webr-unpack.js';
-
-    import {
-      INSPECT_GGPLOT_R,
-      LEGEND_POSITIONS_BASE,
-      LEGEND_POSITIONS_GGPLOT,
-      PCH_CHOICES,
-      LTY_CHOICES,
-      applyPlotStyle,
-      detectPlotKind,
-      inspectBaseFromSource,
-      normalizeGgplotInspect,
-      toPickerHex
-    } from './config/webr-plot-style.js';
 
     // --- State Variables ---
     let webR;
@@ -549,18 +349,6 @@
     let uploadedFiles = [];
     const commandHistory = [];
     let historyIdx = -1;
-
-    // --- HTML Escaping ---
-    function esc(s) {
-      if (s === null || s === undefined) return '';
-      return String(s)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-    window.esc = esc;
 
     // --- Toast Notifications ---
     function showToast(message, type = 'info') {
@@ -770,10 +558,6 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         // Keybindings
         editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => executeSelectionOrLine());
         editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => executeAllCode());
-
-        if (window.webrSession) {
-          window.webrSession.initMultiTabs(editor, monaco);
-        }
       });
     }
 
@@ -801,29 +585,9 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       }
     }
 
-    function registerUpload(f) {
-      uploadedFiles.push(f);
-      renderFileList();
-    }
-
-    function getPlotSnapshots() {
-      return plotHistory.map(function (img, i) {
-        var c = document.createElement("canvas");
-        c.width = img.width;
-        c.height = img.height;
-        c.getContext("2d").drawImage(img, 0, 0);
-        return { index: i + 1, dataUrl: c.toDataURL("image/png"), width: img.width, height: img.height };
-      });
-    }
-
     // --- Plot Gallery State ---
     let plotHistory = [];
     let currentPlotIndex = 0;
-    let lastPlotSource = '';
-    let lastCaptureCount = 0;
-    let currentPlotStyle = { kind: 'none' };
-    let styleReplayTimer = null;
-    let fillingStylePanel = false;
 
     // --- Smart R Statement Parser ---
     function getSmartExecutableCode(editor) {
@@ -918,22 +682,12 @@ plot(iris$Sepal.Length, iris$Petal.Length,
     }
 
     // --- Execute Code Logic ---
-    async function runRCode(code, opts = {}) {
-      if (typeof opts === 'string') opts = {};
-      const isStyleReplay = !!opts.isStyleReplay;
+    async function runRCode(code, label = 'R') {
       if (!webR) {
         showToast('Aguarde o webR inicializar...', 'error');
         return;
       }
       if (isRunning) return;
-
-      const viewMatch = code.trim().match(/^\s*View\s*\(\s*([A-Za-z0-9._]+)\s*\)\s*$/);
-      if (viewMatch) {
-        appendConsoleLine(`> ${code.trim()}`, 'input');
-        await loadDataFrameToGrid(viewMatch[1]);
-        appendConsoleLine(`✓ Abrindo DataFrame '${viewMatch[1]}' no visualizador.`, 'system');
-        return;
-      }
 
       isRunning = true;
       const btnRun = document.getElementById('btn-run-code');
@@ -957,33 +711,20 @@ plot(iris$Sepal.Length, iris$Petal.Length,
             }
           });
 
-          if (!isStyleReplay && res.output && res.output.length) {
+          // Print outputs
+          if (res.output && res.output.length) {
             for (const evt of res.output) {
               if (evt.type === 'stdout') {
                 appendConsoleLine(evt.data, 'stdout');
               } else if (evt.type === 'stderr') {
                 appendConsoleLine(evt.data, 'stderr');
-                if (window.webrProductivity) window.webrProductivity.notifyStderr(evt.data, code);
-              }
-            }
-          } else if (isStyleReplay && res.output && res.output.length) {
-            for (const evt of res.output) {
-              if (evt.type === 'stderr') {
-                appendConsoleLine(evt.data, 'stderr');
               }
             }
           }
 
+          // Render plots if graphics were captured
           if (res.images && res.images.length > 0) {
-            if (isStyleReplay && lastCaptureCount > 0) {
-              plotHistory.splice(Math.max(0, plotHistory.length - lastCaptureCount), lastCaptureCount);
-            }
-            lastPlotSource = code;
-            lastCaptureCount = res.images.length;
-            renderPlotImages(res.images, { skipToast: isStyleReplay, skipTab: isStyleReplay });
-            if (!isStyleReplay) {
-              inspectPlotStyle(code);
-            }
+            renderPlotImages(res.images);
           }
         } finally {
           await shelter.purge();
@@ -992,9 +733,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         // Update environment inspector
         updateEnvironment();
       } catch (err) {
-        var errMsg = String(err && err.message ? err.message : err);
-        appendConsoleLine(errMsg, 'stderr');
-        if (window.webrProductivity) window.webrProductivity.notifyExecError(errMsg, code);
+        appendConsoleLine(String(err && err.message ? err.message : err), 'stderr');
       } finally {
         isRunning = false;
         btnRun.disabled = false;
@@ -1024,830 +763,17 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       }
     }
 
-    // --- Splitter Resizer Logic ---
-    function initSplitResizer() {
-      const resizer = document.getElementById('workspace-resizer');
-      const paneEditor = document.getElementById('pane-editor');
-      const paneTools = document.getElementById('pane-tools');
-      const container = document.getElementById('workspace-container');
-      if (!resizer || !paneEditor || !paneTools || !container) return;
-
-      const MOBILE_MQ = window.matchMedia('(max-width: 768px)');
-
-      function isMobile() {
-        return MOBILE_MQ.matches;
-      }
-
-      function updateLayoutMode() {
-        const mobile = isMobile();
-        container.classList.toggle('webr-stacked', mobile);
-        resizer.setAttribute('aria-orientation', mobile ? 'horizontal' : 'vertical');
-        resizer.title = mobile
-          ? 'Arraste para redimensionar painéis (vertical)'
-          : 'Arraste para redimensionar painéis (Duplo clique para 50/50)';
-      }
-
-      function applySplit(pct) {
-        pct = Math.max(20, Math.min(80, pct));
-        if (isMobile()) {
-          paneEditor.style.flex = `0 0 ${pct}%`;
-          paneTools.style.flex = `1 1 ${100 - pct}%`;
-        } else {
-          paneEditor.style.flex = `0 0 ${pct}%`;
-          paneTools.style.flex = `1 1 ${100 - pct}%`;
-        }
-        localStorage.setItem('webr-split-pct', pct.toFixed(1));
-        if (editor) editor.layout();
-      }
-
-      const savedSplit = localStorage.getItem('webr-split-pct');
-      if (savedSplit) {
-        const pct = parseFloat(savedSplit);
-        if (pct >= 20 && pct <= 80) applySplit(pct);
-      }
-
-      let isDragging = false;
-
-      function pointerRatio(clientX, clientY) {
-        const rect = container.getBoundingClientRect();
-        if (isMobile()) {
-          return ((clientY - rect.top) / rect.height) * 100;
-        }
-        return ((clientX - rect.left) / rect.width) * 100;
-      }
-
-      function onMouseDown(e) {
-        isDragging = true;
-        document.body.classList.add('resizing');
-        document.body.classList.toggle('resizing-vertical', isMobile());
-        resizer.classList.add('active');
-        e.preventDefault();
-      }
-
-      function onMouseMove(e) {
-        if (!isDragging) return;
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        applySplit(pointerRatio(clientX, clientY));
-      }
-
-      function onMouseUp() {
-        if (!isDragging) return;
-        isDragging = false;
-        document.body.classList.remove('resizing', 'resizing-vertical');
-        resizer.classList.remove('active');
-        if (editor) editor.layout();
-      }
-
-      resizer.addEventListener('mousedown', onMouseDown);
-      resizer.addEventListener('touchstart', onMouseDown, { passive: false });
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('touchmove', onMouseMove, { passive: false });
-      window.addEventListener('mouseup', onMouseUp);
-      window.addEventListener('touchend', onMouseUp);
-
-      resizer.addEventListener('dblclick', () => {
-        applySplit(50);
-        showToast('Painéis restaurados para 50% / 50%');
-      });
-
-      MOBILE_MQ.addEventListener('change', () => {
-        updateLayoutMode();
-        const pct = parseFloat(localStorage.getItem('webr-split-pct')) || 50;
-        applySplit(pct);
-      });
-
-      updateLayoutMode();
-    }
-
-    // --- Data Grid Viewer Pro State & Functions ---
-    let currentDataGrid = {
-      name: '',
-      rawData: [],
-      columns: [],
-      filteredData: [],
-      sortCol: null,
-      sortDir: 'asc',
-      colFilters: {},
-      colNumFilters: {},
-      searchQuery: '',
-      page: 1,
-      pageSize: 25,
-      totalRows: 0
-    };
-
-    async function loadDataFrameToGrid(dfName) {
-      if (!webR) {
-        showToast('Aguarde o webR inicializar...', 'error');
-        return;
-      }
-      if (!dfName || !dfName.trim()) return;
-      dfName = dfName.trim();
-
-      const gridContainer = document.getElementById('data-grid-container');
-      gridContainer.innerHTML = `
-        <div class="data-empty-state">
-          <i class="bi bi-arrow-repeat spin" style="font-size: 2.5rem; color: var(--accent-blue-hover);"></i>
-          <p>Carregando DataFrame <strong>${esc(dfName)}</strong>...</p>
-        </div>
-      `;
-      switchTab('data');
-
-      try {
-        const res = await webR.evalR(`
-          tryCatch({
-            target_name <- "${dfName}"
-            if (!exists(target_name, envir = .GlobalEnv) && !exists(target_name)) {
-              stop(paste("DataFrame '", target_name, "' não encontrado."))
-            }
-            raw_obj <- get(target_name)
-            df <- as.data.frame(raw_obj)
-            nr <- nrow(df)
-            nc <- ncol(df)
-            cnames <- colnames(df)
-            ctypes <- sapply(df, function(x) class(x)[1])
-            cnas <- sapply(df, function(x) sum(is.na(x)))
-
-            max_rows <- min(nr, 5000)
-            sub_df <- head(df, max_rows)
-            
-            cols_data <- lapply(1:nc, function(j) {
-              col_v <- sub_df[[j]]
-              if (is.factor(col_v)) col_v <- as.character(col_v)
-              col_v
-            })
-            names(cols_data) <- cnames
-
-            list(
-              ok = TRUE,
-              name = target_name,
-              nrow = nr,
-              ncol = nc,
-              loaded_rows = max_rows,
-              columns = lapply(1:nc, function(j) {
-                list(name = cnames[j], type = ctypes[j], nas = as.integer(cnas[j]))
-              }),
-              cols_data = cols_data
-            )
-          }, error = function(e) list(ok = FALSE, message = e$message))
-        `);
-
-        const rawJs = await res.toJs();
-        const v = unpackWebRJs(rawJs);
-
-        if (!v || !rScalar(v.ok)) {
-          const msg = rScalar(v && v.message) || 'Falha ao ler dados';
-          gridContainer.innerHTML = `
-            <div class="data-empty-state">
-              <i class="bi bi-exclamation-triangle" style="color: var(--accent-red);"></i>
-              <p><strong>Erro ao inspecionar DataFrame:</strong><br>${esc(msg)}</p>
-            </div>
-          `;
-          return;
-        }
-
-        const numRows = Number(rScalar(v.loaded_rows)) || 0;
-        const colList = (Array.isArray(v.columns) ? v.columns : []).map(c => ({
-          name: String(rScalar(c.name) || ''),
-          type: String(rScalar(c.type) || ''),
-          nas: Number(rScalar(c.nas)) || 0,
-          unique: 0
-        }));
-
-        const rows = [];
-        for (let i = 0; i < numRows; i++) {
-          const rowObj = {};
-          for (const col of colList) {
-            const colData = v.cols_data ? v.cols_data[col.name] : null;
-            const colArr = Array.isArray(colData) ? colData : (colData == null ? [] : [colData]);
-            rowObj[col.name] = i < colArr.length ? colArr[i] : null;
-          }
-          rows.push(rowObj);
-        }
-
-        colList.forEach(col => {
-          const seen = new Set();
-          rows.forEach(r => {
-            const val = r[col.name];
-            if (val !== null && val !== undefined) seen.add(String(val));
-          });
-          col.unique = seen.size;
-        });
-
-        const nrow = Number(rScalar(v.nrow)) || numRows;
-        currentDataGrid = {
-          name: rScalar(v.name) || dfName,
-          rawData: rows,
-          columns: colList,
-          filteredData: [...rows],
-          sortCol: null,
-          sortDir: 'asc',
-          colFilters: {},
-          colNumFilters: {},
-          searchQuery: '',
-          page: 1,
-          pageSize: parseInt(document.getElementById('data-page-size-select').value) || 25,
-          totalRows: nrow
-        };
-
-        // Update selector
-        const select = document.getElementById('data-select-dataset');
-        if (!Array.from(select.options).some(o => o.value === dfName)) {
-          const opt = document.createElement('option');
-          opt.value = dfName;
-          opt.textContent = `${dfName} (${nrow} obs)`;
-          select.appendChild(opt);
-        }
-        select.value = dfName;
-
-        // Update tab badge
-        const badge = document.getElementById('data-tab-badge');
-        badge.style.display = 'inline-block';
-        badge.textContent = `${nrow}`;
-
-        // Reset search bar
-        document.getElementById('data-search-input').value = '';
-        document.getElementById('btn-clear-data-search').style.display = 'none';
-
-        applyDataGridFilters();
-        showToast(`DataFrame '${dfName}' carregado no visualizador!`);
-        if (window.webrAnalysis && window.webrAnalysis.onGridLoaded) {
-          window.webrAnalysis.onGridLoaded();
-        }
-      } catch (err) {
-        console.error('Data grid error:', err);
-        gridContainer.innerHTML = `
-          <div class="data-empty-state">
-            <i class="bi bi-exclamation-triangle" style="color: var(--accent-red);"></i>
-            <p><strong>Erro ao processar dados:</strong><br>${esc(err.message)}</p>
-          </div>
-        `;
-      }
-    }
-
-    window.openDataFrameInGrid = loadDataFrameToGrid;
-    window.getCurrentDataGrid = () => currentDataGrid;
-
-    function applyDataGridFilters() {
-      if (!currentDataGrid.rawData.length) {
-        renderEmptyDataGrid();
-        return;
-      }
-
-      let filtered = currentDataGrid.rawData.filter(row => {
-        if (currentDataGrid.searchQuery) {
-          const q = currentDataGrid.searchQuery.toLowerCase();
-          const matchGlobal = currentDataGrid.columns.some(col => {
-            const val = row[col.name];
-            return val !== null && val !== undefined && String(val).toLowerCase().includes(q);
-          });
-          if (!matchGlobal) return false;
-        }
-
-        for (const colName in currentDataGrid.colFilters) {
-          const fVal = currentDataGrid.colFilters[colName];
-          if (fVal) {
-            const val = row[colName];
-            if (val === null || val === undefined) return false;
-            if (!String(val).toLowerCase().includes(fVal.toLowerCase())) return false;
-          }
-        }
-
-        for (const colName in currentDataGrid.colNumFilters) {
-          const nf = currentDataGrid.colNumFilters[colName];
-          if (!nf) continue;
-          const val = row[colName];
-          if (val === null || val === undefined) return false;
-          const num = Number(val);
-          if (isNaN(num)) return false;
-          if (nf.min !== '' && nf.min !== undefined && num < Number(nf.min)) return false;
-          if (nf.max !== '' && nf.max !== undefined && num > Number(nf.max)) return false;
-        }
-
-        return true;
-      });
-
-      if (currentDataGrid.sortCol) {
-        const col = currentDataGrid.sortCol;
-        const dir = currentDataGrid.sortDir === 'asc' ? 1 : -1;
-        const colMeta = currentDataGrid.columns.find(c => c.name === col);
-        const isNum = colMeta && (colMeta.type === 'numeric' || colMeta.type === 'integer' || colMeta.type === 'double');
-
-        filtered.sort((a, b) => {
-          const valA = a[col];
-          const valB = b[col];
-          if (valA === null || valA === undefined) return 1;
-          if (valB === null || valB === undefined) return -1;
-          if (isNum) {
-            return (Number(valA) - Number(valB)) * dir;
-          }
-          return String(valA).localeCompare(String(valB)) * dir;
-        });
-      }
-
-      currentDataGrid.filteredData = filtered;
-      currentDataGrid.page = 1;
-      renderDataGridTable();
-    }
-
-    function renderDataGridTable() {
-      const container = document.getElementById('data-grid-container');
-      const { filteredData, columns, page, pageSize, totalRows, name, sortCol, sortDir } = currentDataGrid;
-
-      if (!filteredData || !columns.length) {
-        renderEmptyDataGrid();
-        return;
-      }
-
-      document.getElementById('data-meta-name').innerHTML = `<i class="bi bi-file-earmark-spreadsheet"></i> <strong>${esc(name)}</strong>`;
-      document.getElementById('data-meta-dim').textContent = `${totalRows} linhas × ${columns.length} colunas`;
-      document.getElementById('data-meta-filtered').textContent = filteredData.length !== totalRows 
-        ? `Filtrados: ${filteredData.length} de ${totalRows}`
-        : `Total: ${totalRows} linhas`;
-
-      const totalPages = Math.max(1, Math.ceil(filteredData.length / pageSize));
-      const curPage = Math.min(page, totalPages);
-      currentDataGrid.page = curPage;
-
-      const startIdx = (curPage - 1) * pageSize;
-      const endIdx = Math.min(startIdx + pageSize, filteredData.length);
-      const pageRows = filteredData.slice(startIdx, endIdx);
-
-      let tableHtml = `<table class="data-table"><thead><tr>`;
-      tableHtml += `<th class="col-row-num">#</th>`;
-
-      columns.forEach(col => {
-        let typeClass = 'chr';
-        if (col.type === 'numeric' || col.type === 'integer' || col.type === 'double') typeClass = 'num';
-        else if (col.type === 'factor') typeClass = 'fct';
-        else if (col.type === 'logical') typeClass = 'logi';
-
-        const isSorted = sortCol === col.name;
-        const sortIcon = isSorted ? (sortDir === 'asc' ? '▲' : '▼') : '↕';
-        const sortClass = isSorted ? 'th-sort-icon sorted' : 'th-sort-icon';
-        const curFilterVal = currentDataGrid.colFilters[col.name] || '';
-        const numF = currentDataGrid.colNumFilters[col.name] || { min: '', max: '' };
-        const isNumCol = col.type === 'numeric' || col.type === 'integer' || col.type === 'double';
-
-        tableHtml += `
-          <th>
-            <div class="th-meta-row">
-              <span class="col-type-tag ${typeClass}">${esc(col.type)}</span>
-              <span style="font-size: 0.65rem; color: var(--text-muted);">${col.nas > 0 ? col.nas + ' NA' : '0 NA'} · ${col.unique ?? '?'} únicos</span>
-            </div>
-            <div class="th-header-content" onclick="toggleSortColumn('${esc(col.name)}')">
-              <span class="th-col-name" title="${esc(col.name)}">${esc(col.name)}</span>
-              <span class="${sortClass}">${sortIcon}</span>
-            </div>
-            <input type="text" class="col-filter-input" placeholder="Filtrar..." value="${esc(curFilterVal)}" 
-                   oninput="onColumnFilterChange('${esc(col.name)}', this.value)" />
-            ${isNumCol ? `
-            <div class="col-num-filter-row">
-              <input type="number" class="col-num-filter" placeholder="Min" value="${esc(numF.min)}"
-                     oninput="onNumericFilterChange('${esc(col.name)}', 'min', this.value)" />
-              <input type="number" class="col-num-filter" placeholder="Max" value="${esc(numF.max)}"
-                     oninput="onNumericFilterChange('${esc(col.name)}', 'max', this.value)" />
-            </div>` : ''}
-          </th>
-        `;
-      });
-
-      tableHtml += `</tr></thead><tbody>`;
-
-      pageRows.forEach((row, rIdx) => {
-        const rowNum = startIdx + rIdx + 1;
-        tableHtml += `<tr><td class="col-row-num">${rowNum}</td>`;
-
-        columns.forEach(col => {
-          const val = row[col.name];
-          const isNum = col.type === 'numeric' || col.type === 'integer' || col.type === 'double';
-          const absIdx = currentDataGrid.rawData.indexOf(row);
-          if (val === null || val === undefined) {
-            tableHtml += `<td class="na-val ${isNum ? 'num' : ''} grid-cell-edit" data-row="${absIdx}" data-col="${esc(col.name)}" contenteditable="true">NA</td>`;
-          } else {
-            tableHtml += `<td class="${isNum ? 'num' : ''} grid-cell-edit" data-row="${absIdx}" data-col="${esc(col.name)}" contenteditable="true" title="Duplo clique para editar">${esc(String(val))}</td>`;
-          }
-        });
-
-        tableHtml += `</tr>`;
-      });
-
-      tableHtml += `</tbody></table>`;
-      container.innerHTML = tableHtml;
-
-      const paginationBar = document.getElementById('data-pagination');
-      paginationBar.style.display = 'flex';
-
-      document.getElementById('data-page-indicator').textContent = `Pág ${curPage} de ${totalPages} (${startIdx + 1}-${endIdx} de ${filteredData.length})`;
-      document.getElementById('btn-data-first-page').disabled = curPage <= 1;
-      document.getElementById('btn-data-prev-page').disabled = curPage <= 1;
-      document.getElementById('btn-data-next-page').disabled = curPage >= totalPages;
-      document.getElementById('btn-data-last-page').disabled = curPage >= totalPages;
-      if (window.webrAnalysis && window.webrAnalysis.onGridRendered) {
-        window.webrAnalysis.onGridRendered();
-      }
-    }
-
-    function renderEmptyDataGrid() {
-      const container = document.getElementById('data-grid-container');
-      container.innerHTML = `
-        <div class="data-empty-state">
-          <i class="bi bi-table"></i>
-          <p><strong>Nenhum registro encontrado</strong><br>Tente ajustar os filtros de busca ou selecione outro DataFrame.</p>
-        </div>
-      `;
-      document.getElementById('data-pagination').style.display = 'none';
-    }
-
-    window.toggleSortColumn = function(colName) {
-      if (currentDataGrid.sortCol === colName) {
-        if (currentDataGrid.sortDir === 'asc') currentDataGrid.sortDir = 'desc';
-        else {
-          currentDataGrid.sortCol = null;
-          currentDataGrid.sortDir = 'asc';
-        }
-      } else {
-        currentDataGrid.sortCol = colName;
-        currentDataGrid.sortDir = 'asc';
-      }
-      applyDataGridFilters();
-    };
-
-    window.onColumnFilterChange = function(colName, value) {
-      if (value && value.trim()) {
-        currentDataGrid.colFilters[colName] = value.trim();
-      } else {
-        delete currentDataGrid.colFilters[colName];
-      }
-      applyDataGridFilters();
-    };
-
-    window.onNumericFilterChange = function(colName, bound, value) {
-      if (!currentDataGrid.colNumFilters[colName]) {
-        currentDataGrid.colNumFilters[colName] = { min: '', max: '' };
-      }
-      currentDataGrid.colNumFilters[colName][bound] = value;
-      if (!currentDataGrid.colNumFilters[colName].min && !currentDataGrid.colNumFilters[colName].max) {
-        delete currentDataGrid.colNumFilters[colName];
-      }
-      applyDataGridFilters();
-    };
-
-    function exportGridToCsv() {
-      if (!currentDataGrid.filteredData.length || !currentDataGrid.columns.length) {
-        showToast('Nenhum dado para exportar.', 'error');
-        return;
-      }
-
-      const cols = currentDataGrid.columns.map(c => c.name);
-      let csvContent = cols.map(c => `"${c.replace(/"/g, '""')}"`).join(',') + '\n';
-
-      currentDataGrid.filteredData.forEach(row => {
-        const line = cols.map(col => {
-          const val = row[col];
-          if (val === null || val === undefined) return '';
-          return `"${String(val).replace(/"/g, '""')}"`;
-        }).join(',');
-        csvContent += line + '\n';
-      });
-
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${currentDataGrid.name || 'dados'}_export.csv`;
-      link.click();
-      showToast(`Dados exportados como ${link.download}!`);
-    }
-
-    function exportGridToXlsx() {
-      if (!currentDataGrid.filteredData.length || !currentDataGrid.columns.length) {
-        showToast('Nenhum dado para exportar.', 'error');
-        return;
-      }
-      if (typeof XLSX === 'undefined') {
-        showToast('Biblioteca XLSX não carregada.', 'error');
-        return;
-      }
-      const cols = currentDataGrid.columns.map(c => c.name);
-      const sheetData = currentDataGrid.filteredData.map(row => {
-        const o = {};
-        cols.forEach(c => { o[c] = row[c] ?? ''; });
-        return o;
-      });
-      const ws = XLSX.utils.json_to_sheet(sheetData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, currentDataGrid.name || 'dados');
-      XLSX.writeFile(wb, `${currentDataGrid.name || 'dados'}_export.xlsx`);
-      showToast('Planilha XLSX exportada!');
-    }
-
-    function downloadPlotQuick() {
-      if (!plotHistory.length || currentPlotIndex < 0) {
-        showToast('Nenhum gráfico para exportar.', 'error');
-        return;
-      }
-      const img = plotHistory[currentPlotIndex];
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-      const link = document.createElement('a');
-      link.download = 'webr_grafico_72dpi.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      showToast('PNG 72 DPI baixado!');
-    }
-
-    function scaleAesLabel(aes) {
-      if (aes === 'colour' || aes === 'color') return 'Cores';
-      if (aes === 'fill') return 'Preenchimento';
-      if (aes === 'shape') return 'Símbolos';
-      if (aes === 'linetype') return 'Linhas';
-      return aes;
-    }
-
-    function pchOptionsHtml(selected) {
-      const sel = Number(selected);
-      return PCH_CHOICES.map((n) => {
-        const isSel = n === sel ? ' selected' : '';
-        return `<option value="${n}"${isSel}>${n}</option>`;
-      }).join('');
-    }
-
-    function ltyOptionsHtml(kind, selected) {
-      const cur = String(selected == null ? '' : selected);
-      if (kind === 'ggplot') {
-        const aliases = { 1: 'solid', 2: 'dashed', 3: 'dotted', 4: 'dotdash', 5: 'longdash', 6: 'twodash' };
-        const curName = aliases[cur] || cur || 'solid';
-        return LTY_CHOICES.map((opt) => {
-          const isSel = opt.value === curName ? ' selected' : '';
-          return `<option value="${esc(opt.value)}"${isSel}>${esc(opt.label)}</option>`;
-        }).join('');
-      }
-      const items = [
-        [1, 'sólida'],
-        [2, 'tracejada'],
-        [3, 'pontilhada'],
-        [4, 'traço-ponto'],
-        [5, 'traço longo'],
-        [6, 'dois traços']
-      ];
-      const curNum = cur === '' ? '1' : cur;
-      return items.map(([n, label]) => {
-        const isSel = String(n) === String(curNum) ? ' selected' : '';
-        return `<option value="${n}"${isSel}>${n} — ${label}</option>`;
-      }).join('');
-    }
-
-    function field(id, label, value, extra) {
-      return (
-        `<label class="plot-style-field"><span>${label}</span>` +
-        `<input id="${id}" type="text" value="${esc(value == null ? '' : value)}" ${extra || ''}/></label>`
-      );
-    }
-
-    function numField(id, label, value, attrs) {
-      return (
-        `<label class="plot-style-row"><span>${label}</span>` +
-        `<input id="${id}" type="number" value="${esc(value)}" ${attrs || ''}/></label>`
-      );
-    }
-
-    function legendOptionsHtml(kind, selected) {
-      const list = kind === 'ggplot' ? LEGEND_POSITIONS_GGPLOT : LEGEND_POSITIONS_BASE;
-      const cur = String(selected || (kind === 'ggplot' ? 'right' : 'topright'));
-      return list.map((p) => {
-        const isSel = p === cur ? ' selected' : '';
-        const labels = {
-          none: 'nenhuma',
-          top: 'cima',
-          bottom: 'baixo',
-          left: 'esquerda',
-          right: 'direita',
-          center: 'centro',
-          topleft: 'sup. esq.',
-          topright: 'sup. dir.',
-          bottomleft: 'inf. esq.',
-          bottomright: 'inf. dir.'
-        };
-        return `<option value="${esc(p)}"${isSel}>${labels[p] || p}</option>`;
-      }).join('');
-    }
-
-    function renderStylePanel(style) {
-      const form = document.getElementById('plot-style-form');
-      const hint = document.getElementById('plot-style-hint');
-      if (!form || !hint) return;
-      currentPlotStyle = style || { kind: 'none' };
-      if (!style || style.kind === 'none') {
-        form.hidden = true;
-        form.innerHTML = '';
-        hint.hidden = false;
-        return;
-      }
-      hint.hidden = true;
-      form.hidden = false;
-      const parts = [];
-      if (style.kind === 'ggplot' && Array.isArray(style.scales)) {
-        style.scales.forEach((sc, si) => {
-          parts.push(`<section class="plot-style-section"><h4>${esc(scaleAesLabel(sc.aes))}</h4>`);
-          (sc.levels || []).forEach((lv, li) => {
-            const val = sc.values[li];
-            if (sc.aes === 'shape') {
-              parts.push(
-                `<label class="plot-style-row"><span>${esc(lv)}</span>` +
-                `<select data-scale="${si}" data-idx="${li}">${pchOptionsHtml(val)}</select></label>`
-              );
-            } else if (sc.aes === 'linetype') {
-              parts.push(
-                `<label class="plot-style-row"><span>${esc(lv)}</span>` +
-                `<input type="text" data-scale="${si}" data-idx="${li}" value="${esc(val)}" /></label>`
-              );
-            } else {
-              parts.push(
-                `<label class="plot-style-row"><span>${esc(lv)}</span>` +
-                `<input type="color" data-scale="${si}" data-idx="${li}" value="${toPickerHex(val)}" /></label>`
-              );
-            }
-          });
-          parts.push('</section>');
-        });
-      }
-      if (style.kind === 'base') {
-        if (style.colors && style.colors.length) {
-          parts.push('<section class="plot-style-section"><h4>Cores</h4>');
-          style.colors.forEach((c, i) => {
-            parts.push(
-              `<label class="plot-style-row"><span>item ${i + 1}</span>` +
-              `<input type="color" data-base-color="${i}" value="${toPickerHex(c)}" /></label>`
-            );
-          });
-          parts.push('</section>');
-        }
-        parts.push(
-          '<section class="plot-style-section"><h4>Símbolo</h4>' +
-          `<label class="plot-style-row"><span>pch</span>` +
-          `<select id="plot-style-pch">${pchOptionsHtml(style.pch == null ? 19 : style.pch)}</select></label>` +
-          '</section>'
-        );
-      }
-      parts.push(
-        '<section class="plot-style-section"><h4>Texto</h4>' +
-        field('plot-style-title', 'Título', style.title) +
-        field('plot-style-xlab', 'Eixo X', style.xlab) +
-        field('plot-style-ylab', 'Eixo Y', style.ylab) +
-        '</section>'
-      );
-      const pointVal = style.pointSize == null || Number.isNaN(Number(style.pointSize))
-        ? (style.kind === 'ggplot' ? 1.5 : 1)
-        : Number(style.pointSize);
-      const alphaVal = style.alpha == null || Number.isNaN(Number(style.alpha)) ? 1 : Number(style.alpha);
-      const lineVal = style.kind === 'ggplot'
-        ? (style.linewidth == null || Number.isNaN(Number(style.linewidth)) ? 0.5 : Number(style.linewidth))
-        : (style.lwd == null || Number.isNaN(Number(style.lwd)) ? 1 : Number(style.lwd));
-      parts.push(
-        '<section class="plot-style-section"><h4>Geoms</h4>' +
-        numField('plot-style-point-size', 'tamanho', pointVal, 'min="0.1" max="12" step="0.1"') +
-        numField(style.kind === 'ggplot' ? 'plot-style-linewidth' : 'plot-style-lwd', 'espessura', lineVal, 'min="0.1" max="8" step="0.1"') +
-        `<label class="plot-style-row"><span>traço</span>` +
-        `<select id="plot-style-lty">${ltyOptionsHtml(style.kind, style.kind === 'ggplot' ? style.linetype : style.lty)}</select></label>` +
-        (style.kind === 'ggplot'
-          ? numField('plot-style-alpha', 'alpha', alphaVal, 'min="0" max="1" step="0.05"')
-          : '') +
-        '</section>'
-      );
-      parts.push(
-        '<section class="plot-style-section"><h4>Legenda</h4>' +
-        `<label class="plot-style-row"><span>posição</span>` +
-        `<select id="plot-style-legend">${legendOptionsHtml(style.kind, style.legendPosition)}</select></label>` +
-        '</section>'
-      );
-      const fontVal = style.textSize == null || Number.isNaN(Number(style.textSize)) ? 12 : Number(style.textSize);
-      parts.push(
-        '<section class="plot-style-section"><h4>Fonte</h4>' +
-        `<label class="plot-style-row"><span>tamanho</span>` +
-        `<input id="plot-style-text-size" type="number" min="8" max="24" step="1" value="${fontVal}" /></label>` +
-        '</section>'
-      );
-      fillingStylePanel = true;
-      form.innerHTML = parts.join('');
-      fillingStylePanel = false;
-    }
-
-    function readStylePanel() {
-      const style = currentPlotStyle && currentPlotStyle.kind ? JSON.parse(JSON.stringify(currentPlotStyle)) : { kind: 'none' };
-      const form = document.getElementById('plot-style-form');
-      if (!form || style.kind === 'none') return style;
-      if (style.kind === 'ggplot' && Array.isArray(style.scales)) {
-        form.querySelectorAll('[data-scale]').forEach((el) => {
-          const si = Number(el.getAttribute('data-scale'));
-          const li = Number(el.getAttribute('data-idx'));
-          if (!style.scales[si]) return;
-          style.scales[si].values[li] = el.value;
-        });
-      }
-      if (style.kind === 'base') {
-        const colors = style.colors ? style.colors.slice() : [];
-        form.querySelectorAll('[data-base-color]').forEach((el) => {
-          const i = Number(el.getAttribute('data-base-color'));
-          colors[i] = el.value;
-        });
-        style.colors = colors;
-        const pchEl = document.getElementById('plot-style-pch');
-        if (pchEl) style.pch = Number(pchEl.value);
-      }
-      const titleEl = document.getElementById('plot-style-title');
-      if (titleEl) style.title = titleEl.value;
-      const xlabEl = document.getElementById('plot-style-xlab');
-      if (xlabEl) style.xlab = xlabEl.value;
-      const ylabEl = document.getElementById('plot-style-ylab');
-      if (ylabEl) style.ylab = ylabEl.value;
-      const pointEl = document.getElementById('plot-style-point-size');
-      if (pointEl) style.pointSize = Number(pointEl.value);
-      const alphaEl = document.getElementById('plot-style-alpha');
-      if (alphaEl) style.alpha = Number(alphaEl.value);
-      const lwEl = document.getElementById('plot-style-linewidth');
-      if (lwEl) style.linewidth = Number(lwEl.value);
-      const lwdEl = document.getElementById('plot-style-lwd');
-      if (lwdEl) style.lwd = Number(lwdEl.value);
-      const ltyEl = document.getElementById('plot-style-lty');
-      if (ltyEl) {
-        if (style.kind === 'ggplot') style.linetype = ltyEl.value;
-        else style.lty = ltyEl.value;
-      }
-      const legendEl = document.getElementById('plot-style-legend');
-      if (legendEl) style.legendPosition = legendEl.value;
-      const sizeEl = document.getElementById('plot-style-text-size');
-      if (sizeEl) style.textSize = Number(sizeEl.value);
-      return style;
-    }
-
-    function writeStyleToEditor(style) {
-      if (!editor || !style || style.kind === 'none') return;
-      const model = editor.getModel();
-      const current = editor.getValue();
-      const next = applyPlotStyle(current, style);
-      if (next !== current && model) {
-        editor.executeEdits('webr-plot-style', [{
-          range: model.getFullModelRange(),
-          text: next
-        }]);
-      }
-      if (lastPlotSource) {
-        lastPlotSource = applyPlotStyle(lastPlotSource, style);
-      }
-    }
-
-    function applyStyleFromPanel() {
-      if (fillingStylePanel) return;
-      const style = readStylePanel();
-      currentPlotStyle = style;
-      writeStyleToEditor(style);
-      clearTimeout(styleReplayTimer);
-      styleReplayTimer = setTimeout(function replay() {
-        if (isRunning) {
-          styleReplayTimer = setTimeout(replay, 200);
-          return;
-        }
-        const code = lastPlotSource || (editor && editor.getValue());
-        if (code && code.trim()) runRCode(code, { isStyleReplay: true });
-      }, 450);
-    }
-
-    async function inspectPlotStyle(code) {
-      const kind = detectPlotKind(code);
-      try {
-        if (kind === 'ggplot') {
-          const res = await webR.evalR(INSPECT_GGPLOT_R);
-          const raw = unpackWebRJs(await res.toJs());
-          const ggplotStyle = normalizeGgplotInspect(raw);
-          currentPlotStyle = ggplotStyle.kind === 'ggplot'
-            ? ggplotStyle
-            : { kind: 'ggplot', scales: [], legendPosition: 'right', textSize: 12 };
-        } else if (kind === 'base') {
-          currentPlotStyle = inspectBaseFromSource(code);
-        } else {
-          currentPlotStyle = { kind: 'none' };
-        }
-      } catch (err) {
-        currentPlotStyle = kind === 'base' ? inspectBaseFromSource(code) : { kind: 'none' };
-      }
-      renderStylePanel(currentPlotStyle);
-    }
-
-    // --- Plots Pro & Thumbnail Gallery ---
-    function renderPlotImages(images, opts = {}) {
+    // --- Plot Handling ---
+    function renderPlotImages(images) {
       images.forEach((img) => {
         plotHistory.push(img);
       });
       currentPlotIndex = plotHistory.length - 1;
       displayCurrentPlot();
-      renderFilmstrip();
-      if (!opts.skipTab) switchTab('plots');
-      if (!opts.skipToast) showToast('Gráfico gerado na aba Gráficos!', 'info');
+
+      // Switch to Plots tab
+      switchTab('plots');
+      showToast('📊 Gráfico gerado na aba Gráficos!', 'info');
     }
 
     function displayCurrentPlot() {
@@ -1870,51 +796,17 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       ctx.drawImage(img, 0, 0, img.width, img.height);
       container.appendChild(canvas);
 
+      // Update plot index indicator if present
       const navIndicator = document.getElementById('plot-nav-indicator');
       if (navIndicator) {
         navIndicator.textContent = `${currentPlotIndex + 1} / ${plotHistory.length}`;
       }
     }
 
-    function renderFilmstrip() {
-      const strip = document.getElementById('plot-filmstrip');
-      if (!strip) return;
-      strip.innerHTML = '';
-      if (!plotHistory.length) return;
-
-      plotHistory.forEach((img, idx) => {
-        const card = document.createElement('div');
-        card.className = `plot-thumb-card ${idx === currentPlotIndex ? 'active' : ''}`;
-        card.title = `Gráfico #${idx + 1}`;
-
-        const thumbCanvas = document.createElement('canvas');
-        thumbCanvas.width = 86;
-        thumbCanvas.height = 64;
-        const tctx = thumbCanvas.getContext('2d');
-        tctx.drawImage(img, 0, 0, thumbCanvas.width, thumbCanvas.height);
-
-        const badge = document.createElement('span');
-        badge.className = 'plot-thumb-badge';
-        badge.textContent = `#${idx + 1}`;
-
-        card.appendChild(thumbCanvas);
-        card.appendChild(badge);
-
-        card.addEventListener('click', () => {
-          currentPlotIndex = idx;
-          displayCurrentPlot();
-          renderFilmstrip();
-        });
-
-        strip.appendChild(card);
-      });
-    }
-
     function prevPlot() {
       if (currentPlotIndex > 0) {
         currentPlotIndex--;
         displayCurrentPlot();
-        renderFilmstrip();
       }
     }
 
@@ -1922,107 +814,26 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       if (currentPlotIndex < plotHistory.length - 1) {
         currentPlotIndex++;
         displayCurrentPlot();
-        renderFilmstrip();
       }
+    }
+
+    function downloadPlot() {
+      const canvas = document.querySelector('#plot-container canvas');
+      if (!canvas) {
+        showToast('Nenhum gráfico disponível para download.', 'error');
+        return;
+      }
+      const link = document.createElement('a');
+      link.download = 'webr-plot.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     }
 
     function clearPlot() {
       plotHistory = [];
       currentPlotIndex = 0;
-      lastPlotSource = '';
-      lastCaptureCount = 0;
-      currentPlotStyle = { kind: 'none' };
-      renderStylePanel(currentPlotStyle);
       displayCurrentPlot();
-      renderFilmstrip();
       showToast('Histórico de gráficos limpo.');
-    }
-
-    // --- High-Res Plot Export Modal ---
-    let selectedExportDpi = 300;
-
-    function openExportPlotModal() {
-      if (!plotHistory.length || currentPlotIndex < 0) {
-        showToast('Nenhum gráfico gerado para exportar.', 'error');
-        return;
-      }
-      document.getElementById('modal-export-plot').classList.add('show');
-    }
-
-    function closeExportPlotModal() {
-      document.getElementById('modal-export-plot').classList.remove('show');
-    }
-
-    function executeHighResExport() {
-      if (!plotHistory.length || currentPlotIndex < 0 || currentPlotIndex >= plotHistory.length) {
-        showToast('Nenhum gráfico para exportar.', 'error');
-        return;
-      }
-
-      const img = plotHistory[currentPlotIndex];
-      const format = document.getElementById('export-format').value;
-      const bg = document.getElementById('export-bg').value;
-      let filename = document.getElementById('export-filename').value.trim() || `grafico_${selectedExportDpi}dpi.${format}`;
-
-      const dimUnit = document.getElementById('export-dim-unit').value;
-      let customW = parseFloat(document.getElementById('export-width').value);
-      let customH = parseFloat(document.getElementById('export-height').value);
-
-      const scale = Math.max(1, selectedExportDpi / 72);
-      let targetW = Math.round(img.width * scale);
-      let targetH = Math.round(img.height * scale);
-
-      if (!isNaN(customW) && customW > 0 && !isNaN(customH) && customH > 0) {
-        if (dimUnit === 'cm') {
-          const pxPerCm = selectedExportDpi / 2.54;
-          targetW = Math.round(customW * pxPerCm);
-          targetH = Math.round(customH * pxPerCm);
-        } else {
-          targetW = Math.round(customW);
-          targetH = Math.round(customH);
-        }
-      }
-
-      const exportCanvas = document.createElement('canvas');
-      exportCanvas.width = targetW;
-      exportCanvas.height = targetH;
-      const ctx = exportCanvas.getContext('2d');
-
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-
-      if (bg === 'white') {
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, targetW, targetH);
-      } else if (bg === 'dark') {
-        ctx.fillStyle = '#0d1117';
-        ctx.fillRect(0, 0, targetW, targetH);
-      }
-
-      ctx.drawImage(img, 0, 0, targetW, targetH);
-
-      if (format === 'svg') {
-        const dataUrl = exportCanvas.toDataURL('image/png');
-        const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${targetW}" height="${targetH}" viewBox="0 0 ${targetW} ${targetH}">
-  <image width="${targetW}" height="${targetH}" xlink:href="${dataUrl}"/>
-</svg>`;
-        const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
-        const link = document.createElement('a');
-        link.download = filename.endsWith('.svg') ? filename : `${filename}.svg`;
-        link.href = URL.createObjectURL(blob);
-        link.click();
-      } else {
-        const mimeType = format === 'jpeg' ? 'image/jpeg' : 'image/png';
-        const dataUrl = exportCanvas.toDataURL(mimeType, bg === 'transparent' && format === 'png' ? undefined : 0.95);
-        const link = document.createElement('a');
-        link.download = filename;
-        link.href = dataUrl;
-        link.click();
-      }
-
-      closeExportPlotModal();
-      showToast(`✓ Gráfico exportado (${targetW}×${targetH}px, ${selectedExportDpi} DPI)!`);
     }
 
     // --- Environment Inspector ---
@@ -2055,20 +866,6 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         const tbody = document.getElementById('env-tbody');
         tbody.innerHTML = '';
 
-        // Update dataset select options in Data tab
-        const datasetSelect = document.getElementById('data-select-dataset');
-        const defaultDatasets = ['iris', 'mtcars', 'airquality'];
-        const existingValues = new Set();
-        
-        datasetSelect.innerHTML = '<option value="">Selecione um DataFrame...</option>';
-        defaultDatasets.forEach(d => {
-          const opt = document.createElement('option');
-          opt.value = d;
-          opt.textContent = `${d} (dataset base)`;
-          datasetSelect.appendChild(opt);
-          existingValues.add(d);
-        });
-
         if (!rawList || !rawList.length) {
           tbody.innerHTML = '<tr><td colspan="3" style="color: var(--text-muted); text-align: center;">Nenhum objeto criado ainda.</td></tr>';
           return;
@@ -2076,27 +873,11 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 
         rawList.forEach((item) => {
           const parts = String(item).split(' | ');
-          const varName = parts[0] || '';
-          const varType = parts[1] || '';
-          const varDims = parts[2] || '';
-          const isDf = varType === 'data.frame' || varType === 'matrix' || varType === 'tibble' || varType === 'tbl_df';
-
-          if (isDf && !existingValues.has(varName)) {
-            const opt = document.createElement('option');
-            opt.value = varName;
-            opt.textContent = `${varName} (${varDims})`;
-            datasetSelect.appendChild(opt);
-            existingValues.add(varName);
-          }
-
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td><strong style="color: var(--accent-blue-hover);">${esc(varName)}</strong></td>
-            <td><code>${esc(varType)}</code></td>
-            <td style="color: var(--text-secondary); display: flex; justify-content: space-between; align-items: center;">
-              <span>${esc(varDims)}</span>
-              ${isDf ? `<button class="btn btn-secondary btn-sm" onclick="window.openDataFrameInGrid('${esc(varName)}')" title="Ver DataFrame no Grid Interativo" style="padding: 2px 6px; font-size: 0.72rem;"><i class="bi bi-table"></i> Ver</button>` : ''}
-            </td>
+            <td><strong style="color: var(--accent-blue-hover);">${parts[0] || ''}</strong></td>
+            <td><code>${parts[1] || ''}</code></td>
+            <td style="color: var(--text-secondary);">${parts[2] || ''}</td>
           `;
           tbody.appendChild(tr);
         });
@@ -2111,11 +892,6 @@ plot(iris$Sepal.Length, iris$Petal.Length,
           const buffer = await file.arrayBuffer();
           const bytes = new Uint8Array(buffer);
           const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const lower = file.name.toLowerCase();
-          if ((lower.endsWith('.csv') || lower.endsWith('.txt') || lower.endsWith('.tsv')) && window.webrAnalysis) {
-            window.webrAnalysis.openCsvWizard(file);
-            continue;
-          }
           const path = `/home/web_user/uploads/${cleanName}`;
           await webR.FS.writeFile(path, bytes);
           uploadedFiles.push({ name: cleanName, path, size: bytes.length });
@@ -2202,11 +978,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       document.querySelectorAll('.tab-content').forEach(c => {
         c.classList.toggle('active', c.id === `tab-${tabId}`);
       });
-      if (tabId === 'plots') {
-        renderFilmstrip();
-      }
     }
-    window.switchTab = switchTab;
 
     // --- Theme Switcher ---
     function toggleTheme() {
@@ -2226,13 +998,6 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 
     // --- Bind UI Events ---
     document.addEventListener('DOMContentLoaded', () => {
-      if (window.webrHeader) {
-        window.webrHeader.init();
-      }
-
-      // Initialize Split Pane Resizer
-      initSplitResizer();
-
       // Saved Theme
       const savedTheme = localStorage.getItem('webr-theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -2246,123 +1011,15 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       document.getElementById('btn-run-all').addEventListener('click', executeAllCode);
       document.getElementById('btn-clear-console').addEventListener('click', clearConsole);
       document.getElementById('btn-toggle-theme').addEventListener('click', toggleTheme);
+      document.getElementById('btn-download-plot').addEventListener('click', downloadPlot);
       document.getElementById('btn-clear-plot').addEventListener('click', clearPlot);
       document.getElementById('btn-prev-plot').addEventListener('click', prevPlot);
       document.getElementById('btn-next-plot').addEventListener('click', nextPlot);
 
-      const styleForm = document.getElementById('plot-style-form');
-      if (styleForm) {
-        styleForm.addEventListener('input', applyStyleFromPanel);
-        styleForm.addEventListener('change', applyStyleFromPanel);
-      }
-
-      // Plot Pro & Export Modal
-      document.getElementById('btn-export-plot-modal').addEventListener('click', openExportPlotModal);
-      document.getElementById('btn-download-plot-quick').addEventListener('click', downloadPlotQuick);
-      document.getElementById('btn-close-export-modal').addEventListener('click', closeExportPlotModal);
-      document.getElementById('btn-cancel-export').addEventListener('click', closeExportPlotModal);
-      document.getElementById('btn-confirm-export').addEventListener('click', executeHighResExport);
-
-      document.getElementById('btn-toggle-filmstrip').addEventListener('click', () => {
-        const strip = document.getElementById('plot-filmstrip');
-        strip.classList.toggle('hidden');
-      });
-
-      // DPI Option buttons
-      document.querySelectorAll('.dpi-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.dpi-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedExportDpi = parseInt(btn.getAttribute('data-dpi')) || 300;
-          const fmt = document.getElementById('export-format').value;
-          document.getElementById('export-filename').value = `webr_grafico_${selectedExportDpi}dpi.${fmt}`;
-        });
-      });
-
-      document.getElementById('export-format').addEventListener('change', (e) => {
-        const fmt = e.target.value;
-        document.getElementById('export-filename').value = `webr_grafico_${selectedExportDpi}dpi.${fmt}`;
-      });
-
-      // Close modal on outside click
-      document.getElementById('modal-export-plot').addEventListener('click', (e) => {
-        if (e.target.id === 'modal-export-plot') closeExportPlotModal();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeExportPlotModal();
-          document.getElementById('command-palette')?.classList.remove('show');
-          document.getElementById('snippets-drawer')?.classList.remove('open');
-          document.getElementById('modal-share')?.classList.remove('show');
-          document.getElementById('modal-excel-import')?.classList.remove('show');
-          document.getElementById('modal-csv-wizard')?.classList.remove('show');
-          document.getElementById('modal-col-type')?.classList.remove('show');
-        }
-      });
-
-      // Data Grid Toolbar Events
-      document.getElementById('data-select-dataset').addEventListener('change', (e) => {
-        if (e.target.value) loadDataFrameToGrid(e.target.value);
-      });
-
-      document.getElementById('btn-refresh-datasets').addEventListener('click', () => {
-        updateEnvironment();
-        showToast('Lista de DataFrames atualizada!');
-      });
-
-      const searchInput = document.getElementById('data-search-input');
-      const clearSearchBtn = document.getElementById('btn-clear-data-search');
-
-      searchInput.addEventListener('input', (e) => {
-        currentDataGrid.searchQuery = e.target.value.trim();
-        clearSearchBtn.style.display = currentDataGrid.searchQuery ? 'block' : 'none';
-        applyDataGridFilters();
-      });
-
-      clearSearchBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        currentDataGrid.searchQuery = '';
-        clearSearchBtn.style.display = 'none';
-        applyDataGridFilters();
-      });
-
-      document.getElementById('btn-export-csv').addEventListener('click', exportGridToCsv);
-      document.getElementById('btn-export-xlsx').addEventListener('click', exportGridToXlsx);
-
-      document.getElementById('data-page-size-select').addEventListener('change', (e) => {
-        currentDataGrid.pageSize = parseInt(e.target.value) || 25;
-        currentDataGrid.page = 1;
-        renderDataGridTable();
-      });
-
-      document.getElementById('btn-data-first-page').addEventListener('click', () => {
-        currentDataGrid.page = 1;
-        renderDataGridTable();
-      });
-
-      document.getElementById('btn-data-prev-page').addEventListener('click', () => {
-        if (currentDataGrid.page > 1) {
-          currentDataGrid.page--;
-          renderDataGridTable();
-        }
-      });
-
-      document.getElementById('btn-data-next-page').addEventListener('click', () => {
-        currentDataGrid.page++;
-        renderDataGridTable();
-      });
-
-      document.getElementById('btn-data-last-page').addEventListener('click', () => {
-        currentDataGrid.page = Math.ceil(currentDataGrid.filteredData.length / currentDataGrid.pageSize);
-        renderDataGridTable();
-      });
-
       // Save Script
       document.getElementById('btn-download-script').addEventListener('click', () => {
-        const ed = (window.webrSession && window.webrSession.getEditor()) || editor;
-        if (!ed) return;
-        const blob = new Blob([ed.getValue()], { type: 'text/plain;charset=utf-8' });
+        if (!editor) return;
+        const blob = new Blob([editor.getValue()], { type: 'text/plain;charset=utf-8' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'script.R';
@@ -2389,6 +1046,15 @@ plot(iris$Sepal.Length, iris$Petal.Length,
           showToast('Ambiente limpo!');
         }
       });
+
+      // Examples Dropdown
+      const btnExamples = document.getElementById('btn-examples-dropdown');
+      const menuExamples = document.getElementById('examples-menu');
+      btnExamples.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuExamples.classList.toggle('show');
+      });
+      document.addEventListener('click', () => menuExamples.classList.remove('show'));
 
       document.querySelectorAll('.dropdown-item[data-example]').forEach(item => {
         item.addEventListener('click', () => {
@@ -2470,273 +1136,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       // Start Engines
       initMonaco();
       initWebR();
-
-      if (window.webrProductivity) {
-        window.webrProductivity.init({
-          getEditor: () => (window.webrSession ? window.webrSession.getEditor() : editor),
-          getWebR: () => webR,
-          showToast,
-          switchTab,
-          runRCode,
-          executeSelectionOrLine,
-          executeAllCode,
-          clearConsole,
-          toggleTheme,
-          loadDataFrameToGrid,
-          EXAMPLES
-        });
-      }
-
-      if (window.webrSession) {
-        window.webrSession.init({
-          getWebR: () => webR,
-          getEditor: () => window.webrSession.getEditor() || editor,
-          showToast,
-          runRCode,
-          appendConsoleLine,
-          loadDataFrameToGrid,
-          registerUpload,
-          getPlotSnapshots
-        });
-      }
-
-      if (window.webrAnalysis) {
-        window.webrAnalysis.init({
-          getWebR: () => webR,
-          showToast,
-          switchTab,
-          runRCode,
-          loadDataFrameToGrid,
-          getGrid: () => currentDataGrid,
-          registerUpload
-        });
-      }
     });
   </script>
-
-  <!-- High-Res Plot Export Modal -->
-  <div id="modal-export-plot" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-export-title">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 id="modal-export-title" class="modal-title">
-          <i class="bi bi-image" style="color: var(--accent-blue-hover);"></i> Exportar Gráfico em Alta Definição
-        </h3>
-        <button id="btn-close-export-modal" class="btn btn-icon btn-sm" title="Fechar">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Densidade de Resolução (DPI):</label>
-          <div class="dpi-options-grid">
-            <button type="button" class="dpi-btn" data-dpi="72">
-              <strong>72 DPI</strong>
-              <span>Web / Rápido</span>
-            </button>
-            <button type="button" class="dpi-btn" data-dpi="150">
-              <strong>150 DPI</strong>
-              <span>Telas & Slides</span>
-            </button>
-            <button type="button" class="dpi-btn active" data-dpi="300">
-              <strong>300 DPI</strong>
-              <span>Artigo Científico</span>
-            </button>
-            <button type="button" class="dpi-btn" data-dpi="600">
-              <strong>600 DPI</strong>
-              <span>Ultra HD</span>
-            </button>
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <div class="form-group">
-            <label for="export-format">Formato:</label>
-            <select id="export-format" class="form-control">
-              <option value="png" selected>PNG (Alta fidelidade)</option>
-              <option value="jpeg">JPEG (Comprimido)</option>
-              <option value="svg">SVG (Vetorial nítido)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="export-bg">Fundo:</label>
-            <select id="export-bg" class="form-control">
-              <option value="white" selected>Branco (#ffffff)</option>
-              <option value="transparent">Transparente</option>
-              <option value="dark">Escuro (#0d1117)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="export-filename">Nome do Arquivo:</label>
-          <input type="text" id="export-filename" class="form-control" value="webr_grafico_300dpi.png" spellcheck="false" />
-        </div>
-
-        <div class="form-group">
-          <label>Dimensões customizadas (opcional):</label>
-          <div class="export-dim-grid">
-            <input type="number" id="export-width" class="form-control" placeholder="Largura" min="1" step="any" />
-            <span class="export-dim-x">×</span>
-            <input type="number" id="export-height" class="form-control" placeholder="Altura" min="1" step="any" />
-            <select id="export-dim-unit" class="form-control export-dim-unit">
-              <option value="px">px</option>
-              <option value="cm">cm</option>
-            </select>
-          </div>
-          <small style="color: var(--text-muted); font-size: 0.72rem;">Deixe vazio para escalar pelo DPI sobre o tamanho original do gráfico.</small>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-cancel-export" type="button" class="btn btn-secondary">Cancelar</button>
-        <button id="btn-confirm-export" type="button" class="btn btn-primary">
-          <i class="bi bi-download"></i> Baixar Figura
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Etapa 2: Snippets drawer -->
-  <div id="snippets-backdrop" class="snippets-backdrop"></div>
-  <aside id="snippets-drawer" class="snippets-drawer" aria-label="Snippets e Cheatsheets">
-    <div class="snippets-header">
-      <h3><i class="bi bi-journal-code"></i> Snippets &amp; Cheatsheets</h3>
-      <button id="btn-close-snippets" type="button" class="btn btn-icon btn-sm">&times;</button>
-    </div>
-    <div id="snippets-list" class="snippets-list"></div>
-  </aside>
-
-  <!-- Etapa 2: Paleta de comandos (Ctrl+K) -->
-  <div id="command-palette" class="command-palette" role="dialog" aria-label="Paleta de comandos">
-    <div class="palette-dialog">
-      <input id="palette-input" type="text" placeholder="Buscar ação... (Ctrl+K)" autocomplete="off" spellcheck="false" />
-      <div id="palette-results" class="palette-results"></div>
-      <p class="palette-footer-hint"><kbd>Ctrl</kbd>+<kbd>K</kbd> abrir · ↑↓ navegar · Enter executar · Esc fechar</p>
-    </div>
-  </div>
-
-  <!-- Etapa 3: Import Excel preview -->
-  <div id="modal-excel-import" class="modal-backdrop" role="dialog">
-    <div class="modal-dialog modal-dialog-wide">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="bi bi-file-earmark-spreadsheet"></i> Importar planilha Excel</h3>
-        <button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('modal-excel-import').classList.remove('show')">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="excel-sheet-select">Selecione a aba:</label>
-          <select id="excel-sheet-select" class="form-control"></select>
-        </div>
-        <p style="font-size:0.78rem;color:var(--text-muted);">Preview (5 primeiras linhas):</p>
-        <div id="excel-preview-table" class="excel-preview-table"></div>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-excel-cancel" type="button" class="btn btn-secondary">Cancelar</button>
-        <button id="btn-excel-confirm" type="button" class="btn btn-primary">Carregar no R</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Assistente CSV -->
-  <div id="modal-csv-wizard" class="modal-backdrop" role="dialog">
-    <div class="modal-dialog modal-dialog-wide">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="bi bi-filetype-csv"></i> Importar CSV</h3>
-        <button id="btn-csv-wizard-close" type="button" class="btn btn-icon btn-sm">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p id="csv-wizard-filename" class="csv-wizard-filename"></p>
-        <div class="csv-wizard-grid">
-          <div class="form-group">
-            <label for="csv-obj-name">Nome no R</label>
-            <input type="text" id="csv-obj-name" class="form-control" spellcheck="false" />
-          </div>
-          <div class="form-group">
-            <label for="csv-encoding">Encoding</label>
-            <select id="csv-encoding" class="form-control">
-              <option value="utf-8">UTF-8</option>
-              <option value="windows-1252">Windows-1252 / Latin-1 (BR)</option>
-              <option value="iso-8859-1">ISO-8859-1</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="csv-sep">Separador</label>
-            <select id="csv-sep" class="form-control">
-              <option value=",">Vírgula (,)</option>
-              <option value=";">Ponto e vírgula (;)</option>
-              <option value="\t">Tab</option>
-              <option value="|">Pipe (|)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="csv-dec">Decimal</label>
-            <select id="csv-dec" class="form-control">
-              <option value=".">Ponto (1.5)</option>
-              <option value=",">Vírgula (1,5)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="csv-header">Cabeçalho</label>
-            <select id="csv-header" class="form-control">
-              <option value="true">Primeira linha são nomes</option>
-              <option value="false">Sem nomes de coluna</option>
-            </select>
-          </div>
-        </div>
-        <p style="font-size:0.78rem;color:var(--text-muted);">Preview (8 primeiras linhas):</p>
-        <div id="csv-wizard-preview" class="excel-preview-table"></div>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-csv-wizard-cancel" type="button" class="btn btn-secondary">Cancelar</button>
-        <button id="btn-csv-wizard-load" type="button" class="btn btn-primary">Carregar no R</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Converter tipo de coluna -->
-  <div id="modal-col-type" class="modal-backdrop" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="bi bi-arrow-left-right"></i> Converter tipo da coluna</h3>
-        <button id="btn-col-type-close" type="button" class="btn btn-icon btn-sm">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="col-type-name">Coluna</label>
-          <select id="col-type-name" class="form-control"></select>
-        </div>
-        <div class="form-group">
-          <label for="col-type-target">Novo tipo</label>
-          <select id="col-type-target" class="form-control">
-            <option value="character">character</option>
-            <option value="factor">factor</option>
-            <option value="numeric">numeric</option>
-            <option value="integer">integer</option>
-            <option value="logical">logical</option>
-            <option value="Date">Date</option>
-          </select>
-        </div>
-        <p style="font-size:0.75rem;color:var(--text-muted);">A conversão roda no R (<code>as.*</code>) e recarrega o grid.</p>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-col-type-cancel" type="button" class="btn btn-secondary">Cancelar</button>
-        <button id="btn-col-type-apply" type="button" class="btn btn-primary">Converter</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Etapa 3: Share link -->
-  <div id="modal-share" class="modal-backdrop" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="bi bi-link-45deg"></i> Compartilhar análise</h3>
-        <button id="btn-close-share" type="button" class="btn btn-icon btn-sm">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size:0.8rem;color:var(--text-secondary);">Link reproduzível com todos os scripts abertos (compactado no hash da URL).</p>
-        <input id="share-link-output" class="form-control" readonly spellcheck="false" />
-      </div>
-      <div class="modal-footer">
-        <button id="btn-copy-share-link" type="button" class="btn btn-primary"><i class="bi bi-clipboard"></i> Copiar link</button>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
