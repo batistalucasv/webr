@@ -712,23 +712,6 @@
     }
   }
 
-
-      closeReportPdfModal();
-      if (ctx.showToast) ctx.showToast("Relatório PDF baixado com sucesso!");
-    } catch (err) {
-      console.error("Erro ao gerar PDF:", err);
-      if (ctx.showToast) ctx.showToast("Falha ao gerar PDF: " + err.message, "error");
-    } finally {
-      if (host && host.parentNode) {
-        host.parentNode.removeChild(host);
-      }
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = origText;
-      }
-    }
-  }
-
   function printReport() {
     var titleInp = document.getElementById("pdf-report-title");
     var authorInp = document.getElementById("pdf-report-author");
