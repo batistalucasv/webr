@@ -15,18 +15,21 @@ Thumbs.db
 .idea/
 *.swp
 
-# Arquivos de teste e desenvolvimento experimental (webr2 / webr3 / webrtest)
-webr2*
+# Arquivos de teste e desenvolvimento experimental (webr3 / webrtest)
 webr3*
 webrtest*
-styles-webr2*
 styles-webr3*
-dist/webr2*
 dist/webr3*
 dist/webrtest*
-src/webr2*
 src/webr3*
 src/webrtest*
+
+# webr2 sandbox: runtime files are published at /webr2.html (not production index)
+# Keep tests, dist copies, src copies, and the roadmap local-only.
+tests/webr2*
+dist/webr2*
+dist/styles-webr2.css
+src/webr2*
 ROADMAP_WEBR2.md
 
 # Git worktrees & SDD scratch
