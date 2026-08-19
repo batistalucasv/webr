@@ -401,24 +401,38 @@
     var author = (opts && opts.author) || "";
     var scripts = getAllScripts();
     var plots = ctx.getPlotSnapshots ? ctx.getPlotSnapshots() : [];
+    
+    // Extrair linhas do console preservando as quebras de linha reais
     var consoleEl = document.getElementById("console-output");
-    var consoleText = consoleEl ? consoleEl.innerText.slice(-8000) : "";
+    var consoleLines = [];
+    if (consoleEl) {
+      var lineNodes = consoleEl.querySelectorAll(".console-line");
+      if (lineNodes && lineNodes.length) {
+        lineNodes.forEach(function (n) {
+          var t = (n.textContent || "").trimEnd();
+          if (t) consoleLines.push(t);
+        });
+      } else {
+        consoleLines = (consoleEl.innerText || "").split(/\r?\n/).filter(function (l) { return l.trim(); });
+      }
+    }
+    var consoleText = consoleLines.slice(-120).join("\n");
 
     var container = document.createElement("div");
     container.className = "webr-pdf-document";
-    container.style.cssText = "font-family: 'Inter', -apple-system, sans-serif; color: #1f2328; background: #ffffff; padding: 24px; max-width: 800px; margin: 0 auto; line-height: 1.5; font-size: 13px;";
+    container.style.cssText = "font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1f2328; background: #ffffff; padding: 24px; max-width: 780px; width: 780px; margin: 0 auto; line-height: 1.5; font-size: 13px; box-sizing: border-box;";
 
     // Header
     var headerHtml = `
-      <div style="border-bottom: 2px solid #276DC3; padding-bottom: 12px; margin-bottom: 20px;">
+      <div style="border-bottom: 2px solid #276DC3; padding-bottom: 12px; margin-bottom: 20px; page-break-after: avoid; break-after: avoid;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
           <div>
-            <h1 style="font-size: 22px; font-weight: 700; color: #276DC3; margin: 0 0 6px 0;">${esc(title)}</h1>
+            <h1 style="font-size: 22px; font-weight: 700; color: #276DC3; margin: 0 0 6px 0; letter-spacing: -0.3px;">${esc(title)}</h1>
             ${author ? `<p style="margin: 0 0 4px 0; font-size: 13px; color: #57606a;"><strong>Autor:</strong> ${esc(author)}</p>` : ''}
-            <p style="margin: 0; font-size: 11px; color: #6e7781;">Gerado em: ${new Date().toLocaleString('pt-BR')} · RStation Web (R 4.6.0 WASM)</p>
+            <p style="margin: 0; font-size: 11px; color: #6e7781;">Gerado em: ${new Date().toLocaleString('pt-BR')} · RStation Web (webR WASM)</p>
           </div>
           <div style="text-align: right;">
-            <span style="font-size: 14px; font-weight: 700; color: #276DC3; font-family: monospace;">RStation Web</span>
+            <span style="font-size: 14px; font-weight: 700; color: #276DC3; font-family: 'JetBrains Mono', monospace;">RStation Web</span>
           </div>
         </div>
       </div>
@@ -429,12 +443,12 @@
     if (opts && opts.includeScripts && scripts.length) {
       var scriptsSec = document.createElement("div");
       scriptsSec.style.cssText = "margin-bottom: 24px;";
-      var sHtml = `<h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px;">1. Scripts R</h2>`;
+      var sHtml = `<h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px; page-break-after: avoid; break-after: avoid;">1. Scripts R</h2>`;
       scripts.forEach(function (s) {
         sHtml += `
-          <div style="margin-bottom: 14px; page-break-inside: avoid;">
-            <div style="font-size: 12px; font-weight: 600; color: #57606a; margin-bottom: 4px; font-family: monospace;">📄 ${esc(s.name)}</div>
-            <pre style="background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.4; overflow-x: auto; white-space: pre-wrap; margin: 0; color: #24292f;">${esc(s.content)}</pre>
+          <div style="margin-bottom: 16px; page-break-inside: avoid; break-inside: avoid; -webkit-column-break-inside: avoid;">
+            <div style="font-size: 12px; font-weight: 600; color: #57606a; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace;">📄 ${esc(s.name)}</div>
+            <pre style="background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 10px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 10.5px; line-height: 1.45; overflow: hidden; white-space: pre-wrap; word-break: break-word; margin: 0; color: #24292f;">${esc(s.content)}</pre>
           </div>
         `;
       });
@@ -446,12 +460,12 @@
     if (opts && opts.includePlots && plots.length) {
       var plotsSec = document.createElement("div");
       plotsSec.style.cssText = "margin-bottom: 24px;";
-      var pHtml = `<h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px;">2. Gráficos e Visualizações</h2><div style="display: flex; flex-direction: column; gap: 16px;">`;
+      var pHtml = `<h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px; page-break-after: avoid; break-after: avoid;">2. Gráficos e Visualizações</h2><div style="display: flex; flex-direction: column; gap: 16px;">`;
       plots.forEach(function (p) {
         pHtml += `
-          <div style="text-align: center; border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; background: #ffffff; page-break-inside: avoid;">
-            <img src="${p.dataUrl}" alt="Gráfico ${p.index}" style="max-width: 100%; max-height: 380px; height: auto; display: inline-block;" />
-            <div style="font-size: 11px; color: #57606a; margin-top: 6px; font-weight: 500;">Figura ${p.index} — Gráfico gerado na sessão R</div>
+          <div style="text-align: center; border: 1px solid #d0d7de; border-radius: 6px; padding: 14px; background: #ffffff; margin-bottom: 16px; page-break-inside: avoid; break-inside: avoid; -webkit-column-break-inside: avoid;">
+            <img src="${p.dataUrl}" alt="Gráfico ${p.index}" style="max-width: 100%; max-height: 320px; width: auto; height: auto; display: block; margin: 0 auto;" />
+            <div style="font-size: 11px; color: #57606a; margin-top: 8px; font-weight: 500;">Figura ${p.index} — Gráfico gerado na sessão R</div>
           </div>
         `;
       });
@@ -463,17 +477,17 @@
     // 3. Console Output
     if (opts && opts.includeConsole && consoleText.trim()) {
       var consoleSec = document.createElement("div");
-      consoleSec.style.cssText = "margin-bottom: 24px; page-break-inside: avoid;";
+      consoleSec.style.cssText = "margin-bottom: 24px; page-break-inside: avoid; break-inside: avoid; -webkit-column-break-inside: avoid;";
       consoleSec.innerHTML = `
-        <h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px;">3. Saída do Console R</h2>
-        <pre style="background: #0d1117; color: #e6edf3; border-radius: 6px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; overflow-x: auto; white-space: pre-wrap; margin: 0;">${esc(consoleText)}</pre>
+        <h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px; page-break-after: avoid; break-after: avoid;">3. Saída do Console R</h2>
+        <pre style="background: #0d1117; color: #e6edf3; border: 1px solid #30363d; border-radius: 6px; padding: 12px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 10px; line-height: 1.45; overflow: hidden; white-space: pre-wrap; word-break: break-word; margin: 0;">${esc(consoleText)}</pre>
       `;
       container.appendChild(consoleSec);
     }
 
     // Footer
     var footerEl = document.createElement("div");
-    footerEl.style.cssText = "border-top: 1px solid #d0d7de; padding-top: 8px; margin-top: 24px; font-size: 10px; color: #8c959f; display: flex; justify-content: space-between;";
+    footerEl.style.cssText = "border-top: 1px solid #d0d7de; padding-top: 8px; margin-top: 24px; font-size: 10px; color: #8c959f; display: flex; justify-content: space-between; page-break-inside: avoid; break-inside: avoid;";
     footerEl.innerHTML = `<span>RStation Web · Análise Reproduzível</span><span>Página gerada via WebAssembly</span>`;
     container.appendChild(footerEl);
 
@@ -504,13 +518,11 @@
     var host = document.createElement("div");
     host.setAttribute("aria-hidden", "true");
     host.setAttribute("data-webr-pdf-capture", "1");
-    // Opaque A4-width host behind the open modal. html2canvas copies computed
-    // styles, so opacity ~0 or negative z-index on the source yields a blank PDF.
     host.style.cssText = [
       "position:fixed",
       "left:0",
       "top:0",
-      "width:794px",
+      "width:780px",
       "height:auto",
       "overflow:visible",
       "border:0",
@@ -546,7 +558,7 @@
       logging: false,
       scrollX: 0,
       scrollY: 0,
-      windowWidth: 794,
+      windowWidth: 780,
       windowHeight: height,
       onclone: function (clonedDoc) {
         var clonedRoot = clonedDoc.querySelector(".webr-pdf-document") || clonedDoc.body;
@@ -600,42 +612,87 @@
 
       host = mountReportCaptureHost(reportEl);
       await waitForPreviewReady(reportEl);
-      var pageHeight = Math.max(reportEl.scrollHeight, reportEl.offsetHeight, host.scrollHeight, 400);
-      host.style.height = pageHeight + "px";
-
-      var canvas = await html2canvas(reportEl, reportCanvasOptions(pageHeight));
-
-      if (!canvas || canvas.width < 10 || canvas.height < 10) {
-        throw new Error("Falha na renderização gráfica do relatório.");
-      }
-
-      var imgData = canvas.toDataURL("image/jpeg", 0.95);
-      var pdf = new JsPdfClass("p", "mm", "a4");
-
-      var pdfWidth = 210;
-      var pdfHeight = 297;
-      var marginX = 10;
-      var marginY = 10;
-      var contentWidth = pdfWidth - (marginX * 2);
-      var contentHeight = (canvas.height * contentWidth) / canvas.width;
-
-      var heightLeft = contentHeight;
-      var positionY = marginY;
-
-      pdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
-      heightLeft -= (pdfHeight - (marginY * 2));
-
-      while (heightLeft > 0) {
-        positionY = marginY - (contentHeight - heightLeft);
-        pdf.addPage();
-        pdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
-        heightLeft -= (pdfHeight - (marginY * 2));
-      }
 
       var safeTitle = (titleInp && titleInp.value.trim()) ? titleInp.value.trim().toLowerCase().replace(/[^a-z0-9]+/gi, "_") : "webr_relatorio";
       var filename = safeTitle + "_" + Date.now() + ".pdf";
 
-      pdf.save(filename);
+      var pdf = new JsPdfClass({
+        orientation: "p",
+        unit: "mm",
+        format: "a4",
+        compress: true
+      });
+
+      // Tentar usar o renderizador inteligente de HTML do jsPDF com detecção de quebra de página
+      var usedNativeHtml = false;
+      if (typeof pdf.html === "function") {
+        try {
+          await new Promise(function (resolve, reject) {
+            pdf.html(reportEl, {
+              x: 10,
+              y: 10,
+              width: 190,
+              windowWidth: 780,
+              autoPaging: "text",
+              html2canvas: {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                logging: false,
+                backgroundColor: "#ffffff"
+              },
+              callback: function (doc) {
+                try {
+                  doc.save(filename);
+                  resolve();
+                } catch (e) {
+                  reject(e);
+                }
+              }
+            }).catch(reject);
+          });
+          usedNativeHtml = true;
+        } catch (htmlErr) {
+          console.warn("Falha no pdf.html nativo, aplicando fallback por canvas:", htmlErr);
+          usedNativeHtml = false;
+        }
+      }
+
+      if (!usedNativeHtml) {
+        var pageHeight = Math.max(reportEl.scrollHeight, reportEl.offsetHeight, host.scrollHeight, 400);
+        host.style.height = pageHeight + "px";
+        var canvas = await html2canvas(reportEl, reportCanvasOptions(pageHeight));
+
+        if (!canvas || canvas.width < 10 || canvas.height < 10) {
+          throw new Error("Falha na renderização gráfica do relatório.");
+        }
+
+        var imgData = canvas.toDataURL("image/jpeg", 0.95);
+        var fallbackPdf = new JsPdfClass("p", "mm", "a4");
+
+        var pdfWidth = 210;
+        var pdfHeight = 297;
+        var marginX = 10;
+        var marginY = 10;
+        var contentWidth = pdfWidth - (marginX * 2);
+        var contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+        var heightLeft = contentHeight;
+        var positionY = marginY;
+
+        fallbackPdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
+        heightLeft -= (pdfHeight - (marginY * 2));
+
+        while (heightLeft > 0) {
+          positionY = marginY - (contentHeight - heightLeft);
+          fallbackPdf.addPage();
+          fallbackPdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
+          heightLeft -= (pdfHeight - (marginY * 2));
+        }
+
+        fallbackPdf.save(filename);
+      }
+
 
       closeReportPdfModal();
       if (ctx.showToast) ctx.showToast("Relatório PDF baixado com sucesso!");
