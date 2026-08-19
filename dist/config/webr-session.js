@@ -613,6 +613,15 @@
       host = mountReportCaptureHost(reportEl);
       await waitForPreviewReady(reportEl);
 
+      var scale = 2;
+      var pageHeight = Math.max(reportEl.scrollHeight, reportEl.offsetHeight, host.scrollHeight, 400);
+      host.style.height = pageHeight + "px";
+
+      var canvas = await html2canvas(reportEl, reportCanvasOptions(pageHeight));
+      if (!canvas || canvas.width < 10 || canvas.height < 10) {
+        throw new Error("Falha na renderização gráfica do relatório.");
+      }
+
       var safeTitle = (titleInp && titleInp.value.trim()) ? titleInp.value.trim().toLowerCase().replace(/[^a-z0-9]+/gi, "_") : "webr_relatorio";
       var filename = safeTitle + "_" + Date.now() + ".pdf";
 
@@ -623,75 +632,85 @@
         compress: true
       });
 
-      // Tentar usar o renderizador inteligente de HTML do jsPDF com detecção de quebra de página
-      var usedNativeHtml = false;
-      if (typeof pdf.html === "function") {
-        try {
-          await new Promise(function (resolve, reject) {
-            pdf.html(reportEl, {
-              x: 10,
-              y: 10,
-              width: 190,
-              windowWidth: 780,
-              autoPaging: "text",
-              html2canvas: {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                backgroundColor: "#ffffff"
-              },
-              callback: function (doc) {
-                try {
-                  doc.save(filename);
-                  resolve();
-                } catch (e) {
-                  reject(e);
-                }
-              }
-            }).catch(reject);
-          });
-          usedNativeHtml = true;
-        } catch (htmlErr) {
-          console.warn("Falha no pdf.html nativo, aplicando fallback por canvas:", htmlErr);
-          usedNativeHtml = false;
+      // Dimensões A4 em mm com margens elegantes
+      var marginX = 12;
+      var marginY = 12;
+      var printWidthMm = 210 - (marginX * 2); // 186 mm
+      var printHeightMm = 297 - (marginY * 2); // 273 mm
+
+      // Altura máxima em pixels de canvas para 1 página A4
+      var maxPageCanvasPx = Math.floor((printHeightMm / printWidthMm) * canvas.width);
+
+      // Obter limites dos elementos que não devem ser cortados ao meio
+      var reportRect = reportEl.getBoundingClientRect();
+      var avoidEls = reportEl.querySelectorAll(".webr-pdf-card, pre, img, h2, .webr-pdf-avoid-break");
+      var avoidBoxes = [];
+      avoidEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        avoidBoxes.push({
+          top: Math.round((r.top - reportRect.top) * scale),
+          bottom: Math.round((r.bottom - reportRect.top) * scale)
+        });
+      });
+
+      var currentY = 0;
+      var pageIndex = 0;
+
+      while (currentY < canvas.height) {
+        var remainingH = canvas.height - currentY;
+        var sliceH = Math.min(maxPageCanvasPx, remainingH);
+
+        // Se ainda houver mais páginas além desta, ajustar o corte para não quebrar cards/imagens
+        if (remainingH > maxPageCanvasPx) {
+          var targetBottom = currentY + sliceH;
+          for (var b = 0; b < avoidBoxes.length; b++) {
+            var box = avoidBoxes[b];
+            // Se o elemento começa antes da quebra da página e termina depois da quebra
+            if (box.top < targetBottom && box.bottom > targetBottom && box.top > currentY + 100) {
+              // Ajustar o corte da página para acontecer logo ANTES do elemento
+              sliceH = box.top - currentY;
+              break;
+            }
+          }
         }
+
+        // Criar canvas individual para esta página
+        var pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceH;
+        var pctx = pageCanvas.getContext("2d");
+        pctx.fillStyle = "#ffffff";
+        pctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        pctx.drawImage(canvas, 0, currentY, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+
+        var pageImgData = pageCanvas.toDataURL("image/jpeg", 0.95);
+        var renderHeightMm = (sliceH * printWidthMm) / canvas.width;
+
+        if (pageIndex > 0) {
+          pdf.addPage();
+        }
+        pdf.addImage(pageImgData, "JPEG", marginX, marginY, printWidthMm, renderHeightMm);
+
+        currentY += sliceH;
+        pageIndex++;
       }
 
-      if (!usedNativeHtml) {
-        var pageHeight = Math.max(reportEl.scrollHeight, reportEl.offsetHeight, host.scrollHeight, 400);
-        host.style.height = pageHeight + "px";
-        var canvas = await html2canvas(reportEl, reportCanvasOptions(pageHeight));
-
-        if (!canvas || canvas.width < 10 || canvas.height < 10) {
-          throw new Error("Falha na renderização gráfica do relatório.");
-        }
-
-        var imgData = canvas.toDataURL("image/jpeg", 0.95);
-        var fallbackPdf = new JsPdfClass("p", "mm", "a4");
-
-        var pdfWidth = 210;
-        var pdfHeight = 297;
-        var marginX = 10;
-        var marginY = 10;
-        var contentWidth = pdfWidth - (marginX * 2);
-        var contentHeight = (canvas.height * contentWidth) / canvas.width;
-
-        var heightLeft = contentHeight;
-        var positionY = marginY;
-
-        fallbackPdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
-        heightLeft -= (pdfHeight - (marginY * 2));
-
-        while (heightLeft > 0) {
-          positionY = marginY - (contentHeight - heightLeft);
-          fallbackPdf.addPage();
-          fallbackPdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
-          heightLeft -= (pdfHeight - (marginY * 2));
-        }
-
-        fallbackPdf.save(filename);
+      pdf.save(filename);
+      closeReportPdfModal();
+      if (ctx.showToast) ctx.showToast("Relatório PDF baixado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao gerar PDF:", err);
+      if (ctx.showToast) ctx.showToast("Falha ao gerar PDF: " + err.message, "error");
+    } finally {
+      if (host && host.parentNode) {
+        host.parentNode.removeChild(host);
       }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }
+    }
+  }
 
 
       closeReportPdfModal();
