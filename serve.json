@@ -1,8 +1,10 @@
 {
   "public": ".",
   "rewrites": [
-    { "source": "/", "destination": "/webr2.html" },
-    { "source": "/index.html", "destination": "/webr2.html" }
+    { "source": "/", "destination": "/webr2/index.html" },
+    { "source": "/webr2", "destination": "/webr2/index.html" },
+    { "source": "/webr2/", "destination": "/webr2/index.html" },
+    { "source": "/webr2.html", "destination": "/webr2/index.html" }
   ],
   "headers": [
     {
