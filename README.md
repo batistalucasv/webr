@@ -7,8 +7,8 @@
 **Ambiente integrado de desenvolvimento, análise de dados e visualização científica em R, executando 100% no navegador via WebAssembly (webR).**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![webR](https://img.shields.io/badge/webR-0.5.7-blue?logo=r&logoColor=white)](https://docs.r-wasm.org/webr/latest/)
-[![Monaco Editor](https://img.shields.io/badge/Monaco_Editor-0.47.0-blueviolet?logo=visualstudiocode)](https://microsoft.github.io/monaco-editor/)
+[![webR](https://img.shields.io/badge/webR-0.6.0-blue?logo=r&logoColor=white)](https://docs.r-wasm.org/webr/latest/)
+[![Monaco Editor](https://img.shields.io/badge/Monaco_Editor-0.55.1-blueviolet?logo=visualstudiocode)](https://microsoft.github.io/monaco-editor/)
 [![Tests](https://img.shields.io/badge/tests-28%20passing-brightgreen)](#-testes-automatizados)
 [![GitHub Pages](https://img.shields.io/badge/deployment-GitHub_Pages-success?logo=github)](https://pages.github.com/)
 
