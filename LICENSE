@@ -1,0 +1,32 @@
+MIT License
+
+Copyright (c) 2024-2026 Lucas Batista Vargas (Modificações de interface, layout e documentação)
+Copyright (c) 2022-2026 Posit Software, PBC / George Stagg (webR core & runtime)
+Copyright (c) Microsoft Corporation (Monaco Editor)
+Copyright (c) James Joseph Balamuta (quarto-webr)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+### NOTA DE FINALIDADE E ATRIBUIÇÃO (FINALIDADE NÃO COMERCIAL & ESTUDO)
+
+1. **Finalidade Educacional:** Este projeto é uma adaptação de interface, layout e usabilidade criada exclusivamente para fins de estudo, ensino, pesquisa acadêmica e uso não comercial. Livre e gratuito para toda a comunidade.
+2. **Autoria do Motor Original:** O motor de execução e compilador R em WebAssembly pertence ao projeto oficial **webR** (https://webr.r-wasm.org), desenvolvido por George Stagg e mantido pela Posit Software, PBC (https://github.com/r-wasm/webr).
+3. **Sem Vínculo Oficial:** Este repositório é um projeto comunitário independente e não possui afiliação comercial ou endosso oficial da Posit Software, PBC ou da Fundação R.
