@@ -2,11 +2,12 @@
   "name": "webr-station",
   "version": "1.0.0",
   "description": "Estação de análise webR independente com R no navegador via WebAssembly",
-  "main": "index.html",
+  "main": "webr2.html",
   "scripts": {
     "dev": "npx serve . -p 3000",
     "start": "npx serve . -p 3000",
     "serve": "npx serve . -p 3000",
+    "test": "node --test tests/plot-style.test.mjs tests/unpack-webr-js.test.mjs",
     "build:quarto": "quarto render src"
   },
   "keywords": [
