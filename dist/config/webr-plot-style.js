@@ -399,6 +399,33 @@ export function patchParCex(source, cex) {
   return source.slice(0, open + 1) + inner + source.slice(close);
 }
 
+export function patchParBg(source, bg) {
+  if (bg == null) return source;
+  const re = /\bpar\s*\(/gi;
+  let match;
+  let last = null;
+  while ((match = re.exec(source))) last = match;
+  const rhs = bg === 'transparent' ? '"transparent"' : rString(bg);
+  if (!last) {
+    if (bg === 'transparent' || !bg) return source;
+    const plot = source.search(BASE_PLOT_RE);
+    const line = 'par(bg = ' + rhs + ')\n';
+    if (plot < 0) return line + source;
+    return source.slice(0, plot) + line + source.slice(plot);
+  }
+  const open = source.indexOf('(', last.index);
+  const close = matchingParen(source, open);
+  if (close < 0) return source;
+  let inner = source.slice(open + 1, close);
+  if (/\bbg\s*=/.test(inner)) {
+    inner = inner.replace(/\bbg\s*=\s*(['"][^'"]*['"]|[A-Za-z0-9._]+)/, 'bg = ' + rhs);
+  } else {
+    if (bg === 'transparent' || !bg) return source;
+    inner = inner.replace(/\s*$/, '') + ', bg = ' + rhs;
+  }
+  return source.slice(0, open + 1) + inner + source.slice(close);
+}
+
 export function inspectBaseFromSource(source) {
   const col = extractEqualsCall(source, 'col');
   const pch = extractEqualsCall(source, 'pch');
@@ -408,6 +435,7 @@ export function inspectBaseFromSource(source) {
   const parCall = findLastCall(source, /\bpar\s*\(/);
   const parInner = parCall ? source.slice(parCall.open + 1, parCall.close) : '';
   const parCex = parInner ? extractEqualsCall(parInner, 'cex') : null;
+  const parBg = parInner ? extractEqualsCall(parInner, 'bg') : null;
   const plotCall = findLastCall(source, BASE_PLOT_RE);
   const plotInner = plotCall ? source.slice(plotCall.open + 1, plotCall.close) : source;
   const main = extractEqualsCall(plotInner, 'main');
@@ -428,7 +456,8 @@ export function inspectBaseFromSource(source) {
     xlab: xlab ? xlab.values[0] : '',
     ylab: ylab ? ylab.values[0] : '',
     legendPosition: legend ? legend[1] : undefined,
-    textSize: parCex ? Number(parCex.values[0]) * 12 : undefined
+    textSize: parCex ? Number(parCex.values[0]) * 12 : undefined,
+    bg: parBg && parBg.values ? parBg.values[0] : undefined
   };
 }
 
@@ -524,6 +553,17 @@ export function generateGgplotAddon(style) {
   if (style && style.textSize != null && style.textSize !== '') {
     themeArgs.push('text = element_text(size = ' + Number(style.textSize) + ')');
   }
+  if (style && style.bg != null) {
+    if (style.bg === 'transparent') {
+      themeArgs.push('plot.background = element_rect(fill = "transparent", colour = NA)');
+      themeArgs.push('panel.background = element_rect(fill = "transparent", colour = NA)');
+      themeArgs.push('legend.background = element_rect(fill = "transparent", colour = NA)');
+    } else if (style.bg !== '') {
+      themeArgs.push('plot.background = element_rect(fill = ' + rString(style.bg) + ')');
+      themeArgs.push('panel.background = element_rect(fill = ' + rString(style.bg) + ')');
+      themeArgs.push('legend.background = element_rect(fill = ' + rString(style.bg) + ')');
+    }
+  }
   if (themeArgs.length) {
     parts.push('theme(' + themeArgs.join(', ') + ')');
   }
@@ -580,6 +620,9 @@ export function applyPlotStyle(source, style) {
   }
   if (style.textSize != null && style.textSize !== '') {
     out = patchParCex(out, textSizeToCex(style.textSize));
+  }
+  if (style.bg != null) {
+    out = patchParBg(out, style.bg);
   }
   if (style.title != null) {
     out = patchOrInsertPlotArg(out, 'main', { kind: 'scalar', values: [style.title] });
@@ -658,7 +701,8 @@ export function normalizeGgplotInspect(raw) {
     alpha: numOrUndef(constants.alpha),
     linewidth: numOrUndef(constants.linewidth),
     linetype: constants.linetype != null ? String(constants.linetype) : '',
-    constants
+    constants,
+    bg: raw.bg != null ? String(first(raw.bg)) : undefined
   };
 }
 
@@ -699,6 +743,8 @@ tryCatch({
         gt <- ggplot2::theme_get()$text$size
         tsz <- if (is.null(gt) || !is.numeric(gt)) 11 else gt
       }
+      plot_bg <- th$plot.background$fill
+      if (is.null(plot_bg)) plot_bg <- th$panel.background$fill
       consts <- list()
       if (length(p$layers) > 0) {
         for (i in seq_along(p$layers)) {
@@ -721,6 +767,7 @@ tryCatch({
         scales = scales,
         legendPosition = as.character(lp)[1],
         textSize = as.numeric(tsz)[1],
+        bg = if (is.null(plot_bg) || is.na(plot_bg)) "" else as.character(plot_bg)[1],
         constants = consts,
         labels = list(
           title = if (is.null(lab_title)) "" else paste(as.character(lab_title), collapse = " "),

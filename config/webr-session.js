@@ -49,6 +49,19 @@
     if (tab && tab.model) tab.content = tab.model.getValue();
   }
 
+  function sanitizeScriptName(raw) {
+    var name = String(raw == null ? "" : raw).trim();
+    name = name.replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, " ");
+    if (!name) name = "script.R";
+    if (!/\.R$/i.test(name)) name += ".R";
+    return name;
+  }
+
+  function getActiveScriptName() {
+    var tab = getActiveTab();
+    return tab ? tab.name : "script.R";
+  }
+
   function renderScriptTabs() {
     var list = document.getElementById("script-tabs-list");
     if (!list) return;
@@ -57,15 +70,26 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "script-tab" + (tab.id === activeTabId ? " active" : "");
+      btn.title = tab.name + " — duplo clique para renomear";
       btn.innerHTML =
         '<span class="script-tab-name">' + esc(tab.name) + "</span>" +
+        '<span class="script-tab-rename" data-id="' + tab.id + '" title="Renomear"><i class="bi bi-pencil"></i></span>' +
         (tabs.length > 1
           ? '<span class="script-tab-close" data-id="' + tab.id + '" title="Fechar">&times;</span>'
           : "");
       btn.addEventListener("click", function (e) {
-        if (e.target.classList.contains("script-tab-close")) return;
+        if (e.target.closest(".script-tab-close") || e.target.closest(".script-tab-rename")) return;
         switchTab(tab.id);
       });
+      var renameEl = btn.querySelector(".script-tab-rename");
+      if (renameEl) {
+        renameEl.addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (tab.id !== activeTabId) switchTab(tab.id);
+          var fresh = document.querySelector("#script-tabs-list .script-tab.active");
+          beginInlineRename(tab, fresh);
+        });
+      }
       var closeEl = btn.querySelector(".script-tab-close");
       if (closeEl) {
         closeEl.addEventListener("click", function (e) {
@@ -74,8 +98,9 @@
         });
       }
       btn.addEventListener("dblclick", function (e) {
+        if (e.target.closest(".script-tab-close")) return;
         e.stopPropagation();
-        renameTab(tab.id);
+        beginInlineRename(tab, btn);
       });
       list.appendChild(btn);
     });
@@ -116,13 +141,58 @@
     else renderScriptTabs();
   }
 
+  function applyTabName(tab, raw) {
+    tab.name = sanitizeScriptName(raw);
+  }
+
+  function beginInlineRename(tab, btn) {
+    if (!btn || btn.querySelector(".script-tab-rename-input")) return;
+    var nameSpan = btn.querySelector(".script-tab-name");
+    if (!nameSpan) return;
+    var input = document.createElement("input");
+    input.type = "text";
+    input.className = "script-tab-rename-input";
+    input.value = tab.name;
+    input.setAttribute("aria-label", "Renomear script");
+    input.spellcheck = false;
+    nameSpan.replaceWith(input);
+    var renameEl = btn.querySelector(".script-tab-rename");
+    if (renameEl) renameEl.style.display = "none";
+    input.focus();
+    input.select();
+    var done = false;
+    function finish(commit) {
+      if (done) return;
+      done = true;
+      if (commit) applyTabName(tab, input.value);
+      renderScriptTabs();
+    }
+    input.addEventListener("keydown", function (e) {
+      e.stopPropagation();
+      if (e.key === "Enter") {
+        e.preventDefault();
+        finish(true);
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        finish(false);
+      }
+    });
+    input.addEventListener("click", function (e) { e.stopPropagation(); });
+    input.addEventListener("mousedown", function (e) { e.stopPropagation(); });
+    input.addEventListener("blur", function () { finish(true); });
+  }
+
   function renameTab(id) {
     var tab = tabs.find(function (t) { return t.id === id; });
     if (!tab) return;
-    var name = prompt("Renomear script:", tab.name);
-    if (!name || !name.trim()) return;
-    tab.name = name.trim().endsWith(".R") ? name.trim() : name.trim() + ".R";
     renderScriptTabs();
+    var list = document.getElementById("script-tabs-list");
+    var btn = list && list.querySelector(".script-tab.active");
+    if (tab.id !== activeTabId) {
+      switchTab(tab.id);
+      btn = list && list.querySelector(".script-tab.active");
+    }
+    beginInlineRename(tab, btn);
   }
 
   function initMultiTabs(editor, monaco) {
@@ -168,7 +238,7 @@
     }
     var webR = ctx.getWebR && ctx.getWebR();
     if (!webR) {
-      if (ctx.showToast) ctx.showToast("Aguarde o webR inicializar.", "error");
+      if (ctx.showToast) ctx.showToast("Aguarde o RStation Web inicializar.", "error");
       return;
     }
     var status = document.getElementById("url-import-status");
@@ -315,6 +385,301 @@
     if (ctx.showToast) ctx.showToast("Scripts exportados em ZIP!");
   }
 
+  function openReportPdfModal() {
+    var modal = document.getElementById("modal-report-pdf");
+    if (modal) modal.classList.add("show");
+  }
+
+  function closeReportPdfModal() {
+    var modal = document.getElementById("modal-report-pdf");
+    if (modal) modal.classList.remove("show");
+  }
+
+  function buildReportDocument(opts) {
+    saveCurrentModel();
+    var title = (opts && opts.title) || "Relatório de Análise Estatística — RStation Web";
+    var author = (opts && opts.author) || "";
+    var scripts = getAllScripts();
+    var plots = ctx.getPlotSnapshots ? ctx.getPlotSnapshots() : [];
+    var consoleEl = document.getElementById("console-output");
+    var consoleText = consoleEl ? consoleEl.innerText.slice(-8000) : "";
+
+    var container = document.createElement("div");
+    container.className = "webr-pdf-document";
+    container.style.cssText = "font-family: 'Inter', -apple-system, sans-serif; color: #1f2328; background: #ffffff; padding: 24px; max-width: 800px; margin: 0 auto; line-height: 1.5; font-size: 13px;";
+
+    // Header
+    var headerHtml = `
+      <div style="border-bottom: 2px solid #276DC3; padding-bottom: 12px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h1 style="font-size: 22px; font-weight: 700; color: #276DC3; margin: 0 0 6px 0;">${esc(title)}</h1>
+            ${author ? `<p style="margin: 0 0 4px 0; font-size: 13px; color: #57606a;"><strong>Autor:</strong> ${esc(author)}</p>` : ''}
+            <p style="margin: 0; font-size: 11px; color: #6e7781;">Gerado em: ${new Date().toLocaleString('pt-BR')} · RStation Web (R 4.6.0 WASM)</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 14px; font-weight: 700; color: #276DC3; font-family: monospace;">RStation Web</span>
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML = headerHtml;
+
+    // 1. Scripts R
+    if (opts && opts.includeScripts && scripts.length) {
+      var scriptsSec = document.createElement("div");
+      scriptsSec.style.cssText = "margin-bottom: 24px;";
+      var sHtml = `<h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px;">1. Scripts R</h2>`;
+      scripts.forEach(function (s) {
+        sHtml += `
+          <div style="margin-bottom: 14px; page-break-inside: avoid;">
+            <div style="font-size: 12px; font-weight: 600; color: #57606a; margin-bottom: 4px; font-family: monospace;">📄 ${esc(s.name)}</div>
+            <pre style="background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.4; overflow-x: auto; white-space: pre-wrap; margin: 0; color: #24292f;">${esc(s.content)}</pre>
+          </div>
+        `;
+      });
+      scriptsSec.innerHTML = sHtml;
+      container.appendChild(scriptsSec);
+    }
+
+    // 2. Gráficos
+    if (opts && opts.includePlots && plots.length) {
+      var plotsSec = document.createElement("div");
+      plotsSec.style.cssText = "margin-bottom: 24px;";
+      var pHtml = `<h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px;">2. Gráficos e Visualizações</h2><div style="display: flex; flex-direction: column; gap: 16px;">`;
+      plots.forEach(function (p) {
+        pHtml += `
+          <div style="text-align: center; border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; background: #ffffff; page-break-inside: avoid;">
+            <img src="${p.dataUrl}" alt="Gráfico ${p.index}" style="max-width: 100%; max-height: 380px; height: auto; display: inline-block;" />
+            <div style="font-size: 11px; color: #57606a; margin-top: 6px; font-weight: 500;">Figura ${p.index} — Gráfico gerado na sessão R</div>
+          </div>
+        `;
+      });
+      pHtml += `</div>`;
+      plotsSec.innerHTML = pHtml;
+      container.appendChild(plotsSec);
+    }
+
+    // 3. Console Output
+    if (opts && opts.includeConsole && consoleText.trim()) {
+      var consoleSec = document.createElement("div");
+      consoleSec.style.cssText = "margin-bottom: 24px; page-break-inside: avoid;";
+      consoleSec.innerHTML = `
+        <h2 style="font-size: 15px; font-weight: 600; color: #24292f; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; margin-bottom: 12px;">3. Saída do Console R</h2>
+        <pre style="background: #0d1117; color: #e6edf3; border-radius: 6px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; overflow-x: auto; white-space: pre-wrap; margin: 0;">${esc(consoleText)}</pre>
+      `;
+      container.appendChild(consoleSec);
+    }
+
+    // Footer
+    var footerEl = document.createElement("div");
+    footerEl.style.cssText = "border-top: 1px solid #d0d7de; padding-top: 8px; margin-top: 24px; font-size: 10px; color: #8c959f; display: flex; justify-content: space-between;";
+    footerEl.innerHTML = `<span>RStation Web · Análise Reproduzível</span><span>Página gerada via WebAssembly</span>`;
+    container.appendChild(footerEl);
+
+    return container;
+  }
+
+  function waitForPreviewReady(root) {
+    var imgs = Array.prototype.slice.call(root.querySelectorAll("img"));
+    var imgWait = Promise.all(imgs.map(function (img) {
+      if (img.complete && img.naturalWidth) {
+        return img.decode ? img.decode().catch(function () {}) : Promise.resolve();
+      }
+      return new Promise(function (resolve) {
+        img.addEventListener("load", resolve, { once: true });
+        img.addEventListener("error", resolve, { once: true });
+      });
+    }));
+    return imgWait.then(function () {
+      return new Promise(function (resolve) {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(resolve);
+        });
+      });
+    });
+  }
+
+  function mountReportCaptureHost(reportEl) {
+    var host = document.createElement("div");
+    host.setAttribute("aria-hidden", "true");
+    host.setAttribute("data-webr-pdf-capture", "1");
+    // Opaque A4-width host behind the open modal. html2canvas copies computed
+    // styles, so opacity ~0 or negative z-index on the source yields a blank PDF.
+    host.style.cssText = [
+      "position:fixed",
+      "left:0",
+      "top:0",
+      "width:794px",
+      "height:auto",
+      "overflow:visible",
+      "border:0",
+      "opacity:1",
+      "visibility:visible",
+      "background:#ffffff",
+      "color:#1f2328",
+      "color-scheme:light",
+      "pointer-events:none",
+      "z-index:1"
+    ].join(";");
+    reportEl.style.position = "relative";
+    reportEl.style.left = "auto";
+    reportEl.style.top = "auto";
+    reportEl.style.width = "780px";
+    reportEl.style.maxWidth = "780px";
+    reportEl.style.margin = "0";
+    reportEl.style.opacity = "1";
+    reportEl.style.visibility = "visible";
+    reportEl.style.zIndex = "auto";
+    reportEl.style.background = "#ffffff";
+    host.appendChild(reportEl);
+    document.body.appendChild(host);
+    return host;
+  }
+
+  function reportCanvasOptions(height) {
+    return {
+      scale: 2,
+      backgroundColor: "#ffffff",
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: 794,
+      windowHeight: height,
+      onclone: function (clonedDoc) {
+        var clonedRoot = clonedDoc.querySelector(".webr-pdf-document") || clonedDoc.body;
+        if (!clonedRoot) return;
+        clonedRoot.style.opacity = "1";
+        clonedRoot.style.visibility = "visible";
+        clonedRoot.style.background = "#ffffff";
+        clonedRoot.style.position = "relative";
+        clonedRoot.style.left = "auto";
+        clonedRoot.style.top = "auto";
+        clonedRoot.style.zIndex = "auto";
+      }
+    };
+  }
+
+  async function exportPdfReport() {
+    var titleInp = document.getElementById("pdf-report-title");
+    var authorInp = document.getElementById("pdf-report-author");
+    var incScripts = document.getElementById("pdf-inc-scripts") ? document.getElementById("pdf-inc-scripts").checked : true;
+    var incPlots = document.getElementById("pdf-inc-plots") ? document.getElementById("pdf-inc-plots").checked : true;
+    var incConsole = document.getElementById("pdf-inc-console") ? document.getElementById("pdf-inc-console").checked : true;
+
+    var btn = document.getElementById("btn-confirm-report-pdf");
+    var origText = btn ? btn.innerHTML : "";
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Gerando PDF...';
+    }
+
+    var host = null;
+    try {
+      if (typeof html2canvas === "undefined") {
+        throw new Error("Biblioteca html2canvas não encontrada.");
+      }
+      var JsPdfClass = null;
+      if (typeof window.jspdf !== "undefined" && window.jspdf.jsPDF) {
+        JsPdfClass = window.jspdf.jsPDF;
+      } else if (typeof jsPDF !== "undefined") {
+        JsPdfClass = jsPDF;
+      } else {
+        throw new Error("Biblioteca jsPDF não encontrada.");
+      }
+
+      var reportEl = buildReportDocument({
+        title: titleInp ? titleInp.value.trim() : "Relatório de Análise — RStation Web",
+        author: authorInp ? authorInp.value.trim() : "",
+        includeScripts: incScripts,
+        includePlots: incPlots,
+        includeConsole: incConsole
+      });
+
+      host = mountReportCaptureHost(reportEl);
+      await waitForPreviewReady(reportEl);
+      var pageHeight = Math.max(reportEl.scrollHeight, reportEl.offsetHeight, host.scrollHeight, 400);
+      host.style.height = pageHeight + "px";
+
+      var canvas = await html2canvas(reportEl, reportCanvasOptions(pageHeight));
+
+      if (!canvas || canvas.width < 10 || canvas.height < 10) {
+        throw new Error("Falha na renderização gráfica do relatório.");
+      }
+
+      var imgData = canvas.toDataURL("image/jpeg", 0.95);
+      var pdf = new JsPdfClass("p", "mm", "a4");
+
+      var pdfWidth = 210;
+      var pdfHeight = 297;
+      var marginX = 10;
+      var marginY = 10;
+      var contentWidth = pdfWidth - (marginX * 2);
+      var contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+      var heightLeft = contentHeight;
+      var positionY = marginY;
+
+      pdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
+      heightLeft -= (pdfHeight - (marginY * 2));
+
+      while (heightLeft > 0) {
+        positionY = marginY - (contentHeight - heightLeft);
+        pdf.addPage();
+        pdf.addImage(imgData, "JPEG", marginX, positionY, contentWidth, contentHeight);
+        heightLeft -= (pdfHeight - (marginY * 2));
+      }
+
+      var safeTitle = (titleInp && titleInp.value.trim()) ? titleInp.value.trim().toLowerCase().replace(/[^a-z0-9]+/gi, "_") : "webr_relatorio";
+      var filename = safeTitle + "_" + Date.now() + ".pdf";
+
+      pdf.save(filename);
+
+      closeReportPdfModal();
+      if (ctx.showToast) ctx.showToast("Relatório PDF baixado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao gerar PDF:", err);
+      if (ctx.showToast) ctx.showToast("Falha ao gerar PDF: " + err.message, "error");
+    } finally {
+      if (host && host.parentNode) {
+        host.parentNode.removeChild(host);
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }
+    }
+  }
+
+  function printReport() {
+    var titleInp = document.getElementById("pdf-report-title");
+    var authorInp = document.getElementById("pdf-report-author");
+    var incScripts = document.getElementById("pdf-inc-scripts") ? document.getElementById("pdf-inc-scripts").checked : true;
+    var incPlots = document.getElementById("pdf-inc-plots") ? document.getElementById("pdf-inc-plots").checked : true;
+    var incConsole = document.getElementById("pdf-inc-console") ? document.getElementById("pdf-inc-console").checked : true;
+
+    var doc = buildReportDocument({
+      title: titleInp ? titleInp.value.trim() : "Relatório RStation Web",
+      author: authorInp ? authorInp.value.trim() : "",
+      includeScripts: incScripts,
+      includePlots: incPlots,
+      includeConsole: incConsole
+    });
+
+    var win = window.open("", "_blank");
+    if (!win) {
+      if (ctx.showToast) ctx.showToast("Permita pop-ups para imprimir.", "error");
+      return;
+    }
+    win.document.write("<!DOCTYPE html><html><head><title>" + esc(titleInp ? titleInp.value : "Relatório RStation Web") + "</title>");
+    win.document.write("<style>body{margin:0;padding:20px;}@media print{@page{margin:15mm;}}</style></head><body>");
+    win.document.write(doc.outerHTML);
+    win.document.write("<script>setTimeout(function(){window.print();},400);</script></body></html>");
+    win.document.close();
+  }
+
   function exportHtmlReport() {
     saveCurrentModel();
     var scripts = getAllScripts();
@@ -332,12 +697,12 @@
       })
       .join("");
     var html =
-      "<!DOCTYPE html><html lang='pt-BR'><head><meta charset='utf-8'/><title>Relatório webr</title>" +
+      "<!DOCTYPE html><html lang='pt-BR'><head><meta charset='utf-8'/><title>Relatório RStation Web</title>" +
       "<style>body{font-family:Inter,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;line-height:1.5}" +
       "pre{background:#f6f8fa;padding:1rem;overflow:auto;border-radius:6px;font-size:0.85rem}" +
       "figure{margin:1.5rem 0;text-align:center}figcaption{color:#666;font-size:0.85rem}" +
       "h1{color:#276DC3}.console{background:#0d1117;color:#c9d1d9;padding:1rem;border-radius:6px;white-space:pre-wrap;font-size:0.8rem}</style></head><body>" +
-      "<h1>Relatório webR Station</h1><p>Gerado em " + new Date().toLocaleString("pt-BR") + "</p>" +
+      "<h1>Relatório RStation Web</h1><p>Gerado em " + new Date().toLocaleString("pt-BR") + "</p>" +
       "<h2>Scripts R</h2>" + codeBlock +
       "<h2>Console (trecho)</h2><div class='console'>" + esc(consoleText) + "</div>" +
       (plotsHtml ? "<h2>Gráficos</h2>" + plotsHtml : "") +
@@ -393,30 +758,38 @@
   }
 
   function bindEvents() {
-    document.getElementById("btn-url-import").addEventListener("click", fetchUrlData);
-    document.getElementById("excel-file-picker").addEventListener("change", function (e) {
+    document.getElementById("btn-url-import")?.addEventListener("click", fetchUrlData);
+    document.getElementById("excel-file-picker")?.addEventListener("change", function (e) {
       if (e.target.files[0]) onExcelFileSelected(e.target.files[0]);
     });
-    document.getElementById("excel-sheet-select").addEventListener("change", function (e) {
+    document.getElementById("excel-sheet-select")?.addEventListener("change", function (e) {
       previewExcelSheet(e.target.value);
     });
-    document.getElementById("btn-excel-confirm").addEventListener("click", confirmExcelImport);
-    document.getElementById("btn-excel-cancel").addEventListener("click", function () {
+    document.getElementById("btn-excel-confirm")?.addEventListener("click", confirmExcelImport);
+    document.getElementById("btn-excel-cancel")?.addEventListener("click", function () {
       document.getElementById("modal-excel-import").classList.remove("show");
       pendingExcel = null;
     });
-    document.getElementById("btn-share-link").addEventListener("click", generateShareLink);
-    document.getElementById("btn-copy-share-link").addEventListener("click", function () {
+    document.getElementById("btn-share-link")?.addEventListener("click", generateShareLink);
+    document.getElementById("btn-copy-share-link")?.addEventListener("click", function () {
       var out = document.getElementById("share-link-output");
       navigator.clipboard.writeText(out.value);
       if (ctx.showToast) ctx.showToast("Link copiado!");
     });
-    document.getElementById("btn-close-share").addEventListener("click", function () {
+    document.getElementById("btn-close-share")?.addEventListener("click", function () {
       document.getElementById("modal-share").classList.remove("show");
     });
-    document.getElementById("btn-export-report").addEventListener("click", exportHtmlReport);
-    document.getElementById("btn-save-session").addEventListener("click", saveSession);
-    document.getElementById("session-file-picker").addEventListener("change", function (e) {
+
+    // Report PDF / HTML events
+    document.getElementById("btn-export-report")?.addEventListener("click", openReportPdfModal);
+    document.getElementById("btn-close-report-pdf")?.addEventListener("click", closeReportPdfModal);
+    document.getElementById("btn-cancel-report-pdf")?.addEventListener("click", closeReportPdfModal);
+    document.getElementById("btn-confirm-report-pdf")?.addEventListener("click", exportPdfReport);
+    document.getElementById("btn-print-report")?.addEventListener("click", printReport);
+    document.getElementById("btn-export-report-html")?.addEventListener("click", exportHtmlReport);
+
+    document.getElementById("btn-save-session")?.addEventListener("click", saveSession);
+    document.getElementById("session-file-picker")?.addEventListener("change", function (e) {
       if (e.target.files[0]) loadSessionFile(e.target.files[0]);
     });
   }
@@ -428,6 +801,9 @@
     },
     initMultiTabs: initMultiTabs,
     getEditor: function () { return editorRef; },
-    getAllScripts: getAllScripts
+    getAllScripts: getAllScripts,
+    getActiveScriptName: getActiveScriptName,
+    openReportPdfModal: openReportPdfModal,
+    exportPdfReport: exportPdfReport
   };
 })();

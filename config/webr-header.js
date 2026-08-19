@@ -55,6 +55,7 @@
       "menu-run-all": "btn-run-all",
       "menu-clear": "btn-clear-console",
       "menu-share": "btn-share-link",
+      "menu-report-pdf": "btn-export-report",
       "menu-report": "btn-export-report"
     };
 

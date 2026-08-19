@@ -166,7 +166,7 @@
     if (!csvState.buffer || !ctx.getWebR) return;
     var webR = ctx.getWebR();
     if (!webR) {
-      ctx.showToast("Aguarde o webR inicializar...", "error");
+      ctx.showToast("Aguarde o RStation Web inicializar...", "error");
       return;
     }
     var encoding = document.getElementById("csv-encoding").value;

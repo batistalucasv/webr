@@ -177,7 +177,7 @@
       }
     } catch (_) {}
     return (
-      "Você é um assistente especialista em R para webR (R no navegador via WASM).\n" +
+      "Você é um assistente especialista em R para RStation Web (R no navegador via WASM).\n" +
       "Responda em português brasileiro. Para código, use bloco ```r ... ```.\n" +
       "Objetos no GlobalEnv: " + (envHint || "(vazio)") + "\n\n" +
       "Script atual do editor:\n```r\n" + code + "\n```\n\n" +

@@ -1,19 +1,28 @@
-# webR — Estação de Análise no Navegador (GitHub Pages)
+# 🌐 RStation Web — Estação de Análise R no Navegador
 
-Este repositório contém a versão independente (standalone) da estação **webR** , pronta para ser publicada no **GitHub Pages**.
+Repositório independente com uma estação de análise interativa baseada em **webR (WebAssembly)**, **Monaco Editor** e sistema de **upload drag-and-drop de arquivos para o filesystem do R**.
 
 ---
 
-## 🚀 Como publicar no GitHub Pages em 3 passos:
+## ⚡ Características
 
-### Passo 1: Criar um novo repositório no GitHub
+- **Zero Instalação:** O R roda 100% no navegador do usuário via WebAssembly (WASM).
+- **Upload de Arquivos:** Área de arrastar e soltar (drag-and-drop) para enviar arquivos (`.csv`, `.txt`, `.xlsx`, etc.) diretamente para `/home/web_user/uploads/` no webR.
+- **Editor Monaco:** Editor de código completo com syntax highlighting, atalhos do RStudio (`Ctrl+Enter` para rodar seleção/linha) e autocompletion.
+- **Tema Claro / Escuro:** Alternância de tema integrada e persistente.
+- **GitHub Pages Ready:** Pronto para publicação direta no GitHub Pages com GitHub Actions ou deploy de branch estática.
+
+---
+
+## 🚀 Como Iniciar um Novo Repositório no GitHub
+
+### 1. Criar o repositório no GitHub
 1. Acesse [github.com/new](https://github.com/new).
-2. Dê um nome ao repositório (por exemplo: `webr-station` ou `webr`).
-3. Deixe o repositório como **Público** (Public).
-4. Clique em **Create repository**.
+2. Nomeie o repositório (ex: `webr` ou `webr-station`).
+3. Deixe como **Público** (Public) e clique em **Create repository**.
 
-### Passo 2: Subir os arquivos desta pasta
-Você pode subir via Git pelo terminal:
+### 2. Inicializar o Git e Enviar
+No terminal dentro desta pasta (`webr-station`):
 
 ```bash
 git init
@@ -24,28 +33,82 @@ git remote add origin https://github.com/SEU_USUARIO/NOME_DO_REPO.git
 git push -u origin main
 ```
 
-*(Ou simplesmente arrastar e soltar todos os arquivos e pastas desta pasta no GitHub web)*.
-
-### Passo 3: Ativar o GitHub Pages
-1. No seu repositório no GitHub, vá em **Settings** > **Pages** (no menu lateral esquerdo).
-2. Em **Build and deployment** > **Source**, selecione **Deploy from a branch**.
-3. Em **Branch**, selecione `main` e a pasta `/ (root)`.
-4. Clique em **Save**.
-5. Aguarde cerca de 1 a 2 minutos. Seu link estará no ar em:
-   `https://SEU_USUARIO.github.io/NOME_DO_REPO/`
+### 3. Ativar o GitHub Pages
+1. No seu repositório no GitHub, abra **Settings** > **Pages**.
+2. Em **Build and deployment** > **Source**, selecione **GitHub Actions** (ou *Deploy from a branch* -> `main` / `root`).
+3. O deploy será feito automaticamente em segundos!
+4. O link final será: `https://SEU_USUARIO.github.io/NOME_DO_REPO/`
 
 ---
 
-## 📁 Estrutura de Arquivos
+## 💻 Testar e Rodar Localmente
 
-- `index.html`: Página principal com o console webR, editor Monaco e área de upload.
-- `styles.css`: Estilos visuais e temas claro/escuro.
-- `config/webr-workstation.js`: Gerenciador de upload de dados e filesystem do webR.
-- `config/ui-nav.js`: Suporte de navegação e layout.
-- `site_libs/`: Bibliotecas do Quarto, Bootstrap, ícones e syntax highlighting.
-- `brand/`: Favicon e identidade visual.
-- `.nojekyll`: Arquivo essencial que impede o GitHub Pages de ignorar pastas de scripts.
+Você pode servir a pasta estática localmente usando qualquer servidor HTTP simples:
 
+### Usando Node.js / npx:
+```bash
+npm run dev
+# ou
+npx serve . -p 3000
+```
+Depois abra no navegador: `http://localhost:3000`
+
+### Usando Python:
+```bash
+python -m http.server 3000
+```
+
+### Usando Quarto (para editar o código fonte em `src/`):
+```bash
+cd src
+quarto preview index.qmd
+```
+
+---
+
+## 📁 Estrutura do Repositório
+
+```text
+webr-station/
+├── index.html                 # Página estática principal pronta para produção
+├── styles.css                 # Estilos da interface e dos temas claro/escuro
+├── .nojekyll                  # Garante carregamento correto no GitHub Pages
+├── package.json               # Scripts de desenvolvimento local
+├── config/
+│   ├── webr-workstation.js    # Gerenciador de upload e integração com o webR
+│   └── ui-nav.js              # Helpers de interface e navegação
+├── site_libs/                 # Bibliotecas (Bootstrap, Quarto, syntax highlight)
+├── brand/                     # Favicons, logos e ícones
+├── src/                       # Código-fonte Quarto (caso queira recompilar)
+│   ├── index.qmd              # Documento Quarto fonte
+│   ├── _quarto.yml            # Configuração do Quarto
+│   └── _extensions/coatless/  # Extensão Quarto webR
+└── .github/
+    └── workflows/
+        └── deploy.yml         # GitHub Actions para deploy contínuo no GitHub Pages
+```
+
+---
+
+## 🛠️ Como pré-instalar pacotes R
+
+Se quiser que o webR já inicialize instalando pacotes R adicionais automaticamente (por exemplo `ggplot2`, `dplyr`, `vegan`), você pode:
+
+1. No arquivo [`src/index.qmd`](file:///src/index.qmd) (ou no `_quarto.yml`):
+   ```yaml
+   webr:
+     packages: ['ggplot2', 'dplyr']
+   ```
+2. Ou via código R direto no console:
+   ```r
+   webr::install("ggplot2")
+   library(ggplot2)
+   ```
+
+---
+
+
+---
 
 ---
 
@@ -53,3 +116,17 @@ git push -u origin main
 
 - **Idealização e Desenvolvimento:** **Lucas Batista Vargas** ([GitHub @batistalucasv](https://github.com/batistalucasv))
 - **Compilado e Estruturado em:** **Antigravity**
+
+---
+
+## 🙏 Créditos e Agradecimentos
+
+Este projeto é desenvolvido com base em tecnologias e extensões de código aberto incríveis:
+
+- **[webR](https://docs.r-wasm.org/webr/latest/)** — Criado por **George Stagg** e mantido pela equipe da **Posit PBC** ([GitHub r-wasm/webr](https://github.com/r-wasm/webr)). Trata-se da versão oficial do interpretador R compilado para WebAssembly (WASM), permitindo executar código R inteiramente no navegador do usuário sem depender de servidor remoto.
+- **[quarto-webr](https://github.com/coatless/quarto-webr)** — Desenvolvido por **James Joseph Balamuta (coatless)** ([GitHub coatless/quarto-webr](https://github.com/coatless/quarto-webr)). Extensão que integra o webR ao ecossistema Quarto e Monaco Editor.
+- **[Monaco Editor](https://microsoft.github.io/monaco-editor/)** — O editor de código open source desenvolvido pela **Microsoft** que alimenta o VS Code.
+- **[Quarto](https://quarto.org/)** — Sistema de publicação técnica e científica de código aberto da **Posit PBC**.
+
+## 📄 Licença
+Distribuído sob a licença MIT.

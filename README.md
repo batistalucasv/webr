@@ -1,4 +1,4 @@
-# 🌐 webR Station — Estação de Análise R no Navegador
+# 🌐 RStation Web — Estação de Análise R no Navegador
 
 Repositório independente com uma estação de análise interativa baseada em **webR (WebAssembly)**, **Monaco Editor** e sistema de **upload drag-and-drop de arquivos para o filesystem do R**.
 

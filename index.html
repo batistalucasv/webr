@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>webR Station — Console e Ambiente R no Navegador</title>
-  <meta name="description" content="Ambiente de desenvolvimento e análise de dados interativo com R e WebAssembly no navegador." />
+  <title>RStation Web — Console e Ambiente R no Navegador</title>
+  <meta name="description"
+    content="RStation Web: ambiente de desenvolvimento e análise de dados interativo com R e WebAssembly no navegador." />
   <link rel="icon" type="image/svg+xml" href="./brand/favicon.svg" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -21,6 +25,7 @@
   <!-- Main IDE Styles -->
   <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
   <div class="app-container">
     <header class="app-header webr-app-header" id="app-header">
@@ -28,65 +33,83 @@
         <div class="dropdown header-menu-static">
           <button type="button" class="menubar-item">Arquivo</button>
           <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" id="menu-save-r"><i class="bi bi-download"></i> Salvar .R</button>
-            <button type="button" class="dropdown-item" id="menu-open-session"><i class="bi bi-folder2-open"></i> Abrir sessão</button>
-            <button type="button" class="dropdown-item" id="menu-session"><i class="bi bi-archive"></i> Salvar sessão</button>
+            <button type="button" class="dropdown-item" id="menu-save-r"><i class="bi bi-download"></i> Salvar
+              .R</button>
+            <button type="button" class="dropdown-item" id="menu-open-session"><i class="bi bi-folder2-open"></i> Abrir
+              sessão</button>
+            <button type="button" class="dropdown-item" id="menu-session"><i class="bi bi-archive"></i> Salvar
+              sessão</button>
           </div>
         </div>
         <div class="dropdown header-menu-static">
           <button type="button" class="menubar-item">Código</button>
           <div class="dropdown-menu menubar-menu-wide">
-            <button type="button" class="dropdown-item" id="menu-snippets"><i class="bi bi-journal-code"></i> Snippets</button>
+            <button type="button" class="dropdown-item" id="menu-snippets"><i class="bi bi-journal-code"></i>
+              Snippets</button>
             <div class="dropdown-divider"></div>
-            <button type="button" class="dropdown-item" data-example="eda"><i class="bi bi-bar-chart-fill"></i> Análise Exploratória</button>
-            <button type="button" class="dropdown-item" data-example="plots"><i class="bi bi-pie-chart-fill"></i> Gráficos Base R</button>
-            <button type="button" class="dropdown-item" data-example="ggplot"><i class="bi bi-palette-fill"></i> ggplot2</button>
-            <button type="button" class="dropdown-item" data-example="regression"><i class="bi bi-graph-up-arrow"></i> Regressão (lm)</button>
-            <button type="button" class="dropdown-item" data-example="simulation"><i class="bi bi-dice-5-fill"></i> Simulações</button>
-            <button type="button" class="dropdown-item" data-example="matrix"><i class="bi bi-grid-3x3-gap-fill"></i> Matrizes</button>
+            <button type="button" class="dropdown-item" data-example="eda"><i class="bi bi-bar-chart-fill"></i> Análise
+              Exploratória</button>
+            <button type="button" class="dropdown-item" data-example="plots"><i class="bi bi-pie-chart-fill"></i>
+              Gráficos Base R</button>
+            <button type="button" class="dropdown-item" data-example="ggplot"><i class="bi bi-palette-fill"></i>
+              ggplot2</button>
+            <button type="button" class="dropdown-item" data-example="regression"><i class="bi bi-graph-up-arrow"></i>
+              Regressão (lm)</button>
+            <button type="button" class="dropdown-item" data-example="simulation"><i class="bi bi-dice-5-fill"></i>
+              Simulações</button>
+            <button type="button" class="dropdown-item" data-example="matrix"><i class="bi bi-grid-3x3-gap-fill"></i>
+              Matrizes</button>
           </div>
         </div>
         <div class="dropdown header-menu-static">
           <button type="button" class="menubar-item">Executar</button>
           <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" id="menu-run"><i class="bi bi-play-fill"></i> Executar seleção</button>
-            <button type="button" class="dropdown-item" id="menu-run-all"><i class="bi bi-play-circle"></i> Executar tudo</button>
-            <button type="button" class="dropdown-item" id="menu-clear"><i class="bi bi-trash3"></i> Limpar console</button>
+            <button type="button" class="dropdown-item" id="menu-run"><i class="bi bi-play-fill"></i> Executar
+              seleção</button>
+            <button type="button" class="dropdown-item" id="menu-run-all"><i class="bi bi-play-circle"></i> Executar
+              tudo</button>
+            <button type="button" class="dropdown-item" id="menu-clear"><i class="bi bi-trash3"></i> Limpar
+              console</button>
           </div>
         </div>
         <div class="dropdown header-menu-static">
           <button type="button" class="menubar-item">Ver</button>
           <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" data-goto-tab="console"><i class="bi bi-terminal"></i> Console</button>
+            <button type="button" class="dropdown-item" data-goto-tab="console"><i class="bi bi-terminal"></i>
+              Console</button>
             <button type="button" class="dropdown-item" data-goto-tab="data"><i class="bi bi-table"></i> Dados</button>
-            <button type="button" class="dropdown-item" data-goto-tab="plots"><i class="bi bi-image"></i> Gráficos</button>
-            <button type="button" class="dropdown-item" data-goto-tab="files"><i class="bi bi-folder2-open"></i> Arquivos</button>
-            <button type="button" class="dropdown-item" data-goto-tab="environment"><i class="bi bi-database"></i> Ambiente</button>
+            <button type="button" class="dropdown-item" data-goto-tab="plots"><i class="bi bi-image"></i>
+              Gráficos</button>
+            <button type="button" class="dropdown-item" data-goto-tab="files"><i class="bi bi-folder2-open"></i>
+              Arquivos</button>
+            <button type="button" class="dropdown-item" data-goto-tab="environment"><i class="bi bi-database"></i>
+              Ambiente</button>
           </div>
         </div>
         <div class="dropdown header-menu-static">
           <button type="button" class="menubar-item">Compartilhar</button>
           <div class="dropdown-menu">
             <button type="button" class="dropdown-item" id="menu-share"><i class="bi bi-link-45deg"></i> Share link</button>
-            <button type="button" class="dropdown-item" id="menu-report"><i class="bi bi-file-earmark-richtext"></i> Relatório HTML</button>
+            <button type="button" class="dropdown-item" id="menu-report"><i class="bi bi-file-earmark-pdf"></i> Relatório</button>
           </div>
         </div>
       </nav>
 
       <div class="header-row header-row-top">
         <div class="brand-section">
-          <a href="./index.html" class="brand-logo" title="webR Station">
+          <a href="./index.html" class="brand-logo" title="RStation Web">
             <svg viewBox="0 0 100 100" width="28" height="28">
-              <rect width="92" height="92" x="4" y="4" rx="20" fill="#276DC3"/>
-              <ellipse cx="50" cy="50" rx="36" ry="24" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.3"/>
-              <path d="M32 72V28h22c8.8 0 15 5.4 15 13.5 0 6.6-4.2 11.6-10.4 13.1L71 72H57.5L46.8 56H42v16H32zm10-25.5h10.8c3.8 0 6.2-2.2 6.2-5.5s-2.4-5.5-6.2-5.5H42v11z" fill="#FFFFFF"/>
+              <rect width="92" height="92" x="4" y="4" rx="20" fill="#276DC3" />
+              <ellipse cx="50" cy="50" rx="36" ry="24" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.3" />
+              <path
+                d="M32 72V28h22c8.8 0 15 5.4 15 13.5 0 6.6-4.2 11.6-10.4 13.1L71 72H57.5L46.8 56H42v16H32zm10-25.5h10.8c3.8 0 6.2-2.2 6.2-5.5s-2.4-5.5-6.2-5.5H42v11z"
+                fill="#FFFFFF" />
             </svg>
-            <span>webR</span>
+            <span>RStation Web</span>
           </a>
-          <span class="brand-badge">Station</span>
           <div id="webr-status-badge" class="status-badge" title="Status da engine WebAssembly do R">
             <span class="status-indicator"></span>
-            <span id="webr-status-text">Inicializando webR WASM...</span>
+            <span id="webr-status-text">Inicializando RStation Web...</span>
           </div>
         </div>
 
@@ -109,7 +132,8 @@
           <button id="btn-toggle-theme" class="btn btn-icon" title="Alternar tema claro/escuro">
             <i class="bi bi-sun-fill"></i>
           </button>
-          <a href="https://github.com/batistalucasv/webr" target="_blank" rel="noopener" class="btn btn-icon" title="Repositório no GitHub">
+          <a href="https://github.com/batistalucasv/webr" target="_blank" rel="noopener" class="btn btn-icon"
+            title="Repositório no GitHub">
             <i class="bi bi-github"></i>
           </a>
         </div>
@@ -136,7 +160,8 @@
           <div class="script-tabs-bar">
             <div id="script-tabs-list" class="script-tabs-list"></div>
             <button id="btn-new-script-tab" type="button" class="btn btn-icon btn-sm" title="Novo script">+</button>
-            <button id="btn-download-scripts-zip" type="button" class="btn btn-icon btn-sm" title="Baixar todos os scripts (.zip)"><i class="bi bi-file-zip"></i></button>
+            <button id="btn-download-scripts-zip" type="button" class="btn btn-icon btn-sm"
+              title="Baixar todos os scripts (.zip)"><i class="bi bi-file-zip"></i></button>
           </div>
           <div style="display: flex; gap: 4px;">
             <button id="btn-copy-editor" class="btn btn-icon" title="Copiar todo o código">
@@ -154,12 +179,13 @@
 
         <div class="editor-footer-status">
           <span id="editor-cursor-pos">Ln 1, Col 1</span>
-          <span>R 4.4.2 · UTF-8 · [Ctrl+Enter: Executar]</span>
+          <span id="editor-r-ver-badge">R 4.6.0 · UTF-8 · [Ctrl+Enter: Executar]</span>
         </div>
       </section>
 
       <!-- Resizer Splitter Bar -->
-      <div id="workspace-resizer" class="pane-resizer" title="Arraste para redimensionar painéis (Duplo clique para 50/50)">
+      <div id="workspace-resizer" class="pane-resizer"
+        title="Arraste para redimensionar painéis (Duplo clique para 50/50)">
         <div class="resizer-handle"></div>
       </div>
 
@@ -171,7 +197,8 @@
               <i class="bi bi-terminal"></i> Console
             </button>
             <button class="tab-btn" data-tab="data">
-              <i class="bi bi-table"></i> Dados <span id="data-tab-badge" class="badge-count" style="display:none;">0</span>
+              <i class="bi bi-table"></i> Dados <span id="data-tab-badge" class="badge-count"
+                style="display:none;">0</span>
             </button>
             <button class="tab-btn" data-tab="plots">
               <i class="bi bi-image"></i> Gráficos
@@ -192,11 +219,13 @@
         <div id="tab-console" class="tab-content active">
           <div class="console-wrapper">
             <div id="console-output" class="console-output">
-              <div class="console-line system">webR (R compilado para WebAssembly) iniciando...</div>
+              <div class="console-line system">RStation Web (R compilado para WebAssembly) iniciando...</div>
             </div>
             <div class="console-input-bar">
               <span class="console-prompt-label">&gt;</span>
-              <input type="text" id="console-cli-input" class="console-input" placeholder="Digite um comando R direto (ex: head(iris)) e pressione Enter" autocomplete="off" spellcheck="false" />
+              <input type="text" id="console-cli-input" class="console-input"
+                placeholder="Digite um comando R direto (ex: head(iris)) e pressione Enter" autocomplete="off"
+                spellcheck="false" />
             </div>
           </div>
         </div>
@@ -213,31 +242,37 @@
                   <option value="mtcars">mtcars (32 obs)</option>
                   <option value="airquality">airquality (153 obs)</option>
                 </select>
-                <button id="btn-refresh-datasets" class="btn btn-secondary btn-sm" title="Recarregar lista de DataFrames">
+                <button id="btn-refresh-datasets" class="btn btn-secondary btn-sm"
+                  title="Recarregar lista de DataFrames">
                   <i class="bi bi-arrow-clockwise"></i>
                 </button>
               </div>
 
               <div class="data-search-box">
                 <i class="bi bi-search"></i>
-                <input type="text" id="data-search-input" placeholder="Buscar em todas as colunas..." autocomplete="off" />
-                <button id="btn-clear-data-search" class="btn-clear-search" style="display:none;" title="Limpar busca">&times;</button>
+                <input type="text" id="data-search-input" placeholder="Buscar em todas as colunas..."
+                  autocomplete="off" />
+                <button id="btn-clear-data-search" class="btn-clear-search" style="display:none;"
+                  title="Limpar busca">&times;</button>
               </div>
 
               <div class="data-actions-group">
                 <button id="btn-apply-grid-r" class="btn btn-primary btn-sm" title="Gravar edições do grid no objeto R">
                   <i class="bi bi-box-arrow-in-down"></i> <span>Aplicar ao R</span>
                 </button>
-                <button id="btn-convert-col-type" class="btn btn-secondary btn-sm" title="Converter tipo da coluna no R">
+                <button id="btn-convert-col-type" class="btn btn-secondary btn-sm"
+                  title="Converter tipo da coluna no R">
                   <i class="bi bi-arrow-left-right"></i> <span>Tipo</span>
                 </button>
                 <button id="btn-toggle-skim" class="btn btn-secondary btn-sm" title="Diagnóstico do data.frame (skim)">
                   <i class="bi bi-clipboard-data"></i> <span>Skim</span>
                 </button>
-                <button id="btn-export-csv" class="btn btn-secondary btn-sm" title="Exportar tabela atual filtrada para CSV">
+                <button id="btn-export-csv" class="btn btn-secondary btn-sm"
+                  title="Exportar tabela atual filtrada para CSV">
                   <i class="bi bi-filetype-csv"></i> <span>CSV</span>
                 </button>
-                <button id="btn-export-xlsx" class="btn btn-secondary btn-sm" title="Exportar tabela filtrada para Excel (.xlsx)">
+                <button id="btn-export-xlsx" class="btn btn-secondary btn-sm"
+                  title="Exportar tabela filtrada para Excel (.xlsx)">
                   <i class="bi bi-file-earmark-spreadsheet"></i> <span>XLSX</span>
                 </button>
               </div>
@@ -254,7 +289,8 @@
             <!-- Data Meta & Stats Bar -->
             <div id="data-meta-bar" class="data-meta-bar">
               <div class="data-meta-badges">
-                <span id="data-meta-name" class="data-tag"><i class="bi bi-file-earmark-spreadsheet"></i> <em>Nenhum</em></span>
+                <span id="data-meta-name" class="data-tag"><i class="bi bi-file-earmark-spreadsheet"></i>
+                  <em>Nenhum</em></span>
                 <span id="data-meta-dim" class="data-tag">0 linhas × 0 colunas</span>
               </div>
               <span id="data-meta-filtered" style="color: var(--text-muted);">Total: 0</span>
@@ -264,7 +300,8 @@
             <div class="data-grid-container" id="data-grid-container">
               <div class="data-empty-state">
                 <i class="bi bi-table"></i>
-                <p><strong>Nenhum DataFrame carregado na visualização</strong><br>Selecione um dataset acima ou clique em <em>Ver</em> no painel <strong>Ambiente</strong>.</p>
+                <p><strong>Nenhum DataFrame carregado na visualização</strong><br>Selecione um dataset acima ou clique
+                  em <em>Ver</em> no painel <strong>Ambiente</strong>.</p>
               </div>
             </div>
 
@@ -281,11 +318,15 @@
                 </select>
               </div>
               <div class="data-page-nav">
-                <button id="btn-data-first-page" class="btn btn-icon btn-sm" title="Primeira página"><i class="bi bi-chevron-double-left"></i></button>
-                <button id="btn-data-prev-page" class="btn btn-icon btn-sm" title="Página anterior"><i class="bi bi-chevron-left"></i></button>
+                <button id="btn-data-first-page" class="btn btn-icon btn-sm" title="Primeira página"><i
+                    class="bi bi-chevron-double-left"></i></button>
+                <button id="btn-data-prev-page" class="btn btn-icon btn-sm" title="Página anterior"><i
+                    class="bi bi-chevron-left"></i></button>
                 <span id="data-page-indicator" class="data-page-text">Pág 1 de 1</span>
-                <button id="btn-data-next-page" class="btn btn-icon btn-sm" title="Próxima página"><i class="bi bi-chevron-right"></i></button>
-                <button id="btn-data-last-page" class="btn btn-icon btn-sm" title="Última página"><i class="bi bi-chevron-double-right"></i></button>
+                <button id="btn-data-next-page" class="btn btn-icon btn-sm" title="Próxima página"><i
+                    class="bi bi-chevron-right"></i></button>
+                <button id="btn-data-last-page" class="btn btn-icon btn-sm" title="Última página"><i
+                    class="bi bi-chevron-double-right"></i></button>
               </div>
             </div>
           </div>
@@ -299,20 +340,25 @@
                 <button id="btn-prev-plot" class="btn btn-secondary btn-sm" title="Gráfico anterior">
                   <i class="bi bi-chevron-left"></i>
                 </button>
-                <span id="plot-nav-indicator" style="font-size: 0.75rem; font-family: var(--font-mono); padding: 0 4px; display: flex; align-items: center; color: var(--text-secondary);">1 / 1</span>
+                <span id="plot-nav-indicator"
+                  style="font-size: 0.75rem; font-family: var(--font-mono); padding: 0 4px; display: flex; align-items: center; color: var(--text-secondary);">1
+                  / 1</span>
                 <button id="btn-next-plot" class="btn btn-secondary btn-sm" title="Próximo gráfico">
                   <i class="bi bi-chevron-right"></i>
                 </button>
               </div>
-              
+
               <div style="display: flex; align-items: center; gap: 6px;">
-                <button id="btn-toggle-filmstrip" class="btn btn-secondary btn-sm" title="Mostrar/ocultar galeria de miniaturas">
+                <button id="btn-toggle-filmstrip" class="btn btn-secondary btn-sm"
+                  title="Mostrar/ocultar galeria de miniaturas">
                   <i class="bi bi-grid-3x3-gap"></i> <span>Galeria</span>
                 </button>
-                <button id="btn-export-plot-modal" class="btn btn-primary btn-sm" title="Exportar figura com alta resolução (DPI/SVG/PNG)">
+                <button id="btn-export-plot-modal" class="btn btn-primary btn-sm"
+                  title="Exportar figura com alta resolução (DPI/SVG/PNG)">
                   <i class="bi bi-download"></i> <span>Exportar Pro</span>
                 </button>
-                <button id="btn-download-plot-quick" class="btn btn-secondary btn-sm" title="Baixar PNG rápido (72 DPI)">
+                <button id="btn-download-plot-quick" class="btn btn-secondary btn-sm"
+                  title="Baixar PNG rápido (72 DPI)">
                   <i class="bi bi-filetype-png"></i> PNG
                 </button>
                 <button id="btn-clear-plot" class="btn btn-secondary btn-sm" title="Limpar histórico de gráficos">
@@ -326,7 +372,8 @@
                 <div id="plot-container" class="plot-canvas-stage">
                   <div class="plot-placeholder">
                     <i class="bi bi-graph-up"></i>
-                    <p>Nenhum gráfico gerado ainda.<br>Rode um comando como <code>plot(iris$Sepal.Length, iris$Petal.Length)</code></p>
+                    <p>Nenhum gráfico gerado ainda.<br>Rode um comando como
+                      <code>plot(iris$Sepal.Length, iris$Petal.Length)</code></p>
                   </div>
                 </div>
                 <div id="plot-filmstrip" class="plot-filmstrip"></div>
@@ -335,7 +382,8 @@
                 <div class="plot-style-header">
                   <h3><i class="bi bi-palette-fill"></i> Estilo</h3>
                 </div>
-                <p id="plot-style-hint" class="plot-style-hint">Rode um <code>ggplot()</code> ou <code>plot()</code> para editar cores, símbolos, legenda e fonte. As mudanças são escritas no script.</p>
+                <p id="plot-style-hint" class="plot-style-hint">Rode um <code>ggplot()</code> ou <code>plot()</code>
+                  para editar cores, símbolos, legenda e fonte. As mudanças são escritas no script.</p>
                 <div id="plot-style-form" class="plot-style-form" hidden></div>
               </aside>
             </div>
@@ -346,18 +394,23 @@
         <div id="tab-files" class="tab-content">
           <div class="files-wrapper">
             <div class="url-import-box">
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-cloud-download"></i> Importar dados via URL</h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">CSV público, GitHub raw ou Google Sheets (export CSV).</p>
+              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-cloud-download"></i> Importar dados via
+                URL</h3>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">CSV público, GitHub raw ou
+                Google Sheets (export CSV).</p>
               <div class="url-import-row">
-                <input type="url" id="url-import-input" class="form-control" placeholder="https://raw.githubusercontent.com/.../dados.csv" spellcheck="false" />
+                <input type="url" id="url-import-input" class="form-control"
+                  placeholder="https://raw.githubusercontent.com/.../dados.csv" spellcheck="false" />
                 <button id="btn-url-import" type="button" class="btn btn-primary btn-sm">Importar</button>
               </div>
               <p id="url-import-status" class="url-import-status"></p>
             </div>
 
             <div class="csv-wizard-box">
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-filetype-csv"></i> Assistente de importação CSV</h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Detecta separador, decimal brasileiro e encoding antes de carregar no R.</p>
+              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-filetype-csv"></i> Assistente de
+                importação CSV</h3>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Detecta separador, decimal
+                brasileiro e encoding antes de carregar no R.</p>
               <label class="btn btn-primary btn-sm" style="cursor:pointer;">
                 <i class="bi bi-upload"></i> Escolher CSV / TXT
                 <input type="file" id="csv-wizard-picker" accept=".csv,.txt,.tsv" style="display:none;" />
@@ -365,8 +418,10 @@
             </div>
 
             <div class="excel-import-box">
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-file-earmark-spreadsheet"></i> Importar Excel (.xlsx)</h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Selecione aba e preview antes de carregar no R.</p>
+              <h3 style="font-size: 0.9rem; margin-bottom: 8px;"><i class="bi bi-file-earmark-spreadsheet"></i> Importar
+                Excel (.xlsx)</h3>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Selecione aba e preview antes
+                de carregar no R.</p>
               <label class="btn btn-secondary btn-sm" style="cursor:pointer;">
                 <i class="bi bi-upload"></i> Escolher .xlsx
                 <input type="file" id="excel-file-picker" accept=".xlsx,.xls" style="display:none;" />
@@ -384,9 +439,11 @@
             </div>
 
             <div>
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;">Arquivos no Filesystem (<code>/home/web_user/uploads/</code>)</h3>
+              <h3 style="font-size: 0.9rem; margin-bottom: 8px;">Arquivos no Filesystem
+                (<code>/home/web_user/uploads/</code>)</h3>
               <div id="files-list" class="file-list-box">
-                <p style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">Nenhum arquivo enviado ainda.</p>
+                <p style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">Nenhum arquivo enviado
+                  ainda.</p>
               </div>
             </div>
 
@@ -427,7 +484,8 @@
                 </thead>
                 <tbody id="env-tbody">
                   <tr>
-                    <td colspan="3" style="color: var(--text-muted); text-align: center;">Nenhum objeto criado ainda.</td>
+                    <td colspan="3" style="color: var(--text-muted); text-align: center;">Nenhum objeto criado ainda.
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -439,61 +497,38 @@
         <div id="tab-packages" class="tab-content">
           <div class="pkg-wrapper">
             <div>
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;">Instalar Pacote do Repositório WebAssembly</h3>
+              <h3 class="pkg-heading">Instalar pacote WASM</h3>
               <div class="pkg-install-box">
-                <input type="text" id="pkg-input" class="pkg-input" placeholder="Ex: ggplot2, dplyr, vegan, tidyr..." />
-                <button id="btn-install-pkg" class="btn btn-primary">
+                <input type="text" id="pkg-input" class="pkg-input" placeholder="Ex: ggplot2, dplyr, vegan…" />
+                <button id="btn-install-pkg" class="btn btn-primary btn-sm">
                   <i class="bi bi-download"></i> Instalar
                 </button>
               </div>
             </div>
 
             <div>
-              <h3 style="font-size: 0.9rem; margin-bottom: 8px;">Pacotes Populares (Instalação em 1 Clique)</h3>
-              <div class="pkg-grid">
-                <div class="pkg-card">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="pkg-name">ggplot2</span>
-                    <button class="btn btn-secondary btn-sm btn-quick-pkg" data-pkg="ggplot2">Instalar</button>
-                  </div>
-                  <span class="pkg-desc">Gramática de gráficos declarativa para visualização de dados.</span>
+              <div class="pkg-list-header">
+                <h3 class="pkg-heading">Pacotes</h3>
+                <button id="btn-refresh-packages" class="btn btn-secondary btn-sm" title="Verificar status dos pacotes no R">
+                  <i class="bi bi-arrow-clockwise"></i> Atualizar
+                </button>
+              </div>
+
+              <div class="pkg-toolbar">
+                <div class="pkg-search-box">
+                  <i class="bi bi-search"></i>
+                  <input type="text" id="pkg-search-input" placeholder="Buscar por nome…" autocomplete="off" spellcheck="false" />
+                  <button id="btn-clear-pkg-search" class="btn-clear-search" style="display:none;" title="Limpar busca">&times;</button>
                 </div>
-                <div class="pkg-card">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="pkg-name">dplyr</span>
-                    <button class="btn btn-secondary btn-sm btn-quick-pkg" data-pkg="dplyr">Instalar</button>
-                  </div>
-                  <span class="pkg-desc">Manipulação rápida e expressiva de dados com pipes (%>%).</span>
-                </div>
-                <div class="pkg-card">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="pkg-name">tidyr</span>
-                    <button class="btn btn-secondary btn-sm btn-quick-pkg" data-pkg="tidyr">Instalar</button>
-                  </div>
-                  <span class="pkg-desc">Organização, pivotagem e estruturação de tabelas.</span>
-                </div>
-                <div class="pkg-card">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="pkg-name">readr</span>
-                    <button class="btn btn-secondary btn-sm btn-quick-pkg" data-pkg="readr">Instalar</button>
-                  </div>
-                  <span class="pkg-desc">Importação e leitura de arquivos retangulares (CSV/TSV).</span>
-                </div>
-                <div class="pkg-card">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="pkg-name">vegan</span>
-                    <button class="btn btn-secondary btn-sm btn-quick-pkg" data-pkg="vegan">Instalar</button>
-                  </div>
-                  <span class="pkg-desc">Ecologia de comunidades, ordenações (PCA, NMDS) e diversidade.</span>
-                </div>
-                <div class="pkg-card">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="pkg-name">stringr</span>
-                    <button class="btn btn-secondary btn-sm btn-quick-pkg" data-pkg="stringr">Instalar</button>
-                  </div>
-                  <span class="pkg-desc">Funções consistentes para manipulação de texto e regex.</span>
+                <div class="pkg-filter-tabs">
+                  <button type="button" class="pkg-filter-btn active" data-pkg-filter="all">Todos</button>
+                  <button type="button" class="pkg-filter-btn" data-pkg-filter="loaded">Ativos</button>
+                  <button type="button" class="pkg-filter-btn" data-pkg-filter="installed">Instalados</button>
+                  <button type="button" class="pkg-filter-btn" data-pkg-filter="available">Disponíveis</button>
                 </div>
               </div>
+
+              <div id="pkg-catalog" class="pkg-catalog"></div>
             </div>
           </div>
         </div>
@@ -503,31 +538,90 @@
     <!-- Bottom App Footer -->
     <footer class="app-footer">
       <div>
-        <span>webR Station · Projeto idealizado por <strong>Lucas Batista Vargas</strong> e desenvolvido com <strong>Cursor</strong> e <strong>Antigravity</strong></span>
+        <span>RStation Web · Projeto idealizado por <strong>Lucas Batista Vargas</strong> e desenvolvido com
+          <strong>Cursor</strong> e <strong>Antigravity</strong></span>
       </div>
       <div>
-        <span>Com tecnologia <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a> (George Stagg &amp; Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank" rel="noopener">quarto-webr</a> (James J. Balamuta)</span>
+        <span>Com tecnologia <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a>
+          (George Stagg &amp; Posit PBC) e <a href="https://github.com/coatless/quarto-webr" target="_blank"
+            rel="noopener">quarto-webr</a> (James J. Balamuta)</span>
       </div>
     </footer>
+  </div>
+
+  <!-- Modal: Relatório PDF Pro -->
+  <div id="modal-report-pdf" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-report-pdf-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-report-pdf-title" class="modal-title">
+          <i class="bi bi-file-earmark-pdf" style="color: #f85149;"></i> Exportar Relatório em PDF
+        </h3>
+        <button id="btn-close-report-pdf" class="btn btn-icon btn-sm" title="Fechar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="pdf-report-title">Título do Relatório:</label>
+          <input type="text" id="pdf-report-title" class="form-control" value="Relatório de Análise Estatística — RStation Web" spellcheck="false" />
+        </div>
+        <div class="form-group">
+          <label for="pdf-report-author">Autor / Pesquisador:</label>
+          <input type="text" id="pdf-report-author" class="form-control" placeholder="Seu nome ou instituição..." spellcheck="false" />
+        </div>
+        <div class="form-group">
+          <label>Seções a Incluir:</label>
+          <div class="pdf-options-list">
+            <label class="pdf-opt-row">
+              <input type="checkbox" id="pdf-inc-scripts" checked />
+              <span><strong>Scripts R</strong> (código de todas as abas abertas)</span>
+            </label>
+            <label class="pdf-opt-row">
+              <input type="checkbox" id="pdf-inc-plots" checked />
+              <span><strong>Gráficos Gerados</strong> (figuras com resolução e legendas)</span>
+            </label>
+            <label class="pdf-opt-row">
+              <input type="checkbox" id="pdf-inc-console" checked />
+              <span><strong>Saída do Console R</strong> (logs de execução e prints)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <div>
+          <button id="btn-print-report" type="button" class="btn btn-secondary btn-sm" title="Abrir visualização de impressão nativa">
+            <i class="bi bi-printer"></i> Imprimir
+          </button>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button id="btn-cancel-report-pdf" type="button" class="btn btn-secondary">Cancelar</button>
+          <button id="btn-confirm-report-pdf" type="button" class="btn btn-primary">
+            <i class="bi bi-file-earmark-arrow-down"></i> Baixar PDF (.pdf)
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
-  <!-- Monaco Loader -->
-  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/loader.js"></script>
+  <!-- Libraries (loaded before Monaco loader to prevent AMD define collisions) -->
   <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/loader.js"></script>
   <script src="./config/webr-productivity.js"></script>
   <script src="./config/webr-session.js"></script>
   <script src="./config/webr-header.js"></script>
+  <script src="./config/webr-about.js"></script>
   <script src="./config/webr-analysis.js"></script>
 
   <!-- Main Application Script (ES Module) -->
   <script type="module">
-    import { WebR } from 'https://webr.r-wasm.org/v0.5.7/webr.mjs';
+    import { WebR } from 'https://webr.r-wasm.org/v0.6.0/webr.mjs';
     import { unpackWebRJs, rScalar } from './config/webr-unpack.js';
+    import { initWebr2Packages, updatePackageStatuses } from './config/webr-packages.js';
 
     import {
       INSPECT_GGPLOT_R,
@@ -657,7 +751,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
   theme_minimal(base_size = 14) +
   labs(
     title = "Relação Sepal x Petal no Dataset Iris",
-    subtitle = "Renderizado 100% no navegador via webR",
+    subtitle = "Renderizado 100% no navegador via RStation Web",
     x = "Comprimento da Sépala (cm)",
     y = "Comprimento da Pétala (cm)"
   )
@@ -733,9 +827,9 @@ print(eigen(A)$values)
       require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs' } });
       require(['vs/editor/editor.main'], function () {
         const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'vs' : 'vs-dark';
-        
+
         editor = monaco.editor.create(document.getElementById('monaco-editor-root'), {
-          value: `# webR Station — Console Interativo
+          value: `# RStation Web — Console Interativo
 # Pressione Ctrl+Enter para executar a linha ou seleção atual
 # Pressione Shift+Enter para executar todo o script
 
@@ -771,6 +865,103 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => executeSelectionOrLine());
         editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => executeAllCode());
 
+        // Register Real R IntelliSense / Autocomplete Provider
+        monaco.languages.registerCompletionItemProvider('r', {
+          triggerCharacters: ['$', ':', '@', '(', ',', '"', "'", ' '],
+          provideCompletionItems: async function (model, position, context) {
+            if (!webR) return { suggestions: [] };
+            try {
+              const textUntilPosition = model.getValueInRange({
+                startLineNumber: position.lineNumber,
+                startColumn: 1,
+                endLineNumber: position.lineNumber,
+                endColumn: position.column
+              });
+
+              // Escape string for R evaluation
+              const escapedLine = textUntilPosition.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+              const res = await webR.evalR(`.webr_completion("${escapedLine}")`);
+              const raw = unpackWebRJs(await res.toJs());
+
+              if (!raw || !raw.items) return { suggestions: [] };
+
+              const items = Array.isArray(raw.items) ? raw.items : [raw.items];
+              if (!items.length) return { suggestions: [] };
+
+              const kindType = raw.type || 'symbol';
+              const word = model.getWordUntilPosition(position);
+              const defaultRange = {
+                startLineNumber: position.lineNumber,
+                endLineNumber: position.lineNumber,
+                startColumn: word.startColumn,
+                endColumn: word.endColumn
+              };
+
+              let monacoKind = monaco.languages.CompletionItemKind.Variable;
+              if (kindType === 'column') monacoKind = monaco.languages.CompletionItemKind.Field;
+              else if (kindType === 'arg') monacoKind = monaco.languages.CompletionItemKind.Property;
+              else if (kindType === 'export' || kindType === 'function') monacoKind = monaco.languages.CompletionItemKind.Function;
+
+              const suggestions = items.map((item, idx) => {
+                let insertText = item;
+                let detail = 'Símbolo R';
+                let doc = '';
+
+                if (kindType === 'column') {
+                  detail = 'Coluna / Elemento';
+                  doc = 'Coluna do dataset/lista no R';
+                } else if (kindType === 'arg') {
+                  insertText = `${item} = `;
+                  detail = 'Parâmetro nomeado';
+                  doc = `Argumento da função: ${item}`;
+                } else if (kindType === 'export') {
+                  detail = 'Função exportada do pacote';
+                }
+
+                return {
+                  label: item,
+                  kind: monacoKind,
+                  detail: detail,
+                  documentation: doc,
+                  insertText: insertText,
+                  range: defaultRange,
+                  sortText: String(idx).padStart(4, '0')
+                };
+              });
+
+              return { suggestions: suggestions };
+            } catch (err) {
+              return { suggestions: [] };
+            }
+          }
+        });
+
+        // Register Hover Provider for R Functions & Objects
+        monaco.languages.registerHoverProvider('r', {
+          provideHover: async function (model, position) {
+            if (!webR) return null;
+            try {
+              const word = model.getWordAtPosition(position);
+              if (!word || !word.word) return null;
+              const token = word.word;
+
+              const res = await webR.evalR(`.webr_hover("${token}")`);
+              const raw = unpackWebRJs(await res.toJs());
+              if (!raw || !raw.content) return null;
+
+              return {
+                range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+                contents: [
+                  { value: `**${token}** (${raw.type || 'objeto'})` },
+                  { value: '```r\n' + raw.content + '\n```' }
+                ]
+              };
+            } catch (_) {
+              return null;
+            }
+          }
+        });
+
         if (window.webrSession) {
           window.webrSession.initMultiTabs(editor, monaco);
         }
@@ -784,19 +975,134 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         webR = new WebR();
         await webR.init();
 
-        // Configure default repos and upload directory
+        // Configure default repos, upload directory, and R completion engine
         await webR.evalRVoid(`
           options(repos = c(CRAN = "https://repo.r-wasm.org/"))
           dir.create("/home/web_user/uploads", recursive = TRUE, showWarnings = FALSE)
+
+          # Custom print method for ggplot objects to ensure transparency in webR graphics device
+          print.ggplot <- function(x, ...) {
+            if (requireNamespace("ggplot2", quietly = TRUE)) {
+              x <- x + ggplot2::theme(
+                plot.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+                panel.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+                legend.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+                legend.box.background = ggplot2::element_rect(fill = "transparent", colour = NA)
+              )
+            }
+            ggplot2:::print.ggplot(x, ...)
+          }
+
+          # Completion engine helper
+          .webr_completion <- function(line) {
+            # 1. Column/attribute access: df$col
+            m_dollar <- regmatches(line, regexec("([A-Za-z0-9._]+)\\\\$([A-Za-z0-9._]*)$", line))[[1]]
+            if (length(m_dollar) == 3) {
+              var_name <- m_dollar[2]
+              prefix <- m_dollar[3]
+              if (exists(var_name, envir = .GlobalEnv) || exists(var_name)) {
+                obj <- get(var_name)
+                if (is.data.frame(obj) || is.list(obj)) {
+                  cols <- names(obj)
+                  if (nchar(prefix) > 0) {
+                    cols <- cols[startsWith(cols, prefix)]
+                  }
+                  return(list(type = "column", items = head(cols, 50), prefix = prefix))
+                }
+              }
+            }
+
+            # 2. Package exports: pkg::fn
+            m_pkg <- regmatches(line, regexec("([A-Za-z0-9._]+)::([A-Za-z0-9._]*)$", line))[[1]]
+            if (length(m_pkg) == 3) {
+              pkg_name <- m_pkg[2]
+              prefix <- m_pkg[3]
+              if (pkg_name %in% loadedNamespaces() || requireNamespace(pkg_name, quietly = TRUE)) {
+                exports <- tryCatch(getNamespaceExports(pkg_name), error = function(e) character(0))
+                if (nchar(prefix) > 0) {
+                  exports <- exports[startsWith(exports, prefix)]
+                }
+                return(list(type = "export", items = head(sort(exports), 60), prefix = prefix))
+              }
+            }
+
+            # 3. Function arguments: fn(..., arg
+            m_arg <- regmatches(line, regexec("([A-Za-z0-9._]+)\\\\([^)]*?(?:,\\\\s*|\\\\()([A-Za-z0-9._]*)$", line))[[1]]
+            if (length(m_arg) == 3) {
+              fn_name <- m_arg[2]
+              arg_prefix <- m_arg[3]
+              if (exists(fn_name, mode = "function")) {
+                fn_obj <- get(fn_name, mode = "function")
+                args <- names(formals(fn_obj))
+                args <- args[args != "..."]
+                if (nchar(arg_prefix) > 0) {
+                  args <- args[startsWith(args, arg_prefix)]
+                }
+                if (length(args) > 0) {
+                  return(list(type = "arg", items = head(args, 30), prefix = arg_prefix))
+                }
+              }
+            }
+
+            # 4. General symbols / functions / datasets
+            token <- regmatches(line, regexec("([A-Za-z0-9._]+)$", line))[[1]]
+            if (length(token) >= 2) {
+              prefix <- token[2]
+              if (nchar(prefix) >= 1) {
+                g_vars <- ls(envir = .GlobalEnv)
+                g_match <- g_vars[startsWith(g_vars, prefix)]
+                all_funcs <- apropos(paste0("^", prefix), mode = "function", ignore.case = FALSE)
+                all_vars <- apropos(paste0("^", prefix), mode = "any", ignore.case = FALSE)
+                items <- unique(c(g_match, all_funcs, all_vars))
+                return(list(type = "symbol", items = head(sort(items), 60), prefix = prefix))
+              }
+            }
+
+            return(list(type = "none", items = character(0), prefix = ""))
+          }
+
+          # Hover helper
+          .webr_hover <- function(token) {
+            if (!exists(token)) return(list(type = "not_found", content = ""))
+            obj <- get(token)
+            if (is.function(obj)) {
+              args <- tryCatch(deparse(args(obj))[1], error = function(e) "")
+              return(list(type = "function", content = paste0(token, args)))
+            } else if (is.data.frame(obj)) {
+              dim_str <- sprintf("data.frame: %d linhas × %d colunas\\nColunas: %s", 
+                                 nrow(obj), ncol(obj), paste(head(names(obj), 8), collapse = ", "))
+              return(list(type = "data.frame", content = dim_str))
+            } else {
+              str_val <- tryCatch(capture.output(str(obj, max.level = 1))[1], error = function(e) class(obj)[1])
+              return(list(type = class(obj)[1], content = str_val))
+            }
+          }
         `);
 
-        setStatus('webR R 4.4.2 Ativo (WASM)', 'ready');
-        appendConsoleLine('✓ webR inicializado com sucesso!', 'system');
+        // Obter versao dinamica do R
+        let rVer = 'R 4.6.0';
+        try {
+          const rObj = await webR.evalR('paste0("R ", getRversion())');
+          const rJs = await rObj.toJs();
+          if (rJs && rJs.values && rJs.values[0]) {
+            rVer = rJs.values[0];
+          }
+        } catch (e) {
+          console.warn('Nao foi possivel obter a versao exata do R:', e);
+        }
+
+        setStatus(`RStation Web · ${rVer} Ativo (WASM)`, 'ready');
+        const badge = document.getElementById('editor-r-ver-badge');
+        if (badge) {
+          badge.textContent = `${rVer} · UTF-8 · [Ctrl+Enter: Executar]`;
+        }
+        appendConsoleLine(`✓ RStation Web (${rVer}) inicializado com sucesso!`, 'system');
         appendConsoleLine('Digite seus scripts no editor à esquerda e clique em Executar (Ctrl+Enter).', 'system');
         updateEnvironment();
+        await updatePackageStatuses();
       } catch (err) {
         console.error('Erro ao inicializar webR:', err);
-        setStatus('Falha ao iniciar webR', 'error');
+        setStatus('Falha ao iniciar RStation Web', 'error');
         appendConsoleLine(`Erro na inicialização: ${err.message}`, 'stderr');
       }
     }
@@ -811,7 +1117,9 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         var c = document.createElement("canvas");
         c.width = img.width;
         c.height = img.height;
-        c.getContext("2d").drawImage(img, 0, 0);
+        var ctx = c.getContext("2d");
+        paintPlotBackground(ctx, "white", img.width, img.height);
+        ctx.drawImage(img, 0, 0);
         return { index: i + 1, dataUrl: c.toDataURL("image/png"), width: img.width, height: img.height };
       });
     }
@@ -922,7 +1230,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       if (typeof opts === 'string') opts = {};
       const isStyleReplay = !!opts.isStyleReplay;
       if (!webR) {
-        showToast('Aguarde o webR inicializar...', 'error');
+        showToast('Aguarde o RStation Web inicializar...', 'error');
         return;
       }
       if (isRunning) return;
@@ -951,7 +1259,9 @@ plot(iris$Sepal.Length, iris$Petal.Length,
             captureGraphics: {
               width: 640,
               height: 480,
-              bg: "white",
+              // Transparent so Exportar Pro → Fundo transparente preserve alpha.
+              // UI paints white behind for preview; export composites white/dark/none.
+              bg: "transparent",
               pointsize: 12,
               capture: true
             }
@@ -989,8 +1299,9 @@ plot(iris$Sepal.Length, iris$Petal.Length,
           await shelter.purge();
         }
 
-        // Update environment inspector
+        // Update environment inspector and package statuses
         updateEnvironment();
+        updatePackageStatuses();
       } catch (err) {
         var errMsg = String(err && err.message ? err.message : err);
         appendConsoleLine(errMsg, 'stderr');
@@ -1138,7 +1449,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 
     async function loadDataFrameToGrid(dfName) {
       if (!webR) {
-        showToast('Aguarde o webR inicializar...', 'error');
+        showToast('Aguarde o RStation Web inicializar...', 'error');
         return;
       }
       if (!dfName || !dfName.trim()) return;
@@ -1361,7 +1672,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 
       document.getElementById('data-meta-name').innerHTML = `<i class="bi bi-file-earmark-spreadsheet"></i> <strong>${esc(name)}</strong>`;
       document.getElementById('data-meta-dim').textContent = `${totalRows} linhas × ${columns.length} colunas`;
-      document.getElementById('data-meta-filtered').textContent = filteredData.length !== totalRows 
+      document.getElementById('data-meta-filtered').textContent = filteredData.length !== totalRows
         ? `Filtrados: ${filteredData.length} de ${totalRows}`
         : `Total: ${totalRows} linhas`;
 
@@ -1459,7 +1770,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       document.getElementById('data-pagination').style.display = 'none';
     }
 
-    window.toggleSortColumn = function(colName) {
+    window.toggleSortColumn = function (colName) {
       if (currentDataGrid.sortCol === colName) {
         if (currentDataGrid.sortDir === 'asc') currentDataGrid.sortDir = 'desc';
         else {
@@ -1473,7 +1784,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       applyDataGridFilters();
     };
 
-    window.onColumnFilterChange = function(colName, value) {
+    window.onColumnFilterChange = function (colName, value) {
       if (value && value.trim()) {
         currentDataGrid.colFilters[colName] = value.trim();
       } else {
@@ -1482,7 +1793,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       applyDataGridFilters();
     };
 
-    window.onNumericFilterChange = function(colName, bound, value) {
+    window.onNumericFilterChange = function (colName, bound, value) {
       if (!currentDataGrid.colNumFilters[colName]) {
         currentDataGrid.colNumFilters[colName] = { min: '', max: '' };
       }
@@ -1551,14 +1862,24 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      paintPlotBackground(ctx, 'white', canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0);
       const link = document.createElement('a');
       link.download = 'webr_grafico_72dpi.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
       showToast('PNG 72 DPI baixado!');
+    }
+
+    /** Fill canvas behind a plot; skip for transparent (keeps alpha from capture). */
+    function paintPlotBackground(ctx, bg, w, h) {
+      if (bg === 'white') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+      } else if (bg === 'dark') {
+        ctx.fillStyle = '#0d1117';
+        ctx.fillRect(0, 0, w, h);
+      }
     }
 
     function scaleAesLabel(aes) {
@@ -1732,8 +2053,29 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         `<input id="plot-style-text-size" type="number" min="8" max="24" step="1" value="${fontVal}" /></label>` +
         '</section>'
       );
+      const bgChoice = style.bg == null || style.bg === '' || style.bg === 'transparent' ? 'transparent' : 'custom';
+      const bgHex = bgChoice === 'custom' ? toPickerHex(style.bg) : '#FFFFFF';
+      parts.push(
+        '<section class="plot-style-section"><h4>Fundo do Gráfico</h4>' +
+        `<label class="plot-style-row"><span>fundo</span>` +
+        `<div class="plot-style-bg-wrap">` +
+        `<select id="plot-style-bg-mode">` +
+        `<option value="transparent"${bgChoice === 'transparent' ? ' selected' : ''}>Padrão / Transparente</option>` +
+        `<option value="custom"${bgChoice === 'custom' ? ' selected' : ''}>Cor personalizada</option>` +
+        `</select>` +
+        `<input id="plot-style-bg-color" type="color" value="${bgHex}" style="${bgChoice === 'custom' ? '' : 'display:none;'}" />` +
+        `</div></label>` +
+        '</section>'
+      );
       fillingStylePanel = true;
       form.innerHTML = parts.join('');
+      const bgModeEl = document.getElementById('plot-style-bg-mode');
+      const bgColEl = document.getElementById('plot-style-bg-color');
+      if (bgModeEl && bgColEl) {
+        bgModeEl.addEventListener('change', () => {
+          bgColEl.style.display = bgModeEl.value === 'custom' ? 'inline-block' : 'none';
+        });
+      }
       fillingStylePanel = false;
     }
 
@@ -1782,6 +2124,11 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       if (legendEl) style.legendPosition = legendEl.value;
       const sizeEl = document.getElementById('plot-style-text-size');
       if (sizeEl) style.textSize = Number(sizeEl.value);
+      const bgModeEl = document.getElementById('plot-style-bg-mode');
+      const bgColEl = document.getElementById('plot-style-bg-color');
+      if (bgModeEl) {
+        style.bg = bgModeEl.value === 'custom' && bgColEl ? bgColEl.value : 'transparent';
+      }
       return style;
     }
 
@@ -1867,12 +2214,13 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d');
+      paintPlotBackground(ctx, 'white', img.width, img.height);
       ctx.drawImage(img, 0, 0, img.width, img.height);
       container.appendChild(canvas);
 
       const navIndicator = document.getElementById('plot-nav-indicator');
       if (navIndicator) {
-        navIndicator.textContent = `${currentPlotIndex + 1} / ${plotHistory.length}`;
+        navIndicator.textContent = `${ currentPlotIndex + 1 } / ${plotHistory.length}`;
       }
     }
 
@@ -1891,6 +2239,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         thumbCanvas.width = 86;
         thumbCanvas.height = 64;
         const tctx = thumbCanvas.getContext('2d');
+        paintPlotBackground(tctx, 'white', thumbCanvas.width, thumbCanvas.height);
         tctx.drawImage(img, 0, 0, thumbCanvas.width, thumbCanvas.height);
 
         const badge = document.createElement('span');
@@ -1943,7 +2292,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 
     function openExportPlotModal() {
       if (!plotHistory.length || currentPlotIndex < 0) {
-        showToast('Nenhum gráfico gerado para exportar.', 'error');
+        showToast('Nenhum gráfico para exportar.', 'error');
         return;
       }
       document.getElementById('modal-export-plot').classList.add('show');
@@ -1961,7 +2310,6 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 
       const img = plotHistory[currentPlotIndex];
       const format = document.getElementById('export-format').value;
-      const bg = document.getElementById('export-bg').value;
       let filename = document.getElementById('export-filename').value.trim() || `grafico_${selectedExportDpi}dpi.${format}`;
 
       const dimUnit = document.getElementById('export-dim-unit').value;
@@ -1986,19 +2334,18 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       const exportCanvas = document.createElement('canvas');
       exportCanvas.width = targetW;
       exportCanvas.height = targetH;
-      const ctx = exportCanvas.getContext('2d');
+      const ctx = exportCanvas.getContext('2d', { alpha: true });
 
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
 
-      if (bg === 'white') {
+      // For JPEG format, fill white background if no background was drawn
+      if (format === 'jpeg') {
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, targetW, targetH);
-      } else if (bg === 'dark') {
-        ctx.fillStyle = '#0d1117';
-        ctx.fillRect(0, 0, targetW, targetH);
+      } else {
+        ctx.clearRect(0, 0, targetW, targetH);
       }
-
       ctx.drawImage(img, 0, 0, targetW, targetH);
 
       if (format === 'svg') {
@@ -2014,7 +2361,9 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         link.click();
       } else {
         const mimeType = format === 'jpeg' ? 'image/jpeg' : 'image/png';
-        const dataUrl = exportCanvas.toDataURL(mimeType, bg === 'transparent' && format === 'png' ? undefined : 0.95);
+        const dataUrl = format === 'png'
+          ? exportCanvas.toDataURL('image/png')
+          : exportCanvas.toDataURL(mimeType, 0.95);
         const link = document.createElement('a');
         link.download = filename;
         link.href = dataUrl;
@@ -2050,7 +2399,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
             }
           }, error = function(e) character(0))
         `);
-        
+
         const rawList = await objs.toArray();
         const tbody = document.getElementById('env-tbody');
         tbody.innerHTML = '';
@@ -2059,7 +2408,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         const datasetSelect = document.getElementById('data-select-dataset');
         const defaultDatasets = ['iris', 'mtcars', 'airquality'];
         const existingValues = new Set();
-        
+
         datasetSelect.innerHTML = '<option value="">Selecione um DataFrame...</option>';
         defaultDatasets.forEach(d => {
           const opt = document.createElement('option');
@@ -2100,7 +2449,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
           `;
           tbody.appendChild(tr);
         });
-      } catch (_) {}
+      } catch (_) { }
     }
 
     // --- Files & Uploads ---
@@ -2119,7 +2468,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
           const path = `/home/web_user/uploads/${cleanName}`;
           await webR.FS.writeFile(path, bytes);
           uploadedFiles.push({ name: cleanName, path, size: bytes.length });
-          showToast(`Arquivo ${cleanName} enviado para o webR!`);
+          showToast(`Arquivo ${cleanName} enviado para o RStation Web!`);
           appendConsoleLine(`✓ Arquivo salvo em: ${path}`, 'system');
         } catch (err) {
           showToast(`Falha no upload de ${file.name}`, 'error');
@@ -2154,7 +2503,7 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       });
     }
 
-    window.insertReadFile = function(path) {
+    window.insertReadFile = function (path) {
       if (!editor) return;
       const code = `\n# Carregar arquivo enviado:\ndados <- read.csv("${path}")\nhead(dados)\n`;
       editor.setValue(editor.getValue() + code);
@@ -2178,22 +2527,6 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       }
     }
 
-    // --- Package Manager ---
-    async function installPackage(pkgName) {
-      if (!webR || !pkgName.trim()) return;
-      pkgName = pkgName.trim();
-      showToast(`Iniciando instalação de ${pkgName}...`);
-      appendConsoleLine(`> webr::install("${pkgName}")`, 'input');
-      try {
-        await webR.evalRVoid(`webr::install("${pkgName}")`);
-        showToast(`Pacote ${pkgName} instalado com sucesso!`);
-        appendConsoleLine(`✓ Pacote ${pkgName} instalado com sucesso. Use library(${pkgName}) para carregar.`, 'system');
-      } catch (err) {
-        showToast(`Falha ao instalar ${pkgName}`, 'error');
-        appendConsoleLine(`Erro ao instalar ${pkgName}: ${err.message}`, 'stderr');
-      }
-    }
-
     // --- Tabs Switcher ---
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(b => {
@@ -2204,6 +2537,8 @@ plot(iris$Sepal.Length, iris$Petal.Length,
       });
       if (tabId === 'plots') {
         renderFilmstrip();
+      } else if (tabId === 'packages') {
+        updatePackageStatuses();
       }
     }
     window.switchTab = switchTab;
@@ -2365,7 +2700,10 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         const blob = new Blob([ed.getValue()], { type: 'text/plain;charset=utf-8' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'script.R';
+        const fname = (window.webrSession && window.webrSession.getActiveScriptName)
+          ? window.webrSession.getActiveScriptName()
+          : 'script.R';
+        link.download = fname || 'script.R';
         link.click();
       });
 
@@ -2457,14 +2795,12 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         btn.addEventListener('click', () => loadSampleDataset(btn.getAttribute('data-sample')));
       });
 
-      // Package installer
-      document.getElementById('btn-install-pkg').addEventListener('click', () => {
-        const inp = document.getElementById('pkg-input');
-        if (inp.value) installPackage(inp.value);
-        inp.value = '';
-      });
-      document.querySelectorAll('.btn-quick-pkg').forEach(btn => {
-        btn.addEventListener('click', () => installPackage(btn.getAttribute('data-pkg')));
+      initWebr2Packages({
+        getWebR: () => webR,
+        unpackWebRJs,
+        showToast,
+        appendConsoleLine,
+        updateEnvironment
       });
 
       // Start Engines
@@ -2515,7 +2851,8 @@ plot(iris$Sepal.Length, iris$Petal.Length,
   </script>
 
   <!-- High-Res Plot Export Modal -->
-  <div id="modal-export-plot" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-export-title">
+  <div id="modal-export-plot" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="modal-export-title">
     <div class="modal-dialog">
       <div class="modal-header">
         <h3 id="modal-export-title" class="modal-title">
@@ -2546,28 +2883,19 @@ plot(iris$Sepal.Length, iris$Petal.Length,
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <div class="form-group">
-            <label for="export-format">Formato:</label>
-            <select id="export-format" class="form-control">
-              <option value="png" selected>PNG (Alta fidelidade)</option>
-              <option value="jpeg">JPEG (Comprimido)</option>
-              <option value="svg">SVG (Vetorial nítido)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="export-bg">Fundo:</label>
-            <select id="export-bg" class="form-control">
-              <option value="white" selected>Branco (#ffffff)</option>
-              <option value="transparent">Transparente</option>
-              <option value="dark">Escuro (#0d1117)</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label for="export-format">Formato:</label>
+          <select id="export-format" class="form-control">
+            <option value="png" selected>PNG (Alta fidelidade)</option>
+            <option value="jpeg">JPEG (Comprimido)</option>
+            <option value="svg">SVG (Vetorial nítido)</option>
+          </select>
         </div>
 
         <div class="form-group">
           <label for="export-filename">Nome do Arquivo:</label>
-          <input type="text" id="export-filename" class="form-control" value="webr_grafico_300dpi.png" spellcheck="false" />
+          <input type="text" id="export-filename" class="form-control" value="webr_grafico_300dpi.png"
+            spellcheck="false" />
         </div>
 
         <div class="form-group">
@@ -2581,7 +2909,8 @@ plot(iris$Sepal.Length, iris$Petal.Length,
               <option value="cm">cm</option>
             </select>
           </div>
-          <small style="color: var(--text-muted); font-size: 0.72rem;">Deixe vazio para escalar pelo DPI sobre o tamanho original do gráfico.</small>
+          <small style="color: var(--text-muted); font-size: 0.72rem;">Deixe vazio para escalar pelo DPI sobre o tamanho
+            original do gráfico.</small>
         </div>
       </div>
       <div class="modal-footer">
@@ -2606,7 +2935,8 @@ plot(iris$Sepal.Length, iris$Petal.Length,
   <!-- Etapa 2: Paleta de comandos (Ctrl+K) -->
   <div id="command-palette" class="command-palette" role="dialog" aria-label="Paleta de comandos">
     <div class="palette-dialog">
-      <input id="palette-input" type="text" placeholder="Buscar ação... (Ctrl+K)" autocomplete="off" spellcheck="false" />
+      <input id="palette-input" type="text" placeholder="Buscar ação... (Ctrl+K)" autocomplete="off"
+        spellcheck="false" />
       <div id="palette-results" class="palette-results"></div>
       <p class="palette-footer-hint"><kbd>Ctrl</kbd>+<kbd>K</kbd> abrir · ↑↓ navegar · Enter executar · Esc fechar</p>
     </div>
@@ -2617,7 +2947,8 @@ plot(iris$Sepal.Length, iris$Petal.Length,
     <div class="modal-dialog modal-dialog-wide">
       <div class="modal-header">
         <h3 class="modal-title"><i class="bi bi-file-earmark-spreadsheet"></i> Importar planilha Excel</h3>
-        <button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('modal-excel-import').classList.remove('show')">&times;</button>
+        <button type="button" class="btn btn-icon btn-sm"
+          onclick="document.getElementById('modal-excel-import').classList.remove('show')">&times;</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -2713,7 +3044,8 @@ plot(iris$Sepal.Length, iris$Petal.Length,
             <option value="Date">Date</option>
           </select>
         </div>
-        <p style="font-size:0.75rem;color:var(--text-muted);">A conversão roda no R (<code>as.*</code>) e recarrega o grid.</p>
+        <p style="font-size:0.75rem;color:var(--text-muted);">A conversão roda no R (<code>as.*</code>) e recarrega o
+          grid.</p>
       </div>
       <div class="modal-footer">
         <button id="btn-col-type-cancel" type="button" class="btn btn-secondary">Cancelar</button>
@@ -2730,13 +3062,16 @@ plot(iris$Sepal.Length, iris$Petal.Length,
         <button id="btn-close-share" type="button" class="btn btn-icon btn-sm">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.8rem;color:var(--text-secondary);">Link reproduzível com todos os scripts abertos (compactado no hash da URL).</p>
+        <p style="font-size:0.8rem;color:var(--text-secondary);">Link reproduzível com todos os scripts abertos
+          (compactado no hash da URL).</p>
         <input id="share-link-output" class="form-control" readonly spellcheck="false" />
       </div>
       <div class="modal-footer">
-        <button id="btn-copy-share-link" type="button" class="btn btn-primary"><i class="bi bi-clipboard"></i> Copiar link</button>
+        <button id="btn-copy-share-link" type="button" class="btn btn-primary"><i class="bi bi-clipboard"></i> Copiar
+          link</button>
       </div>
     </div>
   </div>
 </body>
+
 </html>
