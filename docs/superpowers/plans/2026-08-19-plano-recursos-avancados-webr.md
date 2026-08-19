@@ -1,7 +1,7 @@
 # 🗺️ Plano de Implementação — Recursos Avançados do webR
 
 > **Status:** Planejado para implementação futura modular  
-> **Objetivo:** Integrar os recursos avançados nativos do compilador e runtime **webR** (v0.3.x / v0.5.x+) para elevar a estabilidade, performance de I/O, persistência e experiência interativa do **webR Station**.
+> **Objetivo:** Integrar os recursos avançados nativos do compilador e runtime **webR** (v0.6.0+) para elevar a estabilidade, performance de I/O, persistência e experiência interativa do **webR Station**.
 
 ---
 

@@ -6,7 +6,7 @@
 
 **Architecture:** Extract new UI modules into `config/` (IIFE pattern like `webr-workstation.js`), wire from `index.html`. Keep `styles.css` as single stylesheet. Sync changes to `dist/` only if those files mirror root (primary source: root `index.html`, `styles.css`, `config/`).
 
-**Tech Stack:** Vanilla JS (ES modules in index.html), webR 0.5.7, Monaco Editor, CSS custom properties, localStorage, SheetJS (xlsx export via CDN) optional.
+**Tech Stack:** Vanilla JS (ES modules in index.html), webR v0.6.0, Monaco Editor, CSS custom properties, localStorage, SheetJS (xlsx export via CDN) optional.
 
 ## Global Constraints
 

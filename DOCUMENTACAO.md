@@ -19,7 +19,7 @@ graph TD
 ```
 
 ### Componentes Chave
-1. **Runtime WebAssembly:** Instância oficial do interpretador R compilada para WebAssembly ([webR](https://docs.r-wasm.org/webr/latest/)) isolada em um Web Worker para não bloquear a UI.
+1. **Runtime WebAssembly:** Instância oficial do interpretador R compilada para WebAssembly ([webR v0.6.0](https://docs.r-wasm.org/webr/latest/)) isolada em um Web Worker para não bloquear a UI.
 2. **Sistema de Arquivos Virtual (VFS):** Montado em `/home/web_user/` (Emscripten MEMFS), com diretório dedicado para upload e manipulação em `/home/web_user/uploads/`.
 3. **Editor de Código:** Monaco Editor com realce de sintaxe R, autocompletion e atalhos (`Ctrl+Enter` para execução de linha/seleção).
 
