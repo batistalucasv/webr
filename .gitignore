@@ -24,8 +24,10 @@ dist/webrtest*
 src/webr3*
 src/webrtest*
 
-# webr2 sandbox: runtime files are published at /webr2.html (not production index)
-# Keep tests, dist copies, src copies, and the roadmap local-only.
+# webr2 sandbox: local-only, never committed or published to GitHub / GitHub Pages
+webr2*
+*webr2*
+styles-webr2*
 tests/webr2*
 dist/webr2*
 dist/styles-webr2.css
